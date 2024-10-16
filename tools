@@ -1,0 +1,42 @@
+
+
+
+To connect to PDX
+	% su tsh
+	% sudo openvpn cecs.ovpn
+		- first password is that of tsh
+		- username is _ from _@pdx.edu
+		- password is 7/16
+	Details from
+	 	- https://cat.pdx.edu/platforms/linux/remote-access/openvpn/
+	Test via
+		- https://status.cecs.pdx.edu/
+
+ssh harke@mo.ece.pdx.edu
+
+bash:
+	set -o vi
+
+
+https://www.edaplayground.com/home
+
+addpkg
+	- by default, vsim is not on path
+
+
+(BTW, mobaxterm ...
+	https://www.asbru-cm.net/
+	termintor
+	snowflake
+	remmina
+
+)
+
+text xwindows:
+	% xmessage "Hello from system $(hostname)"
+
+In file
+	.ssh/config
+add the line
+	ForwardX11 yes
+
