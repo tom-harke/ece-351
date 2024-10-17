@@ -1,0 +1,31 @@
+\documentclass{article}
+\begin{document}
+
+\section{Problem 1 A}
+operationally a tri signal is identical to a wire signal
+
+the use of keyword 'tri' serves as documentation of the intent of the author to have z as a valid level.
+
+\begin{verbatim}
+wire in, c;
+tri out;
+
+assign out = c ? in : z;
+\end{verbatim}
+
+\section{Problem 1 B}
+\section{Problem 1 C}
+
+\begin{verbatim}
+module hw1_prob1c (
+  input logic A, B, C, D, E, F, G,
+  output logic Y
+);
+
+logic X;
+
+assign X = not( not( not(A & B & C) & D ) | not( E | F & G ) );
+assign Y = not(x and x);
+endmodule: hw1_prob1c
+\end{verbatim}
+\end{document}

@@ -1,14 +1,15 @@
 /**
  * alu_tb.sv - Testbench for 32-bit ALU with flags
- * ----STARTER CODE-----
  *
- * @author:	<your name> (<your email address>)
- * @date:	<date created>
+ * @author:	Tom Harke (harke@pdx.edu)
+ * @date:	2024/10/16
  *
  * @brief
  * implements a testbench for the 32-bit ALU with flags 
  *
- * @note:  Based on an exercise from Digital Design and Computer Architecture: RISC-V edition by Sarah Harris and David Harris
+ * @note:
+ *    - Exercise based on one from Digital Design and Computer Architecture: RISC-V edition by Sarah Harris and David Harris
+ *    - Draft testbench from Roy Kravitz (roy.kravitz@pdx.edu)
  */ 
 module alu_tb();
 timeunit 1ns/1ns;
@@ -19,13 +20,8 @@ timeunit 1ns/1ns;
   logic [3:0]  flags; 
   // TODO:  Declare your other testbench variables here
   
-   /*** BOILER PLATE CODE TO DISPLAY YOUR WORKING DiRECTORY ***/
-  // make use of the SystemVerilog C programming interface
-  // https://stackoverflow.com/questions/33394999/how-can-i-know-my-current-path-in-system-verilog
   import "DPI-C" function string getenv(input string env_name);  
  
-  // instantiate device under test
-  // TODO:  Change instantiation to match your alu module  
   alu DUT (
 	.a(a),
 	.b(b),
@@ -35,11 +31,8 @@ timeunit 1ns/1ns;
   ); 
  
  
-  /*** BOILER PLATE CODE TO DISPLAY YOUR WORKING DIRECTOR ***/ 
-  // TODO:  Change the greeting message
   initial begin: display_working_dir
-	// display greeting and working directory
-    $display("ECE 351 Fall 2024: ALU testbench - Roy Kravitz (roy.kravitz@pdx.edu)");
+    $display("ECE 351 Fall 2024: ALU testbench - Tom Harke (harke@pdx.edu)");
     $display("Sources: %s\n", getenv("PWD")); 
   end: display_working_dir
  
