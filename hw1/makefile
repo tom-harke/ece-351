@@ -10,3 +10,8 @@ package: \
 	alu_tb_results.txt \
 	hw1_problem1.pdf
 	zip ece351f24_harke_hw1 $+
+
+build:
+	vlog alu.sv
+	vlog alu_tb.sv
+	vsim -c alu_tb
