@@ -15,12 +15,16 @@
     - how fold a 32-bit-array into 1 bit of output
 
  */
-  typedef enum bit [1:0]
+
+// package mnemonics;
+  typedef enum logic [1:0]
     { ADD = 2'b00
     , SUB = 2'b01
     , AND = 2'b10
     , OR  = 2'b11
-    } BINOP;
+    } op_t;
+// endpackage // : mnemonics
+
 
 module alu
   #(parameter WIDTH = 32)
@@ -31,7 +35,7 @@ module alu
 // TODO: for testing, make 32 a parameter
 //       then, one test involves setting param to 2 or 3 and doing exhaustive run
   input  logic [WIDTH-1:0] a, b;
-  // input  BINOP  alucontrol;
+  // input  op_t  alucontrol;
   input  logic [1:0]  alucontrol;
   output logic [WIDTH-1:0] result;
   output logic [3:0]  flags;
@@ -43,10 +47,10 @@ module alu
   logic [WIDTH-1:0] resultNeg;
 
   typedef enum
-    { NEGATIVE
-    , ZERO
-    , CARRY
-    , OVERFLOW
+    { NEGATIVE = 3
+    , ZERO     = 2
+    , CARRY    = 1
+    , OVERFLOW = 0
     } FLAG;
 
   always_comb

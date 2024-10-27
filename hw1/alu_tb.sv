@@ -2,7 +2,7 @@
  * alu_tb.sv - Testbench for 32-bit ALU with flags
  *
  * @author:	Tom Harke (harke@pdx.edu)
- * @date:	2024/10/16
+ * @date:	2024/10/26
  *
  * @brief
  * implements a testbench for the 32-bit ALU with flags
@@ -20,18 +20,28 @@
     } BINOP;
 
 module alu_tb();
-timeunit 1ns/1ns;
-
+  timeunit 1ns/1ns;
 
   // parameter WIDTH = 32;
-  parameter WIDTH = 4;
+  parameter WIDTH   = 3;
+  parameter VEC_LEN = 2       // opcode
+                    + 3*WIDTH // 2 inputs + 1 output, same length
+                    + 4       // flags
+                    ;
 
-  // ALU interface signals
   logic [WIDTH-1:0] a, b, result;
-  logic [1:0]  alucontrol;
-  // BINOP  alucontrol;
-  logic [3:0]  flags;
-  // TODO:  Declare your other testbench variables here
+  logic [1:0]       alucontrol;
+  logic [3:0]       flags;
+
+  logic [WIDTH-1:0] result_exp;
+  logic [3:0]       flags_exp;
+
+
+  logic [VEC_LEN-1:0]  testvectors[63:0];
+  // logic [VEC_LEN-1:0]  testvectors[10000:0];
+  // logic [100:0]  testvectors[10000:0];
+  logic clk;
+  int vectornum, pass, fail;
 
   import "DPI-C" function string getenv(input string env_name);
 
@@ -45,45 +55,53 @@ timeunit 1ns/1ns;
 
 
   initial begin: display_working_dir
-    //alucontrol = 0;
     $display("ECE 351 Fall 2024: ALU testbench - Tom Harke (harke@pdx.edu)");
     $display("Sources: %s\n", getenv("PWD"));
   end: display_working_dir
 
-  initial begin: foo
-    alucontrol = ADD;
-  end: foo
+  initial begin: prep_vectors
+    alucontrol = OR;  // to avoid initial X violating unique case
+    {vectornum,pass,fail} = 0;
+    $readmemb("vectors_short.txt", testvectors);
+  end: prep_vectors
 
-  initial begin: drive_tests
+  // generate clock
+  always 
+    begin
+      clk = 1; #5;
+      clk = 0; #5;
+    end
 
-    // $monitor("Result %d", result);
-    #10;
-    a = 4'b0110; // 6;
-    b = 4'b0101; // 5;
 
-    #10;
-    alucontrol = ADD;
-    #1;
-    $display("result %d, op %b a=%d b=%d\n", result, alucontrol, a, b);
+  // apply test vectors on rising edge of clk
+  always @(posedge clk)
+    begin
+      #1;
+      {alucontrol, a, b, result_exp, flags_exp} = testvectors[vectornum];
+    end
 
-    #10;
-    alucontrol = SUB;
-    #1;
-    $display("result %d, op %b a=%d b=%d\n", result, alucontrol, a, b);
+  always @(negedge clk)
+    begin
+      #1;
+      if ( {result,flags} !== {result_exp,flags_exp} ) begin
+        $display("vector %d is %b",  vectornum, testvectors[vectornum]);
+        $display("op is %b, a is %b(%d), b is %b(%d)", alucontrol, a, a, b, b);
+        $display("expect: %b(%d) with flags %b", result_exp, result_exp, flags_exp);
+        $display("got   : %b(%d) with flags %b", result,     result,     flags    );
+        fail = fail + 1;
+        $display("so far: %d passed, %d failed\n", pass, fail);
+        $display("");
+      end
+      else pass = pass + 1;
 
-    #10;
-    alucontrol = AND;
-    #1;
-    $display("result %b, op %b a=%b b=%b\n", result, alucontrol, a, b);
+      vectornum = vectornum + 1;
+//123456789012345
+//xxxxxxxxxxxxxxx
+      if (testvectors[vectornum] === 15'bx) begin
+        $display("%d passed, %d failed\n", pass, fail);
+        $stop;
+      end
 
-    #10;
-    alucontrol = OR;
-    #1;
-    $display("result %b, op %b a=%b b=%b\n", result, alucontrol, a, b);
-
-  end: drive_tests
-
-  // TODO:  Add your testbench code here
+    end
 
 endmodule: alu_tb
-
