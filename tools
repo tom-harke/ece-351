@@ -40,3 +40,7 @@ In file
 add the line
 	ForwardX11 yes
 
+
+---
+ssh harke@mo.ece.pdx.edu
+set -o vi

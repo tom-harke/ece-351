@@ -3,7 +3,7 @@ define ABOUT
 How to connect to pdx.edu via vpn:
    ssh tsh
    cd HERE
-   sudo openvpn --config cecs.ovpn
+   sudo openvpn --config cecs.ovpn --auth-user-pass up
 
 How simulate
    ssh _@mo.ece.pdx.edu

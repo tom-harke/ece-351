@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{circuitikz}
 \begin{document}
 
 \section{Problem 1 A}
@@ -14,6 +15,18 @@ assign out = c ? in : z;
 \end{verbatim}
 
 \section{Problem 1 B}
+
+
+WARNING -- this is not the answer, it's a demo of using a library
+\begin{circuitikz} \draw
+(0,2) node[and port] (myand1) {}
+(0,0) node[and port] (myand2) {}
+(2,1) node[xnor port] (myxnor) {}
+(myand1.out) -- (myxnor.in 1)
+(myand2.out) -- (myxnor.in 2);
+\end{circuitikz}
+
+
 \section{Problem 1 C}
 
 \begin{verbatim}
@@ -22,10 +35,12 @@ module hw1_prob1c (
   output logic Y
 );
 
-logic X;
+  logic X;
 
-assign X = not( not( not(A & B & C) & D ) | not( E | F & G ) );
-assign Y = not(x and x);
+  assign X = not( not( not(A & B & C) & D ) | not( E | F & G ) );
+  assign Y = not(x and x);
 endmodule: hw1_prob1c
 \end{verbatim}
+\section{Etc}
+Thanks to  \verb'circuitikz'!
 \end{document}
