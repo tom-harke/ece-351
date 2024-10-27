@@ -12,6 +12,7 @@ To connect to PDX
 	Test via
 		- https://status.cecs.pdx.edu/
 
+ssh harke@auto.ece.pdx.edu
 ssh harke@mo.ece.pdx.edu
 
 bash:

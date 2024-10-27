@@ -1,11 +1,13 @@
 finish HW 1
- - TB plan
-    - #1, exhaustive for 3-bit ALU 
-    - #2, strategic for 32-bit ALU
+ - code
+    - TB plan
+       - #1, exhaustive for 4-bit ALU 
+       - #2, strategic for 32-bit ALU
+ - written questions
 
-figure out how to git pull directly from pdx to laptop
- - what is the name of the host?
-    - vaguely remember 'mo' or 'cecs'
-    - can't find Daniel's doc in Canvas
 
-pdf-split class slides & create KB from them
+med:
+  - pdf-split class slides & create KB from them
+
+low importance:
+  - can't find Daniel's doc in Canvas
