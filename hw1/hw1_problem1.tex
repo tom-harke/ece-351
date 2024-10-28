@@ -5,15 +5,14 @@
 
 \section{Problem 1}
 \subsection{Problem 1 A}
-operationally a tri signal is identical to a wire signal
-
-the use of keyword 'tri' serves as documentation of the intent of the author to have z as a valid level.
+Operationally a tri signal is identical to a wire signal.
+The use of keyword 'tri' serves as documentation of the intent of the author to have z as a valid level.
 
 \begin{verbatim}
 wire in, c;
 tri out;
 
-assign out = c ? in : z;
+assign out = c ? in : 1'bz;
 \end{verbatim}
 
 \subsection{Problem 1 B}
@@ -92,6 +91,8 @@ endmodule: hw1_prob1c
 \end{Verbatim}
 \section{Problem 2: 32-bit ALU}
 
+I did not get this done completely.  Read on for details.
+
 I took the strategy of parameterizing the design by the width of the word.
 Instantiating at 32 gives the desired ALU, but for part of the testing
 we can instantiate to a much smaller width and quickly do exhaustive testing
@@ -102,6 +103,23 @@ bits are completely predictable/uninteresting.  The places where the
 design is most likely to have obscure bugs is the treatment of the
 highest-order bit with the flags.
 
-\end{document}
+I could have made a mistake implementing the parametrization, so there's still
+need to do some selected tests on the full 32-bit design -- this is where my time/knowledge ran out --
+I was unable to figure out how to get 2 instances of the ALU living in the testbench.
 
+The testbench is, I believe, self-checking -- other than the start and end messages it only prints when an error is found:
+\begin{verbatim}
+# vector         126 is 011111100010000
+# op is 01, a is 111(7), b is 110(6)
+# expect: 001(1) with flags 0000
+# got   : 001(1) with flags 0010
+# so far:          91 passed,          36 failed
+\end{verbatim}
+{document}
+
+Also, when the testbench check AND/OR it ignores the arithmetic flags.
+
+%My testbench has $2^3 \time 2^3$ vectors, and initially several of my vectors were wrong.
+%I found that I didn't understand the design as well as I originally thought.
+%I would have liked to have spent more time
 % arizonans = Aseurasians

@@ -12,18 +12,24 @@
  *    - Draft testbench from Roy Kravitz (roy.kravitz@pdx.edu)
  */
 
-  typedef enum bit [1:0]
+typedef enum bit [1:0]
+  // I tried to get mnemonic names, but it didn't quite work
     { ADD = 2'b00
     , SUB = 2'b01
     , AND = 2'b10
     , OR  = 2'b11
-    } BINOP;
+  } BINOP;
 
-module alu_tb();
+module alu_tb
+  #(
+    parameter WIDTH = 3,
+    parameter FILE = "vectors_short.txt"
+  )
+  ();
   timeunit 1ns/1ns;
 
-  // parameter WIDTH = 32;
-  parameter WIDTH   = 3;
+  //parameter FILE = "vectors_short.txt";
+  //parameter WIDTH   = 3;
   parameter VEC_LEN = 2       // opcode
                     + 3*WIDTH // 2 inputs + 1 output, same length
                     + 4       // flags
@@ -37,9 +43,7 @@ module alu_tb();
   logic [3:0]       flags_exp;
 
 
-  logic [VEC_LEN-1:0]  testvectors[63:0];
-  // logic [VEC_LEN-1:0]  testvectors[10000:0];
-  // logic [100:0]  testvectors[10000:0];
+  logic [VEC_LEN-1:0]  testvectors[255:0];
   logic clk;
   int vectornum, pass, fail;
 
@@ -62,7 +66,8 @@ module alu_tb();
   initial begin: prep_vectors
     alucontrol = OR;  // to avoid initial X violating unique case
     {vectornum,pass,fail} = 0;
-    $readmemb("vectors_short.txt", testvectors);
+    // $readmemb("vectors_short.txt", testvectors);
+    $readmemb(FILE, testvectors);
   end: prep_vectors
 
   // generate clock
@@ -83,20 +88,42 @@ module alu_tb();
   always @(negedge clk)
     begin
       #1;
-      if ( {result,flags} !== {result_exp,flags_exp} ) begin
-        $display("vector %d is %b",  vectornum, testvectors[vectornum]);
-        $display("op is %b, a is %b(%d), b is %b(%d)", alucontrol, a, a, b, b);
-        $display("expect: %b(%d) with flags %b", result_exp, result_exp, flags_exp);
-        $display("got   : %b(%d) with flags %b", result,     result,     flags    );
-        fail = fail + 1;
-        $display("so far: %d passed, %d failed\n", pass, fail);
-        $display("");
-      end
-      else pass = pass + 1;
-
+      case (alucontrol)
+        10, 11: 
+                // The flags aren't meaningful for logic operations.
+                // This branch ignores flags.
+                if ( result == result_exp )
+                  begin
+                    pass = pass+1;
+                  end
+                else
+                  begin
+                    $display("vector %d is %b",  vectornum, testvectors[vectornum]);
+                    $display("op is %b, a is %b(%d), b is %b(%d)", alucontrol, a, a, b, b);
+                    $display("expect: %b(%d)", result_exp, result_exp);
+                    $display("got   : %b(%d)", result,     result,   );
+                    fail = fail + 1;
+                    $display("so far: %d passed, %d failed\n", pass, fail);
+                    $display("");
+                  end
+        00, 01: 
+                // This branch checks flags.
+                if ( {result,flags} == {result_exp,flags_exp} )
+                  begin
+                    pass = pass+1;
+                  end
+                else
+                  begin
+                    $display("vector %d is %b",  vectornum, testvectors[vectornum]);
+                    $display("op is %b, a is %b(%d), b is %b(%d)", alucontrol, a, a, b, b);
+                    $display("expect: %b(%d) with flags %b", result_exp, result_exp, flags_exp);
+                    $display("got   : %b(%d) with flags %b", result,     result,     flags    );
+                    fail = fail + 1;
+                    $display("so far: %d passed, %d failed\n", pass, fail);
+                    $display("");
+                  end
+      endcase;
       vectornum = vectornum + 1;
-//123456789012345
-//xxxxxxxxxxxxxxx
       if (testvectors[vectornum] === 15'bx) begin
         $display("%d passed, %d failed\n", pass, fail);
         $stop;
@@ -105,3 +132,12 @@ module alu_tb();
     end
 
 endmodule: alu_tb
+
+/*
+module alu_tb_what_I_want();
+
+  alu_tb(3, "vectors_short.txt");
+  alu_tb(32, "vectors_long.txt");
+
+endmodule: alu_tb_what_I_want
+*/
