@@ -4,6 +4,9 @@ finish HW 1
        - #1, exhaustive for 4-bit ALU 
           - only 'ADD' is done
        - #2, strategic for 32-bit ALU
+          - ?? corner cases
+          - x's
+            - 1|x => 1?
  - written questions
     - verify 1C
 
