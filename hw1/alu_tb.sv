@@ -21,6 +21,7 @@ typedef enum bit [1:0]
   } BINOP;
 
 module alu_tb
+  // I really want a 2nd instance of the DUT, with 32 bits & a small set of vectors, but ran out of time
   #(
     parameter WIDTH = 3,
     parameter FILE = "vectors_short.txt"
@@ -28,8 +29,6 @@ module alu_tb
   ();
   timeunit 1ns/1ns;
 
-  //parameter FILE = "vectors_short.txt";
-  //parameter WIDTH   = 3;
   parameter VEC_LEN = 2       // opcode
                     + 3*WIDTH // 2 inputs + 1 output, same length
                     + 4       // flags
@@ -66,7 +65,6 @@ module alu_tb
   initial begin: prep_vectors
     alucontrol = OR;  // to avoid initial X violating unique case
     {vectornum,pass,fail} = 0;
-    // $readmemb("vectors_short.txt", testvectors);
     $readmemb(FILE, testvectors);
   end: prep_vectors
 

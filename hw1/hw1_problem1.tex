@@ -1,8 +1,16 @@
 \documentclass{article}
 \usepackage{circuitikz}
 \usepackage{fancyvrb}
-\begin{document}
 
+
+\usepackage[hscale=0.7,vscale=0.8]{geometry}
+
+\title{ECE 351 HW 1}
+\date{2024 Oct 28}
+\author{Tom Harke}
+
+\begin{document}
+\maketitle
 \section{Problem 1}
 \subsection{Problem 1 A}
 Operationally a tri signal is identical to a wire signal.
@@ -115,11 +123,12 @@ The testbench is, I believe, self-checking -- other than the start and end messa
 # got   : 001(1) with flags 0010
 # so far:          91 passed,          36 failed
 \end{verbatim}
-{document}
+
 
 Also, when the testbench check AND/OR it ignores the arithmetic flags.
 
 %My testbench has $2^3 \time 2^3$ vectors, and initially several of my vectors were wrong.
 %I found that I didn't understand the design as well as I originally thought.
 %I would have liked to have spent more time
+\end{document}
 % arizonans = Aseurasians

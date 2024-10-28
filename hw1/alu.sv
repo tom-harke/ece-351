@@ -1,23 +1,18 @@
 /**
- * alu.sv - 32-bit ALU with flags
+ * alu.sv - N-bit ALU with flags
  *
  * @author:	Tom Harke (harke@pdx.edu)
  * @date:	2024/10/16
  *
  * @brief
- * implements a 32-bit ALU with flags
+ * implements an N-bit ALU with flags, with the intent to instantiate at N=32
  *
  * @note:  Based on an exercise from Digital Design and Computer Architecture: RISC-V edition by Sarah Harris and David Harris
  */
 
-/* Questions
-    - 'self checking'
-    - how fold a 32-bit-array into 1 bit of output
-
- */
-
 // package mnemonics;
   typedef enum logic [1:0]
+    // I tried to get mnemonic names, but it didn't quite work
     { ADD = 2'b00
     , SUB = 2'b01
     , AND = 2'b10
@@ -30,12 +25,7 @@ module alu
   #(parameter WIDTH = 32)
   (a,b,alucontrol,result,flags);
 
-// timeunit 1ns/1ns;
-
-// TODO: for testing, make 32 a parameter
-//       then, one test involves setting param to 2 or 3 and doing exhaustive run
   input  logic [WIDTH-1:0] a, b;
-  // input  op_t  alucontrol;
   input  logic [1:0]  alucontrol;
   output logic [WIDTH-1:0] result;
   output logic [3:0]  flags;
