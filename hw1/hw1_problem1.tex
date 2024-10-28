@@ -1,8 +1,10 @@
 \documentclass{article}
 \usepackage{circuitikz}
+\usepackage{fancyvrb}
 \begin{document}
 
-\section{Problem 1 A}
+\section{Problem 1}
+\subsection{Problem 1 A}
 operationally a tri signal is identical to a wire signal
 
 the use of keyword 'tri' serves as documentation of the intent of the author to have z as a valid level.
@@ -14,22 +16,69 @@ tri out;
 assign out = c ? in : z;
 \end{verbatim}
 
-\section{Problem 1 B}
-
-
-WARNING -- this is not the answer, it's a demo of using a library
-\begin{circuitikz} \draw
-(0,2) node[and port] (myand1) {}
-(0,0) node[and port] (myand2) {}
-(2,1) node[xnor port] (myxnor) {}
-(myand1.out) -- (myxnor.in 1)
-(myand2.out) -- (myxnor.in 2);
-\end{circuitikz}
-
-
-\section{Problem 1 C}
+\subsection{Problem 1 B}
 
 \begin{verbatim}
+module hw1_prob1b (
+  input logic a, b, c,
+  output logic y, z
+);
+  assign y = a & b & c | a & b & ~c | a & ~b & c;
+  assign z = a & b | ~a & ~b;
+endmodule: hw1_prob1b
+\end{verbatim}
+
+Warning! The inverted signals are not drawn correctly (this is my first
+time using \verb'circuitikz')
+
+\begin{center}
+\begin{circuitikz} \draw
+(0,7) node[above](a){$a$} 
+(2,7) node[above](b){$b$} 
+(4,7) node[above](c){$c$} 
+(1,6) node[not port](anot){}
+      (a) |- (anot.in 1)
+(3,6) node[not port](bnot){}
+      (b) |- (bnot.in 1)
+(5,6) node[not port](cnot){}
+      (c) |- (cnot.in 1)
+(8,4) node[and port, number inputs=3] (yand1) {}
+      (a) |- (yand1.in 3)
+      (b) |- (yand1.in 2)
+      (c) |- (yand1.in 1)
+(8,2) node[and port, number inputs=3] (yand2) {}
+      (a)    |- (yand2.in 3)
+      (b)    |- (yand2.in 2)
+      (cnot) |- (yand2.in 1)
+(8,0) node[and port, number inputs=3] (yand3) {}
+      (a)    |- (yand3.in 3)
+      (bnot) |- (yand3.in 2)
+      (c)    |- (yand3.in 1)
+(10,2) node[or port, number inputs=3] (yor) {}
+(11,2) node[above](y){$y$} 
+(yand1.out) -| (yor.in 1)
+(yand2.out) -| (yor.in 2)
+(yand3.out) -| (yor.in 3)
+(yor.out) -- (y)
+(8,-2) node[and port] (zand1) {}
+       (a) |- (zand1.in 1)
+       (b) |- (zand1.in 2)
+(8,-4) node[and port] (zand2) {}
+       (anot) |- (zand2.in 1)
+       (bnot) |- (zand2.in 2)
+(10,-3) node[or port] (zor) {}
+(11,-3) node[above](z){$z$} 
+(zand1.out) -| (zor.in 1)
+(zand2.out) -| (zor.in 2)
+(zor.out) -- (z)
+;
+\end{circuitikz}
+\end{center}
+
+
+\subsection{C}
+
+\begin{Verbatim}[frame=single]
 module hw1_prob1c (
   input logic A, B, C, D, E, F, G,
   output logic Y
@@ -37,10 +86,22 @@ module hw1_prob1c (
 
   logic X;
 
-  assign X = not( not( not(A & B & C) & D ) | not( E | F & G ) );
-  assign Y = not(x and x);
+  assign X = ~( ~( ~(A & B & C) & D ) | ~( E | F & G ) );
+  assign Y = ~(x & x);
 endmodule: hw1_prob1c
-\end{verbatim}
-\section{Etc}
-Thanks to  \verb'circuitikz'!
+\end{Verbatim}
+\section{Problem 2: 32-bit ALU}
+
+I took the strategy of parameterizing the design by the width of the word.
+Instantiating at 32 gives the desired ALU, but for part of the testing
+we can instantiate to a much smaller width and quickly do exhaustive testing
+of that smaller design.
+
+The reasoning behind this is that, of the 32 bits, the lower order
+bits are completely predictable/uninteresting.  The places where the
+design is most likely to have obscure bugs is the treatment of the
+highest-order bit with the flags.
+
 \end{document}
+
+% arizonans = Aseurasians

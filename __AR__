@@ -2,8 +2,10 @@ finish HW 1
  - code
     - TB plan
        - #1, exhaustive for 4-bit ALU 
+          - only 'ADD' is done
        - #2, strategic for 32-bit ALU
  - written questions
+    - verify 1C
 
 
 med:
