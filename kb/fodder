@@ -1,0 +1,98 @@
+# week 5 -- modern SV vs older
+
+without enums
+```
+`define FETCH 3'h0
+`define WRITE 3'h1
+`define ADD   3'h2
+`define SUB   3'h3
+`define MULT  3'h4
+`define DIV   3'h5
+`define SHIFT 3'h6
+`define NOP   3'h7
+
+
+module controller (
+  output reg        read, write,
+  input  wire [2:0] instsruction,
+  input  wire       clock, resetN
+);
+  parameter WAITE = 0, // `wait` is a keyword
+            LOAD  = 1,
+            STORE = 2;
+  reg [1:0] State, NextState;
+
+  always @(posedge clock, negedge resetN)
+    if (!resetN) State <= WAITE;
+    else         State <= NextState;
+
+  always @(State) begin
+    case (State)
+      WAITE: NextState = LOAD;
+      LOAD:  NextState = STORE;
+      STORE: NextState = WAITE;
+    endcase
+  end
+
+  always @(State, instruction) begin
+    read = 0;
+    write = 0;
+    if (State == LOAD && instruction == `FETCH)
+      read = 1;
+    else if (State == STORE && instruction == `WRITE)
+      write = 1;
+  end
+endmodule
+```
+
+with enums
+```
+package chip_types;
+  typedef enum {
+    FETCH,
+    WRITE,
+    ADD,
+    SUB,
+    MULT,
+    DIV,
+    SHIFT,
+    NOP
+  } instr_t;
+endpackage
+
+import chip_types::*
+
+module controller (
+  output reg        read, write,
+  input  wire [2:0] instsruction,
+  input  wire       clock, resetN
+);
+
+  enum {
+    WAITE,
+    LOAD,
+    STORE
+  } State, NextState;
+
+  always_ff @(posedge clock, negedge resetN)
+    if (!resetN) State <= WAITE;
+    else         State <= NextState;
+
+  always_comb begin
+    case (State)
+      WAITE: NextState = LOAD;
+      LOAD:  NextState = STORE;
+      STORE: NextState = WAITE;
+    endcase
+  end
+
+  always_comb begin
+    read = 0;
+    write = 0;
+    if (State == LOAD && instruction == `FETCH)
+      read = 1;
+    else if (State == STORE && instruction == `WRITE)
+      write = 1;
+  end
+endmodule
+```
