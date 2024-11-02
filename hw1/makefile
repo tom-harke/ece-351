@@ -11,7 +11,7 @@ package: \
 	hw1_problem1.pdf
 	zip ece351f24_harke_hw1 $+
 
-alu_tb_results.txt: alu.sv alu_tb.sv
+alu_tb_results.txt: # alu.sv alu_tb.sv
 	echo run -a | make run > alu_tb_results.txt
 
 run:
