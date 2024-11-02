@@ -89,9 +89,8 @@ assign dig_enable_n = ~dig_enable;
 
 // Apply the test vectors
 initial begin: stimulus
-	// CHANGE THE GREETING TO YOUR NAME
 	// display greeting and working directory
-    $display("ECE 351 Fall 2024: PmodSSD Testbench - Submitted by <your name> (<your email address>)");
+    $display("ECE 351 Fall 2024: PmodSSD Testbench - Submitted by Tom Harke (harke@pdx.edu)");
     $display("Sources: %s\n", getenv("PWD")); 
 	
 	$display("Reset the system ");
