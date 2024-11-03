@@ -118,6 +118,14 @@ always_ff @(posedge tick_60Hz or negedge tick_60Hz) begin
 end
 
 assign SSD_C = foo;
-assign {SSD_AG, SSD_AF, SSD_AE, SSD_AD, SSD_AC, SSD_AB, SSD_AA} = bar;
+assign {
+		SSD_AA,
+		SSD_AB,
+		SSD_AC,
+		SSD_AD,
+		SSD_AE,
+		SSD_AF,
+		SSD_AG,
+} = bar;
 
 endmodule: pmodSSD
