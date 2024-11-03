@@ -28,6 +28,7 @@ module dig2SevenSeg (
 
 assign output =
   unique case (input)
+    // hexadecimal characters
     5'b00000: 7'b1111110; // char '0'
     5'b00001: 7'b0000110; // char '1'
     5'b00010: 7'b1101101; // char '2'
@@ -44,6 +45,8 @@ assign output =
     5'b01101: 7'b0111101; // char 'D'
     5'b01110: 7'b1001111; // char 'E'
     5'b01111: 7'b1000111; // char 'F'
+
+    // single segments
     5'b10000: 7'b1000000; // Segment a
     5'b00001: 7'b0100000; // Segment b
     5'b10010: 7'b0010000; // Segment c
@@ -51,12 +54,17 @@ assign output =
     5'b10100: 7'b0000100; // Segment e
     5'b10101: 7'b0000010; // Segment f
     5'b10110: 7'b0000001; // Segment g
-    5'b10111: 7'b0000000; // BLANK
+
+    // 5'b10111 via default
+
+    // misc letters
     5'b11000: 7'b0110111; // char 'H'
     5'b11001: 7'b0001110; // char 'L'
     5'b11010: 7'b1110111; // char 'R'
     5'b11011: 7'b0000110; // char 'l'
     5'b11100: 7'b0000101; // char 'r'
+
+    // blank
     default:  7'b0000000; // BLANK
   endcase;
 

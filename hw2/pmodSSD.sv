@@ -3,8 +3,8 @@
  *
  * PmodSSD.sv - Implements a Digilent PmodSSD - a 2 digit 7-segment display
  *
- * @author:	<your name> (<your email address>) 
- * @date:	<date  you created the module> 
+ * @author: Tom Harke (harke@pdx.edu) 
+ * @date:   2024 Nov 2
  *
  * @brief
  * Implements Digilent PmodSSD Peripheral Module.  The PmodSSD contains
@@ -40,7 +40,7 @@
 
 module pmodSSD
 #(
-	parameter SIMULATE = 1		// speeds up the clock divider to save millions of
+  parameter SIMULATE = 1		// speeds up the clock divider to save millions of
 								// simulation cycles
 )
 (
@@ -105,7 +105,13 @@ dig2SevenSeg DIGIT0DEC (
   
 // ADD YOUR CODE TO PRODUCE AND MULTIPLEX THE TWO DIGITS AND MAP THEM TO THE SSD_ OUTPUTS
 
-	
-	
-endmodule: pmodSSD
 
+
+
+always_ff @(posedge tick_60Hz or negedge tick_60Hz) begin
+  SSD_C = tick_60Hz;
+  {SSD_AG, SSD_AF, SSD_AE, SSD_AD, SSD_AC, SSD_AB, SSD_AA} = SSD_C ? an1 : an0;
+end
+
+
+endmodule: pmodSSD
