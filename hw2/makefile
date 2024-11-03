@@ -46,6 +46,9 @@ pmodSSD_results.txt:
 	echo run -a | make run > pmodSSD_results.txt
 
 run:
+	vlog clk_divider.sv
 	vlog dig2SevenSeg.sv
+	vlog pmodSSD_emu.sv
 	vlog pmodSSD.sv
-	vsim -c TODO
+	vlog tb_pmodSSD.sv
+	vsim -c tb_pmodSSD

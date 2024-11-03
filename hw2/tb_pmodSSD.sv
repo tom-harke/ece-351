@@ -112,5 +112,3 @@ initial begin: stimulus
 end: stimulus
 
 endmodule: tb_pmodSSD
-
-
