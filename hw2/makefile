@@ -34,16 +34,19 @@ endef
 
 
 package: \
+	clk_divider.sv \
 	dig2SevenSeg.sv \
 	pmodSSD.sv \
+	pmodSSD_emu.sv \
+	tb_pmodSSD.sv \
 	pmodSSD_results.txt
 	zip ece351f24_harke_hw2 $+
 
 spec:
 	evince docs/ece351f24_hw2.pdf &
 
-pmodSSD_results.txt:
-	echo run -a | make run > pmodSSD_results.txt
+pmodSSD_results.txt: clk_divider.sv dig2SevenSeg.sv pmodSSD_emu.sv pmodSSD.sv tb_pmodSSD.sv
+	echo run -all | make run > pmodSSD_results.txt
 
 run:
 	vlog clk_divider.sv

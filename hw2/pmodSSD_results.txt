@@ -1,1 +1,130 @@
-TODO
+# vsim -c tb_pmodSSD 
+# Start time: 17:09:06 on Nov 03,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt2
+# //  Questa Sim-64
+# //  Version 2024.2 linux_x86_64 May 20 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.tb_pmodSSD(fast)
+run -all
+# ECE 351 Fall 2024: PmodSSD Testbench - Submitted by Tom Harke (harke@pdx.edu)
+# Sources: /u/harke/ece-351/hw2
+# 
+# Reset the system 
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ns  Iteration: 1  Process: /tb_pmodSSD/#implicit#unique__34 File: dig2SevenSeg.sv Line: 34
+# ** Warning: (vsim-8315) No condition is true in the unique/priority if/case statement.
+#    Time: 0 ns  Iteration: 1  Process: /tb_pmodSSD/#implicit#unique__34 File: dig2SevenSeg.sv Line: 34
+#                    0	dig1 cc=xx	dig0 cc=xx	dig enable=x	display=xx		dig1 segs=xxxxxxx	dig0 segs=xxxxxxx		[xx]
+#                   10	dig1 cc=xx	dig0 cc=xx	dig enable=0	display=xx		dig1 segs=xxxxxxx	dig0 segs=xxxxxxx		[xx]
+# Test digits by walking digit0 up and digit 1 down
+# Digit 1 (leftmost) should only change when dig_enable is asserted high (not the edge, the level)
+# Digit 0 (rightmost) should only change when dig_enable is asserted low (not the edge, the level
+# This is because the display is multiplexed.  On live hardware you would
+# not notice this because the display would be updating @ 60Hz and your
+# brain would average the results
+#                   85	dig1 cc=xx	dig0 cc=xx	dig enable=1	display=xx		dig1 segs=xxxxxxx	dig0 segs=xxxxxxx		[xx]
+#                  120	dig1 cc=1f	dig0 cc=00	dig enable=1	display=^x		dig1 segs=0000000	dig0 segs=xxxxxxx		[^x]
+#                  145	dig1 cc=1f	dig0 cc=00	dig enable=0	display=^0		dig1 segs=0000000	dig0 segs=1111110		[^0]
+#                  205	dig1 cc=1f	dig0 cc=00	dig enable=1	display=^0		dig1 segs=0000000	dig0 segs=1111110		[^0]
+#                  220	dig1 cc=1e	dig0 cc=01	dig enable=1	display=^0		dig1 segs=0000000	dig0 segs=1111110		[^0]
+#                  265	dig1 cc=1e	dig0 cc=01	dig enable=0	display=^1		dig1 segs=0000000	dig0 segs=0000110		[^1]
+#                  320	dig1 cc=1d	dig0 cc=02	dig enable=0	display=^2		dig1 segs=0000000	dig0 segs=1101101		[^2]
+#                  325	dig1 cc=1d	dig0 cc=02	dig enable=1	display=^2		dig1 segs=0000000	dig0 segs=1101101		[^2]
+#                  385	dig1 cc=1d	dig0 cc=02	dig enable=0	display=^2		dig1 segs=0000000	dig0 segs=1101101		[^2]
+#                  420	dig1 cc=1c	dig0 cc=03	dig enable=0	display=^3		dig1 segs=0000000	dig0 segs=1111001		[^3]
+#                  445	dig1 cc=1c	dig0 cc=03	dig enable=1	display=r3		dig1 segs=0000101	dig0 segs=1111001		[r3]
+#                  505	dig1 cc=1c	dig0 cc=03	dig enable=0	display=r3		dig1 segs=0000101	dig0 segs=1111001		[r3]
+#                  520	dig1 cc=1b	dig0 cc=04	dig enable=0	display=r4		dig1 segs=0000101	dig0 segs=0110011		[r4]
+#                  565	dig1 cc=1b	dig0 cc=04	dig enable=1	display=14		dig1 segs=0000110	dig0 segs=0110011		[14]
+#                  620	dig1 cc=1a	dig0 cc=05	dig enable=1	display=A4		dig1 segs=1110111	dig0 segs=0110011		[A4]
+#                  625	dig1 cc=1a	dig0 cc=05	dig enable=0	display=A5		dig1 segs=1110111	dig0 segs=1011011		[A5]
+#                  685	dig1 cc=1a	dig0 cc=05	dig enable=1	display=A5		dig1 segs=1110111	dig0 segs=1011011		[A5]
+#                  720	dig1 cc=19	dig0 cc=06	dig enable=1	display=L5		dig1 segs=0001110	dig0 segs=1011011		[L5]
+#                  745	dig1 cc=19	dig0 cc=06	dig enable=0	display=L6		dig1 segs=0001110	dig0 segs=1011111		[L6]
+#                  805	dig1 cc=19	dig0 cc=06	dig enable=1	display=L6		dig1 segs=0001110	dig0 segs=1011111		[L6]
+#                  820	dig1 cc=18	dig0 cc=07	dig enable=1	display=H6		dig1 segs=0110111	dig0 segs=1011111		[H6]
+#                  865	dig1 cc=18	dig0 cc=07	dig enable=0	display=H7		dig1 segs=0110111	dig0 segs=1110000		[H7]
+#                  920	dig1 cc=17	dig0 cc=08	dig enable=0	display=H8		dig1 segs=0110111	dig0 segs=1111111		[H8]
+#                  925	dig1 cc=17	dig0 cc=08	dig enable=1	display=^8		dig1 segs=0000000	dig0 segs=1111111		[^8]
+#                  985	dig1 cc=17	dig0 cc=08	dig enable=0	display=^8		dig1 segs=0000000	dig0 segs=1111111		[^8]
+#                 1020	dig1 cc=16	dig0 cc=09	dig enable=0	display=^9		dig1 segs=0000000	dig0 segs=1111011		[^9]
+#                 1045	dig1 cc=16	dig0 cc=09	dig enable=1	display=g9		dig1 segs=0000001	dig0 segs=1111011		[g9]
+#                 1105	dig1 cc=16	dig0 cc=09	dig enable=0	display=g9		dig1 segs=0000001	dig0 segs=1111011		[g9]
+#                 1120	dig1 cc=15	dig0 cc=0a	dig enable=0	display=gA		dig1 segs=0000001	dig0 segs=1110111		[gA]
+#                 1165	dig1 cc=15	dig0 cc=0a	dig enable=1	display=fA		dig1 segs=0000010	dig0 segs=1110111		[fA]
+#                 1220	dig1 cc=14	dig0 cc=0b	dig enable=1	display=eA		dig1 segs=0000100	dig0 segs=1110111		[eA]
+#                 1225	dig1 cc=14	dig0 cc=0b	dig enable=0	display=eB		dig1 segs=0000100	dig0 segs=0011111		[eB]
+#                 1285	dig1 cc=14	dig0 cc=0b	dig enable=1	display=eB		dig1 segs=0000100	dig0 segs=0011111		[eB]
+#                 1320	dig1 cc=13	dig0 cc=0c	dig enable=1	display=dB		dig1 segs=0001000	dig0 segs=0011111		[dB]
+#                 1345	dig1 cc=13	dig0 cc=0c	dig enable=0	display=dC		dig1 segs=0001000	dig0 segs=1001110		[dC]
+#                 1405	dig1 cc=13	dig0 cc=0c	dig enable=1	display=dC		dig1 segs=0001000	dig0 segs=1001110		[dC]
+#                 1420	dig1 cc=12	dig0 cc=0d	dig enable=1	display=cC		dig1 segs=0010000	dig0 segs=1001110		[cC]
+#                 1465	dig1 cc=12	dig0 cc=0d	dig enable=0	display=cD		dig1 segs=0010000	dig0 segs=0111101		[cD]
+#                 1520	dig1 cc=11	dig0 cc=0e	dig enable=0	display=cE		dig1 segs=0010000	dig0 segs=1001111		[cE]
+#                 1525	dig1 cc=11	dig0 cc=0e	dig enable=1	display=bE		dig1 segs=0100000	dig0 segs=1001111		[bE]
+#                 1585	dig1 cc=11	dig0 cc=0e	dig enable=0	display=bE		dig1 segs=0100000	dig0 segs=1001111		[bE]
+#                 1620	dig1 cc=10	dig0 cc=0f	dig enable=0	display=bF		dig1 segs=0100000	dig0 segs=1000111		[bF]
+#                 1645	dig1 cc=10	dig0 cc=0f	dig enable=1	display=aF		dig1 segs=1000000	dig0 segs=1000111		[aF]
+#                 1705	dig1 cc=10	dig0 cc=0f	dig enable=0	display=aF		dig1 segs=1000000	dig0 segs=1000111		[aF]
+#                 1720	dig1 cc=0f	dig0 cc=10	dig enable=0	display=aa		dig1 segs=1000000	dig0 segs=1000000		[aa]
+#                 1765	dig1 cc=0f	dig0 cc=10	dig enable=1	display=Fa		dig1 segs=1000111	dig0 segs=1000000		[Fa]
+#                 1820	dig1 cc=0e	dig0 cc=11	dig enable=1	display=Ea		dig1 segs=1001111	dig0 segs=1000000		[Ea]
+#                 1825	dig1 cc=0e	dig0 cc=11	dig enable=0	display=Eb		dig1 segs=1001111	dig0 segs=0100000		[Eb]
+#                 1885	dig1 cc=0e	dig0 cc=11	dig enable=1	display=Eb		dig1 segs=1001111	dig0 segs=0100000		[Eb]
+#                 1920	dig1 cc=0d	dig0 cc=12	dig enable=1	display=Db		dig1 segs=0111101	dig0 segs=0100000		[Db]
+#                 1945	dig1 cc=0d	dig0 cc=12	dig enable=0	display=Dc		dig1 segs=0111101	dig0 segs=0010000		[Dc]
+#                 2005	dig1 cc=0d	dig0 cc=12	dig enable=1	display=Dc		dig1 segs=0111101	dig0 segs=0010000		[Dc]
+#                 2020	dig1 cc=0c	dig0 cc=13	dig enable=1	display=Cc		dig1 segs=1001110	dig0 segs=0010000		[Cc]
+#                 2065	dig1 cc=0c	dig0 cc=13	dig enable=0	display=Cd		dig1 segs=1001110	dig0 segs=0001000		[Cd]
+#                 2120	dig1 cc=0b	dig0 cc=14	dig enable=0	display=Ce		dig1 segs=1001110	dig0 segs=0000100		[Ce]
+#                 2125	dig1 cc=0b	dig0 cc=14	dig enable=1	display=Be		dig1 segs=0011111	dig0 segs=0000100		[Be]
+#                 2185	dig1 cc=0b	dig0 cc=14	dig enable=0	display=Be		dig1 segs=0011111	dig0 segs=0000100		[Be]
+#                 2220	dig1 cc=0a	dig0 cc=15	dig enable=0	display=Bf		dig1 segs=0011111	dig0 segs=0000010		[Bf]
+#                 2245	dig1 cc=0a	dig0 cc=15	dig enable=1	display=Af		dig1 segs=1110111	dig0 segs=0000010		[Af]
+#                 2305	dig1 cc=0a	dig0 cc=15	dig enable=0	display=Af		dig1 segs=1110111	dig0 segs=0000010		[Af]
+#                 2320	dig1 cc=09	dig0 cc=16	dig enable=0	display=Ag		dig1 segs=1110111	dig0 segs=0000001		[Ag]
+#                 2365	dig1 cc=09	dig0 cc=16	dig enable=1	display=9g		dig1 segs=1111011	dig0 segs=0000001		[9g]
+#                 2420	dig1 cc=08	dig0 cc=17	dig enable=1	display=8g		dig1 segs=1111111	dig0 segs=0000001		[8g]
+#                 2425	dig1 cc=08	dig0 cc=17	dig enable=0	display=8^		dig1 segs=1111111	dig0 segs=0000000		[8^]
+#                 2485	dig1 cc=08	dig0 cc=17	dig enable=1	display=8^		dig1 segs=1111111	dig0 segs=0000000		[8^]
+#                 2520	dig1 cc=07	dig0 cc=18	dig enable=1	display=7^		dig1 segs=1110000	dig0 segs=0000000		[7^]
+#                 2545	dig1 cc=07	dig0 cc=18	dig enable=0	display=7H		dig1 segs=1110000	dig0 segs=0110111		[7H]
+#                 2605	dig1 cc=07	dig0 cc=18	dig enable=1	display=7H		dig1 segs=1110000	dig0 segs=0110111		[7H]
+#                 2620	dig1 cc=06	dig0 cc=19	dig enable=1	display=6H		dig1 segs=1011111	dig0 segs=0110111		[6H]
+#                 2665	dig1 cc=06	dig0 cc=19	dig enable=0	display=6L		dig1 segs=1011111	dig0 segs=0001110		[6L]
+#                 2720	dig1 cc=05	dig0 cc=1a	dig enable=0	display=6A		dig1 segs=1011111	dig0 segs=1110111		[6A]
+#                 2725	dig1 cc=05	dig0 cc=1a	dig enable=1	display=5A		dig1 segs=1011011	dig0 segs=1110111		[5A]
+#                 2785	dig1 cc=05	dig0 cc=1a	dig enable=0	display=5A		dig1 segs=1011011	dig0 segs=1110111		[5A]
+#                 2820	dig1 cc=04	dig0 cc=1b	dig enable=0	display=51		dig1 segs=1011011	dig0 segs=0000110		[51]
+#                 2845	dig1 cc=04	dig0 cc=1b	dig enable=1	display=41		dig1 segs=0110011	dig0 segs=0000110		[41]
+#                 2905	dig1 cc=04	dig0 cc=1b	dig enable=0	display=41		dig1 segs=0110011	dig0 segs=0000110		[41]
+#                 2920	dig1 cc=03	dig0 cc=1c	dig enable=0	display=4r		dig1 segs=0110011	dig0 segs=0000101		[4r]
+#                 2965	dig1 cc=03	dig0 cc=1c	dig enable=1	display=3r		dig1 segs=1111001	dig0 segs=0000101		[3r]
+#                 3020	dig1 cc=02	dig0 cc=1d	dig enable=1	display=2r		dig1 segs=1101101	dig0 segs=0000101		[2r]
+#                 3025	dig1 cc=02	dig0 cc=1d	dig enable=0	display=2^		dig1 segs=1101101	dig0 segs=0000000		[2^]
+#                 3085	dig1 cc=02	dig0 cc=1d	dig enable=1	display=2^		dig1 segs=1101101	dig0 segs=0000000		[2^]
+#                 3120	dig1 cc=01	dig0 cc=1e	dig enable=1	display=1^		dig1 segs=0000110	dig0 segs=0000000		[1^]
+#                 3145	dig1 cc=01	dig0 cc=1e	dig enable=0	display=1^		dig1 segs=0000110	dig0 segs=0000000		[1^]
+#                 3205	dig1 cc=01	dig0 cc=1e	dig enable=1	display=1^		dig1 segs=0000110	dig0 segs=0000000		[1^]
+#                 3220	dig1 cc=00	dig0 cc=1f	dig enable=1	display=0^		dig1 segs=1111110	dig0 segs=0000000		[0^]
+#                 3265	dig1 cc=00	dig0 cc=1f	dig enable=0	display=0^		dig1 segs=1111110	dig0 segs=0000000		[0^]
+# ** Note: $stop    : tb_pmodSSD.sv(111)
+#    Time: 3320 ns  Iteration: 0  Instance: /tb_pmodSSD
+# Break at tb_pmodSSD.sv line 111
+# Stopped at tb_pmodSSD.sv line 111
+# 
+# <EOF>
+# End time: 17:09:07 on Nov 03,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2

@@ -20,7 +20,10 @@
  *
  * @note:  This is an example of a ROM
  */
- 
+
+/* Questions
+ *  1. why, when I use `default: seg7out = 0` do I get different results than when I explicitly give each case `seg7out = 0`?
+ */ 
 module dig2SevenSeg (
     input  logic [4:0] digit,
     output logic [6:0] seg7out
@@ -56,7 +59,7 @@ begin
     5'b10101: seg7out = 7'b0000010; // Segment f
     5'b10110: seg7out = 7'b0000001; // Segment g
 
-    // 5'b10111 done via default
+    5'b10111: seg7out = 7'b0000000; // blank
 
     // misc letters
     5'b11000: seg7out = 7'b0110111; // char 'H'
@@ -66,7 +69,10 @@ begin
     5'b11100: seg7out = 7'b0000101; // char 'r'
 
     // blank
-    default:  seg7out = 7'b0000000; // BLANK
+    5'b11101: seg7out = 7'b0000000; // blank
+    5'b11110: seg7out = 7'b0000000; // blank
+    5'b11111: seg7out = 7'b0000000; // blank
+    // default:  seg7out = 7'b0000000; // this is what I wanted, for conciseness, but it behaves differently
   endcase;
 end
 

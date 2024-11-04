@@ -110,22 +110,15 @@ dig2SevenSeg DIGIT0DEC (
 // ADD YOUR CODE TO PRODUCE AND MULTIPLEX THE TWO DIGITS AND MAP THEM TO THE SSD_ OUTPUTS
 
 
-
-
-always_ff @(posedge tick_60Hz or negedge tick_60Hz) begin
-  foo = tick_60Hz;
-  bar = foo ? an1 : an0;
-end
-
-assign SSD_C = foo;
+assign SSD_C = tick_60Hz;
 assign {
-		SSD_AA,
-		SSD_AB,
-		SSD_AC,
-		SSD_AD,
-		SSD_AE,
-		SSD_AF,
-		SSD_AG,
-} = bar;
+  SSD_AA,
+  SSD_AB,
+  SSD_AC,
+  SSD_AD,
+  SSD_AE,
+  SSD_AF,
+  SSD_AG
+} = SSD_C ? an1 : an0;
 
 endmodule: pmodSSD
