@@ -7,10 +7,13 @@ module
 
 port
  - types
-    - input
-    - output
-    - inout
+    - `input`
+    - `output`
+    - `inout`
  - if omitted at top level, will map to arbitrary pins on ASIC/FPGA
+
+# Examples
+## Definition
 ```
 module addbit
 
@@ -33,4 +36,25 @@ module addbit
   // functionality
   ...
 endmodule: addbit
+```
+## Instantiation
+```
+module tb
+
+  logic [3:0] A, B, Sum;
+  logic       Ci, Co;
+
+  addbit
+    #(4)
+    dut(
+      .a(A),
+      .b(B),
+      .ci(Ci),
+      .sum(Sum),
+      .co(Co),
+    );
+
+  // functionality
+  ...
+endmodule: tb
 ```
