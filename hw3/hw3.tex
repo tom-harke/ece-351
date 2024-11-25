@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{circuitikz}
+\usepackage{fancyvrb}
+\usepackage{enumitem}
+\usepackage{pdfpages}
+\usepackage{multicol}
+%\usepackage[hscale=0.7,vscale=0.8]{geometry}
+\usepackage[margin=1.5cm]{geometry}
+
+
+\setlength{\parindent}{0pt}
+
+\title{ECE 351 HW 3}
+\date{2024 Nov 27}
+\author{Tom Harke}
+%\setlength{\columnseprule}{.4pt}
+
+
+\begin{document}
+\maketitle
+
+\begin{multicols}{2}
+
+\section{Design}
+I'm not using the suggested FSM for two reasons
+\begin{enumerate}[noitemsep]
+\item it has far more states that seem necessary
+\item the descriptions don't match how I view the machine
+\end{enumerate}
+Instead I'll try to motivate a simpler 3-state FSM by
+examining the constraints on how the CPU moves data
+around -- specifically, focussing on what needs to be
+registered, and leaving the rest to combinational logic.
+
+The longest chain of register updates is for processsing
+a binary operation.
+For concreteness we'll focus on 4+3, as all other instances
+are isomorphic (modulo error detection due
+to divide-by-zero or overflow).
+
+The operation 4+3 arises in the context of the next op being
+\verb'ADD' and with a stack of the form:
+\begin{center}
+	$4:3:\sigma$
+\end{center}
+where $4$ is at the top of the stack, $3$ is next-to-top,
+and $\sigma$ represents the rest of the stack
+
+In this context the stack changes state
+\begin{center} $4:3:\sigma$ \end{center}
+\begin{center}   $3:\sigma$ \end{center}
+\begin{center}     $\sigma$ \end{center}
+\begin{center}   $7:\sigma$ \end{center}
+
+We need to have each change on a clock edge so we can pop or push.
+\section{Finite State Machine}\
+TODO
+\section{Timing}
+
+All binary ops ($+$,$-$,$*$,$/$,$\%$,$\&$,$|$)
+follow this timing example.
+
+The stack is included, even though it's more than a register,
+using the notation from above (eg $3:4:\sigma$).
+\includegraphics[scale=1.0]{add.timing.pdf}
+The \verb'invert' op follows this timing example
+\includegraphics[scale=1.0]{inv.timing.pdf}
+The \verb'push_immediate' op follows this timing example
+\includegraphics[scale=1.0]{imm.timing.pdf}
+\end{multicols}
+
+\end{document}

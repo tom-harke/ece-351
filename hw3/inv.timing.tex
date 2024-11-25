@@ -1,0 +1,40 @@
+\documentclass{standalone}
+
+\usepackage{xparse} % NewDocumentCommand, IfValueTF, IFBooleanTF
+
+\usepackage{tikz-timing}[2014/10/29]
+\usetikztiminglibrary[rising arrows]{clockarrows}
+
+\NewDocumentCommand{\busref}{som}{\texttt{%
+#3%
+\IfValueTF{#2}{[#2]}{}%
+\IfBooleanTF{#1}{\#}{}%
+}}
+
+\begin{document}
+\begin{tikztimingtable}[%
+    timing/dslope=0.1,
+    timing/.style={x=5ex,y=2ex},
+    x=5ex,
+    timing/rowdist=3ex,
+    timing/name/.style={font=\sffamily\scriptsize}
+]
+\busref{clk}       & 12{c} \\
+\busref{inst}      & U 4D{INVERT} U \\
+\busref{push/step} & \\
+\busref{pop}       & \\
+\busref{(stack)}   & \\
+\busref{top}       & \\
+\busref{state}     & \\
+\busref{op2}       & \\
+\busref{op1}       & \\
+\busref{result}    & \\
+\extracode
+\begin{pgfonlayer}{background}
+\begin{scope}[semitransparent ,semithick]
+\vertlines[darkgray,dotted]{0.5,1.5 ,...,8.0}
+\end{scope}
+\end{pgfonlayer}
+\end{tikztimingtable}
+
+\end{document}

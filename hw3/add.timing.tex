@@ -1,0 +1,40 @@
+\documentclass{standalone}
+
+\usepackage{xparse} % NewDocumentCommand, IfValueTF, IFBooleanTF
+
+\usepackage{tikz-timing}[2014/10/29]
+\usetikztiminglibrary[rising arrows]{clockarrows}
+
+\NewDocumentCommand{\busref}{som}{\texttt{%
+#3%
+\IfValueTF{#2}{[#2]}{}%
+\IfBooleanTF{#1}{\#}{}%
+}}
+
+\begin{document}
+\begin{tikztimingtable}[%
+    timing/dslope=0.1,
+    timing/.style={x=5ex,y=2ex},
+    x=5ex,
+    timing/rowdist=3ex,
+    timing/name/.style={font=\sffamily\scriptsize}
+]
+\busref{clk}       & 12{c} \\
+\busref{inst}      & U 4D{ADD} U \\
+\busref{push/step} & 4L H L  \\
+\busref{pop}       & 2L 2H 3L \\
+\busref{(stack)}   & 2D{3:4:$\sigma$} D{4:$\sigma$} 2D{$\sigma$} D{7:$\sigma$}  \\
+\busref{top}       & 2D{3} D{4} 2U D{7}  \\
+\busref{state}     & U D{DECODE} D{POPD2} D{POPD1} D{PUSHD} D{DECODE} \\
+\busref{op2}       & 2U 4D{3} \\
+\busref{op1}       & 3U 3D{4}  \\
+\busref{result}    & 2U U 3D{7}  \\
+\extracode
+\begin{pgfonlayer}{background}
+\begin{scope}[semitransparent ,semithick]
+\vertlines[darkgray,dotted]{0.5,1.5 ,...,8.0}
+\end{scope}
+\end{pgfonlayer}
+\end{tikztimingtable}
+
+\end{document}
