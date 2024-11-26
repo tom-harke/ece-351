@@ -16,3 +16,14 @@ hw3.pdf: \
 
 clean:
 	echo TODO
+
+vlog.%: %.sv
+	vlog $*.sv && touch vlog.$*
+
+clear:
+	clear
+
+.PHONY: clear
+
+run: clear vlog.stackCPU_DEFS vlog.stack_signed vlog.tb_stackCPU vlog.stackCPU
+	vsim -c tb_stackCPU

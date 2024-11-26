@@ -73,7 +73,6 @@ module tb_stackCPU;
         reset = 1;
 
         // Load program memory from file while in reset
-		// TODO:  Change the file name to your program
         $readmemb("program.mem", program_memory);
 
         repeat(2) @(posedge clk);	// wait 2 clock periods before starting CPU
@@ -96,14 +95,13 @@ module tb_stackCPU;
 			$display("Reached end of memory.");
 			$stop;
 		end else begin
-			if (valid_result) begin
-				if (result > 0)
-					$display("Operation: %15s,\tResult: +%-10d", DUT.CP.my_op, result);
-				else if (result == 0)
-					$display("Operation: %15s,\tResult:  %-10d", DUT.CP.my_op, result);
-				else
-					$display("Operation: %15s,\tResult: %-10d", DUT.CP.my_op, result);
-			end
+			$display("Operation: %15s, (%d)\tState: %4s -> %4s\tPC: +%-10d"
+				,DUT.CP.name
+				,DUT.value
+				,DUT.current.name
+				,DUT.next.name
+				,DUT.pc
+			);
 		end
 	end: MONITOR
 
