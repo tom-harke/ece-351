@@ -95,11 +95,13 @@ module tb_stackCPU;
 			$display("Reached end of memory.");
 			$stop;
 		end else begin
-			$display("Operation: %15s, (%d)\tState: %4s -> %4s\tPC: +%-10d"
+			$display("Operation: %15s, (%d)\tState: %4s -> %4s\t pop=%b push=%b\tPC: +%-10d"
 				,DUT.CP.name
 				,DUT.value
 				,DUT.current.name
 				,DUT.next.name
+				,DUT.pop
+				,DUT.push
 				,DUT.pc
 			);
 		end

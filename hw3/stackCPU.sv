@@ -30,7 +30,8 @@ module stackCPU
 
 opcode_t CP;
 state_t current, next;
-logic foo;
+logic unused;
+logic pop, push;
 logic signed [9:0] value;
 
 always_ff @(posedge clk, posedge reset)
@@ -40,9 +41,13 @@ always_ff @(posedge clk, posedge reset)
       current <= IDLE;
     end
   else
-    pc <= pc+1;
+    begin
+      current <= next;
+      if (current==IDLE)
+        pc <= pc+1;
+    end
 
-always_comb
+always_comb // Next State
   begin
     case (current)
       IDLE:
@@ -57,12 +62,42 @@ always_comb
     endcase
   end
 
+always_comb // Stack Pop Control
+  begin
+    case (current)
+      IDLE:
+        case (CP)
+          PUSH_IMMEDIATE: pop = 0;
+          INVERT:         pop = 1;
+          default:        pop = 1;
+        endcase
+      POP2: pop = 1;
+      POP1: pop = 0;
+      PUSH: pop = 0;
+    endcase
+  end
+
+always_comb // Stack Push Control
+  begin
+    case (current)
+      IDLE:
+        case (CP)
+          PUSH_IMMEDIATE: push = 1;
+          INVERT:         push = 0;
+          default:        push = 0;
+        endcase
+      POP2: push = 0;
+      POP1: push = 1;
+      PUSH: push = 0;
+    endcase
+  end
+
 assign
     result = pc;
 
 always_comb
   begin
-    {CP,foo,value} = instruction;
+    {CP,unused,value} = instruction;
     valid_result = 1;
   end
 
