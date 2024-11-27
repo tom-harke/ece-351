@@ -27,3 +27,7 @@ clear:
 
 run: clear vlog.stackCPU_DEFS vlog.stack_signed vlog.tb_stackCPU vlog.stackCPU
 	vsim -c tb_stackCPU
+
+echo:
+	echo run -a | make run
+

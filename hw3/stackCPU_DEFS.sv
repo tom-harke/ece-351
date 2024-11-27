@@ -37,10 +37,11 @@
  } opcode_t;
  
  // States of FSM
- typedef enum logic [1:0] {
-        IDLE,
-        POP1,
+ typedef enum logic [2:0] {
+        FETCH,
+        DECODE,
         POP2,
+        POP1,
         PUSH
  } state_t;
  

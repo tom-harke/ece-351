@@ -95,16 +95,16 @@ module tb_stackCPU;
 			$display("Reached end of memory.");
 			$stop;
 		end else if (~reset) begin
-			//$display("Operation: %15s, (%d)\tState: %4s -> %4s\t pop=%b push=%b\tPC: +%-10d\ttop: %d"
-			if (DUT.current == IDLE)
+			//$display("Operation: %15s, (%d)\tState: %4s  (%4s)\t pop=%b push=%b\tPC: +%-10d\ttop: %d"
+			if (DUT.current == FETCH)
 				begin
-					$display("-----------------------------------------------------");
-					$display("PC  | Operation             | State          | pop  push | top");
+					$display("----+------------------------+----------------+-----------+------+-----------+");
+					$display("PC  | Operation              | State  (next)  | pop  push | top  | op1   op2 | result");
 				end
-			$display("%3d | %14s, (%3d) | %4s (-> %4s) | %b    %b    | %10d | %4d,%4d"
+			$display("%3d | %14s, (%3d) | %6s (%6s) | %b    %b    | %4d | %4d,%4d | %4d"
 				,DUT.pc
-				,DUT.CP.name
-				,DUT.value
+				,DUT.opcode.name
+				,DUT.immediate
 				,DUT.current.name
 				,DUT.next.name
 				,DUT.pop
@@ -112,6 +112,7 @@ module tb_stackCPU;
 				,DUT.top
 				,DUT.op1
 				,DUT.op2
+				,DUT.result
 			);
 		end else begin
 			$display("waiting to come out of reset");
