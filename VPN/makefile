@@ -1,12 +1,15 @@
 
+HERE = $(shell pwd)
+
 define ABOUT
 How to connect to pdx.edu via vpn:
-   ssh tsh
-   cd HERE
+   su tsh
+   cd $(HERE)
    sudo openvpn --config cecs.ovpn --auth-user-pass up
 
 How simulate
    ssh _@mo.ece.pdx.edu
+   ssh _@auto.ece.pdx.edu
    set -o vi
 
 How to pull changes from pdx.edu to laptop

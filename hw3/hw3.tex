@@ -21,13 +21,28 @@
 
 \begin{multicols}{2}
 
+\section{TODO}
+\begin{itemize}
+\item test that memory is larger than immediates
+\item test divide-by-zero
+\item test overflow
+\item test stack size
+\item test stack empty
+\item test stack full
+\end{itemize}
 \section{Design}
-I'm not using the suggested FSM for two reasons
-\begin{enumerate}[noitemsep]
-\item it has far more states that seem necessary
-\item the descriptions don't match how I view the machine
-\end{enumerate}
-Instead I'll try to motivate a simpler 3-state FSM by
+I've merged a number of states from the suggested FSM, and slightly changed the meaning of the POP/PUSH states.
+The reason for merging is that we don't need that many
+	-- we only need enough so that we can sequence the flow of separate pieces of stack data on separate clock cycle.
+With my compressed FSM the meaning of state\dots
+\begin{description}[noitemsep]
+\item[POP2] is that 2nd argument (if any) has already been popped off the stack
+\item[POP1] is that 1st argument (if any) has already been popped off the stack
+\item[PUSH] is that result has already been pushed onto the stack
+\end{description}
+Note that each of these is in the past tense.
+
+I'll try to motivate a simpler 3-state FSM by
 examining the constraints on how the CPU moves data
 around -- specifically, focussing on what needs to be
 registered, and leaving the rest to combinational logic.
@@ -57,16 +72,26 @@ We need to have each change on a clock edge so we can pop or push.
 TODO
 \section{Timing}
 
-All binary ops ($+$,$-$,$*$,$/$,$\%$,$\&$,$|$)
+All binary ops (\verb'+',\verb'-',\verb'*',\verb'/',\verb'\%',\verb'\&',\verb'|')
 follow this timing example.
 
-The stack is included, even though it's more than a register,
+The stack is included in the diagram, even though it's more than a register,
 using the notation from above (eg $3:4:\sigma$).
 \includegraphics[scale=1.0]{add.timing.pdf}
 The \verb'invert' op follows this timing example
 \includegraphics[scale=1.0]{inv.timing.pdf}
 The \verb'push_immediate' op follows this timing example
 \includegraphics[scale=1.0]{imm.timing.pdf}
-\end{multicols}
 
+\section{Etc}
+\subsection{Etc}
+I spent a lot of time drawing timing diagrams before I started coding.
+Midway through, I wondered if I'd just wasted all that time, but when I started coding, it was a breeze.
+\subsection{Technology}
+Timing diagrams were typeset with ease using the \LaTeX\ package \verb'tikz-timing' 
+\subsection{Etc}
+Next time you offer this assignment, drop the logical operators, add an arithmetic unary negation operator.
+The only thing logic ops add is the unary operator, and they have the cost of ... TODO
+
+\end{multicols}
 \end{document}
