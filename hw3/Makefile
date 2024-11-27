@@ -1,3 +1,4 @@
+#!/usr/bin/make -f
 
 INST = add inv
 INST = add 
@@ -33,16 +34,30 @@ echo:
 
 %.out: %.mem
 	ln -fsn $*.mem program.mem
-	cat $*.mem
-	echo run -a | make run > $*.out
+	echo ''                >  $*.out
+	echo '=========================================' >> $*.out
+	echo 'About:' >> $*.out
+	echo $*                >> $*.out
+	cat $*.about           >> $*.out
+	echo ''                >> $*.out
+	echo 'Program:'        >> $*.out
+	cat $*.mem             >> $*.out
+	echo ''                >> $*.out
+	echo 'Results:'        >> $*.out
+	echo run -a | make run >> $*.out
 	cat $*.out
 
 UNIT_ARITH = add sub mul div mod
 UNIT_LOGIC = and or invert
+UNIT       = $(patsubst %,unit.%,$(UNIT_ARITH) $(UNIT_LOGIC))
 COMPLEX = \
 	deferred \
 	roys
 
-PROGRAMS = $(UNIT_ARITH) $(UNIT_LOGIC) $(COMPLEX)
+PROGRAMS = \
+	$(COMPLEX) \
+	$(UNIT) \
 
-Out: $(patsubst %,%.out,$(PROGRAMS))
+
+test_results.txt: $(patsubst %,%.out,$(PROGRAMS))
+	cat $(patsubst %,%.out,$(PROGRAMS)) > test_results.txt

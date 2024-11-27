@@ -43,7 +43,7 @@ module tb_stackCPU;
 	logic [INSTR_WIDTH_DEF-1:0] instruction;
 	logic [PC_WIDTH_DEF-1:0] pc;
 	logic signed [DATA_WIDTH_DEF-1:0] result;
-	logic error, halt, valid_result;
+	logic error, halt;
 
 	// Instantiate the stack-based CPU
 	stackCPU #(
@@ -58,10 +58,16 @@ module tb_stackCPU;
 		.instruction(instruction),
 		.pc(pc),
 		.result(result),
-		.valid_result(valid_result),
 		.error(error),
 		.halt(halt)
 	);   
+
+  import "DPI-C" function string getenv(input string env_name);
+
+	initial begin: display_working_dir
+		$display("ECE 351 Fall 2024: Stack CPU testbench - Tom Harke (harke@pdx.edu)");
+		$display("Sources: %s\n", getenv("PWD"));
+	end: display_working_dir
 
 	// clock generator
 	initial begin: CLK_GEN

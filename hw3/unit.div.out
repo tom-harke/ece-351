@@ -1,3 +1,14 @@
+
+=========================================
+About:
+unit.div
+
+Program:
+00000_0_0000001001 // PUSH_IMMEDIATE 9
+00000_0_0000000010 // PUSH_IMMEDIATE 2	
+00100_0_0000000000 // DIV
+
+Results:
 make[1]: Entering directory `/u/harke/ece-351/hw3'
 clear
 [3;J[H[2Jvsim -c tb_stackCPU
@@ -6,7 +17,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 11:41:54 on Nov 27,2024
+# Start time: 14:04:44 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -28,10 +39,16 @@ Reading pref.tcl
 # Loading work.tb_stackCPU_sv_unit(fast)
 # Loading work.tb_stackCPU(fast)
 VSIM 1> run -a
+# ECE 351 Fall 2024: Stack CPU testbench - Tom Harke (harke@pdx.edu)
+# Sources: /u/harke/351/hw3
+# 
 # waiting to come out of reset
 # waiting to come out of reset
 # StackCPU is alive and executing instructions!!
-#   0 | PUSH_IMMEDIATE, (  9) | DECODE (  PUSH) | 0    0    |    0 |    x,   0 |    9 0000001001
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   0 | PUSH_IMMEDIATE, (  9) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    9 0000001001
 #   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    9 0000001001
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
@@ -40,18 +57,18 @@ VSIM 1> run -a
 #   1 | PUSH_IMMEDIATE, (  2) |   PUSH ( FETCH) | 0    1    |    9 |    X,   9 |    2 0000000010
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            MOD, (  0) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    x xxxxxxxxxx
-#   2 |            MOD, (  0) | DECODE (  POP2) | 1    0    |    2 |    X,   X |    x xxxxxxxxxx
-#   2 |            MOD, (  0) |   POP2 (  POP1) | 1    0    |    9 |    X,   2 |    x xxxxxxxxxx
-#   2 |            MOD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    9,   2 |    1 0000000001
-#   2 |            MOD, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    9,   2 |    1 0000000001
+#   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    x xxxxxxxxxx
+#   2 |            DIV, (  0) | DECODE (  POP2) | 1    0    |    2 |    X,   X |    x xxxxxxxxxx
+#   2 |            DIV, (  0) |   POP2 (  POP1) | 1    0    |    9 |    X,   2 |    x xxxxxxxxxx
+#   2 |            DIV, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    9,   2 |    4 0000000100
+#   2 |            DIV, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    9,   2 |    4 0000000100
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(93)
-#    Time: 125 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 93
-# Stopped at tb_stackCPU.sv line 93
+# ** Note: $stop    : tb_stackCPU.sv(102)
+#    Time: 135 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 102
+# Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 11:41:54 on Nov 27,2024, Elapsed time: 0:00:00
+# End time: 14:04:44 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'

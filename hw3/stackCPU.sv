@@ -15,8 +15,8 @@ import stackCPU_DEFS::*;
 
 module stackCPU
 #(
-  parameter DATA_WIDTH  = 10,
-  parameter STACK_DEPTH = 10,
+  parameter DATA_WIDTH  = 32,
+  parameter STACK_DEPTH = 16,
   parameter INSTR_WIDTH = 10,
   parameter PC_WIDTH    = 10
 )
@@ -25,7 +25,7 @@ module stackCPU
   input  logic [INSTR_WIDTH-1:0] instruction,
   output logic [PC_WIDTH-1:0] pc,
   output logic signed [DATA_WIDTH-1:0] result,
-  output logic valid_result, error, halt
+  output logic error, halt
 );
 
   opcode_t opcode;
@@ -62,7 +62,7 @@ module stackCPU
     if (reset)
       begin
         pc <= 0;
-        current <= DECODE;
+        current <= FETCH; // DECODE;
         // TODO: clear stack
       end
     else
