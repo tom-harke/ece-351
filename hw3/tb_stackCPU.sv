@@ -2,31 +2,34 @@
  * @file tb_stackCPU.sv
  * @brief Testbench for stackCPU
  * 
- * @author	Roy Kravitz (roy.kravitz@pdx.edu)
- * @date	16-Nov-2024
+ * @submitter   Tom Harke (harke@pdx.edu)
+ * @date        27-Nov-2024
+
+ * @history
+ *    original author: Roy Kravitz (roy.kravitz@pdx.edu)
+ *    date:   16-Nov-2024
  *
  * @detail
  * This is the source code for a testbench that instantiates a stack-based CPU that supports
  * the following instructions:
  * 
- * Opcode   Mnemonic  Operation
- * 00000	PUSH_IMMEDIATE	Push immediate value onto stack
- * 00001	ADD				Add top two values on stack
- * 00010	SUB				Subtract top two values on stack
- * 00011	MUL				Multiply top two values on stack
- * 00100	DIV				Divide top two values on stack
- * 00101	MOD				Modulus (remainder) of top two values on stack
- * 00110	AND				bitwise AND of top two values on stack
- * 00111	OR				bitwise OR of top two values on stack
- * 01000	INVERT			bitwise inversion of the top value on stack
- * 11111	HALT_CPU		Halt the CPU. Assert reset to restart the CPU 
+ * Opcode   Mnemonic         Operation
+ * 00000    PUSH_IMMEDIATE   Push immediate value onto stack
+ * 00001    ADD              Add top two values on stack
+ * 00010    SUB              Subtract top two values on stack
+ * 00011    MUL              Multiply top two values on stack
+ * 00100    DIV              Divide top two values on stack
+ * 00101    MOD              Modulus (remainder) of top two values on stack
+ * 00110    AND              bitwise AND of top two values on stack
+ * 00111    OR               bitwise OR of top two values on stack
+ * 01000    INVERT           bitwise inversion of the top value on stack
  *
  * The instruction format is instruction[15:0] = {opcode[4:0], 1'b0, immediate[10:0]}. 
  * Arithmetic is 2's complement.
  *
  * The testbench reads an output file from the assembler that contains the instructions and
  * continues to run until the instruction is 'X (meaning we ran out of instructions) or we've run
- * out of instructions or if the CPU executed a HALT or ERROR condition
+ * out of instructions or if the CPU executed an ERROR condition
  *
  */
  
@@ -98,10 +101,10 @@ module tb_stackCPU;
 			//$display("Operation: %15s, (%d)\tState: %4s  (%4s)\t pop=%b push=%b\tPC: +%-10d\ttop: %d"
 			if (DUT.current == FETCH)
 				begin
-					$display("----+------------------------+----------------+-----------+------+-----------+");
-					$display("PC  | Operation              | State  (next)  | pop  push | top  | op1   op2 | result");
+					$display("----+-----------------------+-----------------+-----------+------+-----------+-------");
+					$display("PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result");
 				end
-			$display("%3d | %14s, (%3d) | %6s (%6s) | %b    %b    | %4d | %4d,%4d | %4d"
+			$display("%3d | %14s, (%3d) | %6s (%6s) | %b    %b    | %4d | %4d,%4d | %4d %10b"
 				,DUT.pc
 				,DUT.opcode.name
 				,DUT.immediate
@@ -112,6 +115,7 @@ module tb_stackCPU;
 				,DUT.top
 				,DUT.op1
 				,DUT.op2
+				,DUT.result
 				,DUT.result
 			);
 		end else begin

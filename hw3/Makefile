@@ -31,3 +31,18 @@ run: clear vlog.stackCPU_DEFS vlog.stack_signed vlog.tb_stackCPU vlog.stackCPU
 echo:
 	echo run -a | make run
 
+%.out: %.mem
+	ln -fsn $*.mem program.mem
+	cat $*.mem
+	echo run -a | make run > $*.out
+	cat $*.out
+
+UNIT_ARITH = add sub mul div mod
+UNIT_LOGIC = and or invert
+COMPLEX = \
+	deferred \
+	roys
+
+PROGRAMS = $(UNIT_ARITH) $(UNIT_LOGIC) $(COMPLEX)
+
+Out: $(patsubst %,%.out,$(PROGRAMS))

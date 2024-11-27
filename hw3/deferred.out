@@ -1,0 +1,81 @@
+make[1]: Entering directory `/u/harke/ece-351/hw3'
+clear
+[3;J[H[2Jvsim -c tb_stackCPU
+Reading pref.tcl
+
+# 2024.2
+
+# vsim -c tb_stackCPU 
+# Start time: 11:36:23 on Nov 27,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 2024.2 linux_x86_64 May 20 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.stackCPU_DEFS(fast)
+# Loading work.stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU(fast)
+VSIM 1> run -a
+# waiting to come out of reset
+# waiting to come out of reset
+# StackCPU is alive and executing instructions!!
+#   0 | PUSH_IMMEDIATE, (  2) | DECODE (  PUSH) | 0    0    |    0 |    x,   0 |    2 0000000010
+#   0 | PUSH_IMMEDIATE, (  2) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    2 0000000010
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   1 | PUSH_IMMEDIATE, (  3) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    3 0000000011
+#   1 | PUSH_IMMEDIATE, (  3) | DECODE (  PUSH) | 0    0    |    2 |    X,   X |    3 0000000011
+#   1 | PUSH_IMMEDIATE, (  3) |   PUSH ( FETCH) | 0    1    |    2 |    X,   2 |    3 0000000011
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   2 | PUSH_IMMEDIATE, (  4) |  FETCH (DECODE) | 0    0    |    3 |    X,   X |    4 0000000100
+#   2 | PUSH_IMMEDIATE, (  4) | DECODE (  PUSH) | 0    0    |    3 |    X,   X |    4 0000000100
+#   2 | PUSH_IMMEDIATE, (  4) |   PUSH ( FETCH) | 0    1    |    3 |    X,   3 |    4 0000000100
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   3 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |    4 |    X,   X |    5 0000000101
+#   3 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |    4 |    X,   X |    5 0000000101
+#   3 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |    4 |    X,   4 |    5 0000000101
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   4 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   4 |            MUL, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   4 |            MUL, (  0) |   POP2 (  POP1) | 1    0    |    4 |    X,   5 |    x xxxxxxxxxx
+#   4 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    3 |    4,   5 |   20 0000010100
+#   4 |            MUL, (  0) |   PUSH ( FETCH) | 0    1    |    3 |    4,   5 |   20 0000010100
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   5 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |   20 |    X,   X |    x xxxxxxxxxx
+#   5 |            MUL, (  0) | DECODE (  POP2) | 1    0    |   20 |    X,   X |    x xxxxxxxxxx
+#   5 |            MUL, (  0) |   POP2 (  POP1) | 1    0    |    3 |    X,  20 |    x xxxxxxxxxx
+#   5 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    2 |    3,  20 |   60 0000111100
+#   5 |            MUL, (  0) |   PUSH ( FETCH) | 0    1    |    2 |    3,  20 |   60 0000111100
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   6 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |   60 |    X,   X |    x xxxxxxxxxx
+#   6 |            MUL, (  0) | DECODE (  POP2) | 1    0    |   60 |    X,   X |    x xxxxxxxxxx
+#   6 |            MUL, (  0) |   POP2 (  POP1) | 1    0    |    2 |    X,  60 |    x xxxxxxxxxx
+#   6 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    2,  60 |  120 0001111000
+#   6 |            MUL, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    2,  60 |  120 0001111000
+# Reached end of program.
+# ** Note: $stop    : tb_stackCPU.sv(93)
+#    Time: 285 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 93
+# Stopped at tb_stackCPU.sv line 93
+VSIM 2> # 
+# <EOF>
+# End time: 11:36:23 on Nov 27,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+make[1]: Leaving directory `/u/harke/ece-351/hw3'
