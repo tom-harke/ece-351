@@ -94,16 +94,27 @@ module tb_stackCPU;
 		end else if (pc > PGRM_MEM_DEPTH_DEF) begin
 			$display("Reached end of memory.");
 			$stop;
-		end else begin
-			$display("Operation: %15s, (%d)\tState: %4s -> %4s\t pop=%b push=%b\tPC: +%-10d"
+		end else if (~reset) begin
+			//$display("Operation: %15s, (%d)\tState: %4s -> %4s\t pop=%b push=%b\tPC: +%-10d\ttop: %d"
+			if (DUT.current == IDLE)
+				begin
+					$display("-----------------------------------------------------");
+					$display("PC  | Operation             | State          | pop  push | top");
+				end
+			$display("%3d | %14s, (%3d) | %4s (-> %4s) | %b    %b    | %10d | %4d,%4d"
+				,DUT.pc
 				,DUT.CP.name
 				,DUT.value
 				,DUT.current.name
 				,DUT.next.name
 				,DUT.pop
 				,DUT.push
-				,DUT.pc
+				,DUT.top
+				,DUT.op1
+				,DUT.op2
 			);
+		end else begin
+			$display("waiting to come out of reset");
 		end
 	end: MONITOR
 
