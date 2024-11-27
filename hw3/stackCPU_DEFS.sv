@@ -36,5 +36,13 @@
 		HALT_CPU	   = 5'b11111	// HALT - stops the program until reset is asserted
  } opcode_t;
  
+ // States of FSM
+ typedef enum logic [1:0] {
+        IDLE,
+        POP1,
+        POP2,
+        PUSH
+ } state_t;
+ 
  endpackage: stackCPU_DEFS
  
