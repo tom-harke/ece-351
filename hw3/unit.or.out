@@ -1,0 +1,74 @@
+
+=========================================
+About:
+unit.or
+
+Program:
+00000_0_01111_00000 // PUSH_IMMEDIATE
+00000_0_01111_10101 // PUSH_IMMEDIATE
+00111_0_00000_00000 // OR
+
+Results:
+make[1]: Entering directory `/u/harke/ece-351/hw3'
+clear
+[3;J[H[2Jvsim -c tb_stackCPU
+Reading pref.tcl
+
+# 2024.2
+
+# vsim -c tb_stackCPU 
+# Start time: 14:04:50 on Nov 27,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 2024.2 linux_x86_64 May 20 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.stackCPU_DEFS(fast)
+# Loading work.stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU(fast)
+VSIM 1> run -a
+# ECE 351 Fall 2024: Stack CPU testbench - Tom Harke (harke@pdx.edu)
+# Sources: /u/harke/351/hw3
+# 
+# waiting to come out of reset
+# waiting to come out of reset
+# StackCPU is alive and executing instructions!!
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   0 | PUSH_IMMEDIATE, (480) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |  480 0111100000
+#   0 | PUSH_IMMEDIATE, (480) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |  480 0111100000
+#   0 | PUSH_IMMEDIATE, (480) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |  480 0111100000
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   1 | PUSH_IMMEDIATE, (501) |  FETCH (DECODE) | 0    0    |  480 |    X,   X |  501 0111110101
+#   1 | PUSH_IMMEDIATE, (501) | DECODE (  PUSH) | 0    0    |  480 |    X,   X |  501 0111110101
+#   1 | PUSH_IMMEDIATE, (501) |   PUSH ( FETCH) | 0    1    |  480 |    X, 480 |  501 0111110101
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   2 |             OR, (  0) |  FETCH (DECODE) | 0    0    |  501 |    X,   X |    X 000000000x
+#   2 |             OR, (  0) | DECODE (  POP2) | 1    0    |  501 |    X,   X |    X 000000000x
+#   2 |             OR, (  0) |   POP2 (  POP1) | 1    0    |  480 |    X, 501 |  501 0111110101
+#   2 |             OR, (  0) |   POP1 (  PUSH) | 0    0    |    0 |  480, 501 |  501 0111110101
+#   2 |             OR, (  0) |   PUSH ( FETCH) | 0    1    |    0 |  480, 501 |  501 0111110101
+# Reached end of program.
+# ** Note: $stop    : tb_stackCPU.sv(102)
+#    Time: 135 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 102
+# Stopped at tb_stackCPU.sv line 102
+VSIM 2> # 
+# <EOF>
+# End time: 14:04:51 on Nov 27,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+make[1]: Leaving directory `/u/harke/ece-351/hw3'

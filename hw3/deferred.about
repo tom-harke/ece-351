@@ -1,0 +1,8 @@
+At one point my design was pushing duplicates onto the design.
+So PUSH_IMMEDIATE 2 would transform
+	stack
+to
+	2:2:stack
+
+Roy's example program didn't catch the problem, since it consumed data immediately after each push.
+This program pushes all the arguments to 5! onto the stack before it begins calculations.

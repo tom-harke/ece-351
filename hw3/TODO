@@ -1,0 +1,15 @@
+DONE
+ - unit tests
+    - add - sub - mul - div - mod
+    - and - or - invert
+ - more complex
+    - roys
+    - deferred
+ - cleanup
+    - temp comments
+    - dead code
+ - remove HALT
+
+TODO
+make more *.mem files
+set parameters correctly
