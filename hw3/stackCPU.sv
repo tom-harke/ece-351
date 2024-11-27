@@ -34,6 +34,7 @@ module stackCPU
   logic pop, push;
   logic signed [9:0] immediate;
   logic signed [DATA_WIDTH-1:0] top, op1, op2;
+  logic full;
 
   logic HI, LO;
   assign HI = 1;
@@ -51,7 +52,7 @@ module stackCPU
     .data_in(result),
     .data_out(top),
 
-    .full(),         // TODO
+    .full(full),         // TODO
     .empty(),        // TODO
     .one_or_more(),  // TODO
     .two_or_more()   // TODO
@@ -62,7 +63,7 @@ module stackCPU
     if (reset)
       begin
         pc <= 0;
-        current <= FETCH; // DECODE;
+        current <= FETCH;
         // TODO: clear stack
       end
     else
@@ -71,7 +72,11 @@ module stackCPU
         if (next==FETCH)
           begin
             pc <= pc+1;
-        end
+          end
+        if (next==ERROR)
+          begin
+            pc <= pc+1;
+          end
       end
 
   always_ff @(posedge clk)
@@ -106,7 +111,12 @@ module stackCPU
           end
         POP2: {next,pop,push} = {POP1, 1'b1,1'b0};
         POP1: {next,pop,push} = {PUSH, 1'b0,1'b0};
-        PUSH: {next,pop,push} = {FETCH,1'b0,1'b1};
+        PUSH:
+          begin
+            {next,pop,push} = {FETCH,1'b0,1'b1};
+            if (full)
+              next = ERROR;
+          end
       endcase
     end
 

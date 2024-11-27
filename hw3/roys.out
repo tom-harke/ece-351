@@ -19,14 +19,26 @@ Program:
 Results:
 make[1]: Entering directory `/u/harke/ece-351/hw3'
 clear
-[3;J[H[2Jvsim -c tb_stackCPU
+[3;J[H[2Jvlog stackCPU.sv && touch vlog.stackCPU
+QuestaSim-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+Start time: 15:40:40 on Nov 27,2024
+vlog stackCPU.sv 
+-- Compiling package stackCPU_sv_unit
+-- Importing package stackCPU_DEFS
+-- Compiling module stackCPU
+
+Top level modules:
+	stackCPU
+End time: 15:40:41 on Nov 27,2024, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0
+vsim -c tb_stackCPU
 Reading pref.tcl
 
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:34 on Nov 27,2024
-# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Start time: 15:40:42 on Nov 27,2024
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
 # //
@@ -113,6 +125,6 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:35 on Nov 27,2024, Elapsed time: 0:00:01
+# End time: 15:40:44 on Nov 27,2024, Elapsed time: 0:00:02
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
