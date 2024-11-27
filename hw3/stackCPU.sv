@@ -95,11 +95,15 @@ module stackCPU
       case (current)
         FETCH: {next,pop,push} = {DECODE,1'b0,1'b0};
         DECODE:
-          case (opcode)
-            PUSH_IMMEDIATE: {next,pop,push} = {PUSH,1'b0,1'b0}; // TODO want HI/LO instead of 1/0
-            INVERT:         {next,pop,push} = {POP1,1'b1,1'b0};
-            default:        {next,pop,push} = {POP2,1'b1,1'b0};
-          endcase
+          begin
+            case (opcode)
+              PUSH_IMMEDIATE: {next,pop,push} = {PUSH,1'b0,1'b0}; // TODO want HI/LO instead of 1/0
+              INVERT:         {next,pop,push} = {POP1,1'b1,1'b0};
+              default:        {next,pop,push} = {POP2,1'b1,1'b0};
+            endcase
+            if (opcode==DIV && top==0)
+              next = ERROR;
+          end
         POP2: {next,pop,push} = {POP1, 1'b1,1'b0};
         POP1: {next,pop,push} = {PUSH, 1'b0,1'b0};
         PUSH: {next,pop,push} = {FETCH,1'b0,1'b1};

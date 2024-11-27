@@ -1,0 +1,31 @@
+
+=========================================
+About:
+error.div0
+
+Program:
+00000_0_0000001001 // PUSH_IMMEDIATE 9
+00000_0_0000000000 // PUSH_IMMEDIATE 0	
+00100_0_0000000000 // DIV
+
+Results:
+make[1]: Entering directory `/u/harke/ece-351/hw3'
+clear
+[3;J[H[2Jvlog stackCPU_DEFS.sv && touch vlog.stackCPU_DEFS
+QuestaSim-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+Start time: 14:35:33 on Nov 27,2024
+vlog stackCPU_DEFS.sv 
+-- Compiling package stackCPU_DEFS
+
+Top level modules:
+	--none--
+End time: 14:35:34 on Nov 27,2024, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0
+vlog stackCPU.sv && touch vlog.stackCPU
+QuestaSim-64 vlog 2024.2 Compiler 2024.05 May 20 2024
+Start time: 14:35:34 on Nov 27,2024
+vlog stackCPU.sv 
+** Error: (vlog-13069) stackCPU.sv(107): near "and": syntax error, unexpected and.
+End time: 14:35:34 on Nov 27,2024, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+make[1]: Leaving directory `/u/harke/ece-351/hw3'

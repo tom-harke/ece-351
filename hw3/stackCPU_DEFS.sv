@@ -42,7 +42,8 @@ package stackCPU_DEFS;
         DECODE,
         POP2,
         POP1,
-        PUSH
+        PUSH,
+        ERROR
  } state_t;
  
 endpackage: stackCPU_DEFS
