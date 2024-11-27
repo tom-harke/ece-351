@@ -19,7 +19,7 @@
 \begin{document}
 \maketitle
 
-\begin{multicols}{2}
+%\begin{multicols}{2}
 
 \section{TODO}
 \begin{itemize}
@@ -31,67 +31,104 @@
 \item test stack full
 \end{itemize}
 \section{Design}
-I've merged a number of states from the suggested FSM, and slightly changed the meaning of the POP/PUSH states.
-The reason for merging is that we don't need that many
-	-- we only need enough so that we can sequence the flow of separate pieces of stack data on separate clock cycle.
-With my compressed FSM the meaning of state\dots
+\subsection{Finite State Machine}
+\includegraphics[scale=0.4]{fsm.pdf}
+\subsection{Fewer States}
+I tried to merge a number of states from the suggested FSM,
+and slightly changed the meaning of the POP/PUSH states.
+
+I originally thought I could get away with 3 or 4 states, but kept encountering problems.
+When I expanded to 5,
+I finally got a machine that worked correctly, but the design may still show the scars of trying to minimize the states.
+
+
+%The reason for merging is that I suspect we don't need that many
+%	-- we only need enough so that we can sequence the flow of separate pieces of stack data on separate clock cycle.
+With my FSM the states are:
 \begin{description}[noitemsep]
-\item[POP2] is that 2nd argument (if any) has already been popped off the stack
-\item[POP1] is that 1st argument (if any) has already been popped off the stack
-\item[PUSH] is that result has already been pushed onto the stack
+\item[FETCH:]  get the next instruction
+\item[DECODE:] start taking action (choose next state, signal a pop if needed)
+\item[POP2:]   means the 2nd argument (if any) has already been popped off the stack
+\item[POP1:]   means the 1st argument (if any) has already been popped off the stack
+\item[PUSH:]   the result is computed and ready to push onto the stack
 \end{description}
-Note that each of these is in the past tense.
 
-I'll try to motivate a simpler 3-state FSM by
-examining the constraints on how the CPU moves data
-around -- specifically, focussing on what needs to be
-registered, and leaving the rest to combinational logic.
 
-The longest chain of register updates is for processsing
-a binary operation.
-For concreteness we'll focus on 4+3, as all other instances
-are isomorphic (modulo error detection due
-to divide-by-zero or overflow).
+%Note that each of these is in the past tense.
+%
+%I'll try to motivate a simpler 3-state FSM by
+%examining the constraints on how the CPU moves data
+%around -- specifically, focussing on what needs to be
+%registered, and leaving the rest to combinational logic.
+%
+%The longest chain of register updates is for processsing
+%a binary operation.
 
-The operation 4+3 arises in the context of the next op being
-\verb'ADD' and with a stack of the form:
-\begin{center}
-	$4:3:\sigma$
-\end{center}
-where $4$ is at the top of the stack, $3$ is next-to-top,
-and $\sigma$ represents the rest of the stack
+\subsection{Removal of HALT State}
 
-In this context the stack changes state
-\begin{center} $4:3:\sigma$ \end{center}
-\begin{center}   $3:\sigma$ \end{center}
-\begin{center}     $\sigma$ \end{center}
-\begin{center}   $7:\sigma$ \end{center}
+I'm not sure how I did it \verb':-)',
+but my design doesn't need \verb'HALT' to terminate.
+So I've removed it from all .mem files and from the
+verilog.
 
-We need to have each change on a clock edge so we can pop or push.
-\section{Finite State Machine}\
-TODO
 \section{Timing}
+\subsection{Binary Operations}
 
-All binary ops (\verb'+',\verb'-',\verb'*',\verb'/',\verb'\%',\verb'\&',\verb'|')
-follow this timing example.
+All binary ops (\verb'+',\verb'-',\verb'*',\verb'/',\verb'\%',\verb'\&',\verb'|') follow the timing diagram below.
+For concreteness we'll focus on 4+3, as all other instances
+are isomorphic (modulo error detection due to divide-by-zero or overflow).
 
-The stack is included in the diagram, even though it's more than a register,
-using the notation from above (eg $3:4:\sigma$).
+\begin{center}
 \includegraphics[scale=1.0]{add.timing.pdf}
-The \verb'invert' op follows this timing example
+\end{center}
+
+The state of the stack is included in the diagram, even though it's more complex than a register or a wire.
+The notation I've used has the `top` on the left, and separates elements with \verb':'.
+So, for example, $3:4:\sigma$ has a 3 on top, a 4 in the second position, and the rest of the stack is $\sigma$.
+
+% I had tried to have the \verb'push' signal go high immediately after the last \verb'pop' went low, but was  ...
+
+%The operation 4+3 arises in the context of the next op being
+%\verb'ADD' and with a stack of the form:
+%\begin{center}
+%	$4:3:\sigma$
+%\end{center}
+%where $4$ is at the top of the stack, $3$ is next-to-top,
+%and $\sigma$ represents the rest of the stack
+%
+%In this context the stack changes state
+%\begin{center} $4:3:\sigma$ \end{center}
+%\begin{center}   $3:\sigma$ \end{center}
+%\begin{center}     $\sigma$ \end{center}
+%\begin{center}   $7:\sigma$ \end{center}
+%
+%We need to have each change on a clock edge so we can pop or push.
+
+\subsection{Unary Operations}
+The \verb'INVERT' op follows this timing example
+\begin{center}
 \includegraphics[scale=1.0]{inv.timing.pdf}
-The \verb'push_immediate' op follows this timing example
+\end{center}
+
+\subsection{Immediate Operations}
+The \verb'PUSH_IMMEDIATE' op follows this timing example
+\begin{center}
 \includegraphics[scale=1.0]{imm.timing.pdf}
+\end{center}
 
 \section{Etc}
-\subsection{Etc}
-I spent a lot of time drawing timing diagrams before I started coding.
-Midway through, I wondered if I'd just wasted all that time, but when I started coding, it was a breeze.
+%\subsection{Etc}
+%I spent a lot of time drawing timing diagrams before I started coding.
+%Midway through, I wondered if I'd just wasted all that time, but when I started coding, it was a breeze.
 \subsection{Technology}
-Timing diagrams were typeset with ease using the \LaTeX\ package \verb'tikz-timing' 
-\subsection{Etc}
+Timing diagrams were typeset with ease using the \LaTeX\ package \verb'tikz-timing'.
+The ugly FSM was generated with graphviz dot.
+\section{Improvements}
 Next time you offer this assignment, drop the logical operators, add an arithmetic unary negation operator.
-The only thing logic ops add is the unary operator, and they have the cost of ... TODO
+The only thing logic ops add is a unary operator, and they have the cost of the student supporting both bit arrays and numbers.
+They also have the problem that a 10-bit input with a leading 1 gets sign-extended, which is nonsensical for bit arrays.
 
-\end{multicols}
+It would be nice to have a way to quickly run the simulator on multiple inputs.
+I was able to jerry-rig something with a makefile and symlinks.
+%\end{multicols}
 \end{document}

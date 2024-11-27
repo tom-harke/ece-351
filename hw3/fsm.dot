@@ -1,0 +1,10 @@
+digraph G {
+    // rankdir = LR;
+	FETCH  -> DECODE [label="*/"];
+	DECODE -> POP2   [label="default/pop"];
+	DECODE -> POP1   [label="INVERT/pop"];
+	DECODE -> PUSH   [label="PUSH_IMMEDIATE/"];
+	POP2   -> POP1   [label="*/pop"];
+	POP1   -> PUSH   [label="*/"];
+	PUSH   -> FETCH  [label="*/push"];
+}

@@ -6,6 +6,7 @@ hw3.pdf: \
 	add.timing.pdf \
 	imm.timing.pdf \
 	inv.timing.pdf \
+	fsm.pdf \
 	hw3.tex
 	pdflatex hw3.tex
 
@@ -13,6 +14,9 @@ hw3.pdf: \
 
 %.timing.pdf: %.timing.tex
 	pdflatex $*.timing.tex
+
+fsm.pdf: fsm.dot
+	dot -Tpdf fsm.dot -o fsm.pdf
 
 clean:
 	echo TODO

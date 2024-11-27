@@ -21,14 +21,13 @@
 ]
 \busref{clk}       & 12{c} \\
 \busref{inst}      & U 4D{INVERT} U \\
-\busref{push/step} & \\
-\busref{pop}       & \\
-\busref{(stack)}   & \\
-\busref{top}       & \\
-\busref{state}     & \\
-\busref{op2}       & \\
-\busref{op1}       & \\
-\busref{result}    & \\
+\busref{push}      & 4L H L  \\
+\busref{pop}       & 2L 1H 3L \\
+\busref{(stack)}   & 3D{30F:$\sigma$} 2D{$\sigma$} D{0F0:$\sigma$}  \\
+\busref{top}       & 3D{3} 2U D{7}  \\
+\busref{state}     & U D{FETCH} D{DECODE} D{POP1} D{PUSH} D{FETCH} \\
+\busref{op1}       & 3U 3D{30F}  \\
+\busref{result}    & 3U 3D{0F0}  \\
 \extracode
 \begin{pgfonlayer}{background}
 \begin{scope}[semitransparent ,semithick]
