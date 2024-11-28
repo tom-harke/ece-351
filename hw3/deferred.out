@@ -1,9 +1,10 @@
 
 =========================================
-About:
-deferred
+File: deferred.mem
+
+Description:
 At one point my design was pushing duplicates onto the design.
-So PUSH_IMMEDIATE 2 would transform
+For example PUSH_IMMEDIATE 2 would transform
 	stack
 to
 	2:2:stack
@@ -11,7 +12,7 @@ to
 Roy's example program didn't catch the problem, since it consumed data immediately after each push.
 This program pushes all the arguments to 5! onto the stack before it begins calculations.
 
-Program:
+Input Program:
 00000_0_0000000001        // PUSH_IMMEDIATE 1
 00000_0_0000000010        // PUSH_IMMEDIATE 2
 00000_0_0000000011        // PUSH_IMMEDIATE 3
@@ -25,26 +26,14 @@ Program:
 Results:
 make[1]: Entering directory `/u/harke/ece-351/hw3'
 clear
-[3;J[H[2Jvlog stackCPU.sv && touch vlog.stackCPU
-QuestaSim-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-Start time: 14:04:27 on Nov 27,2024
-vlog stackCPU.sv 
--- Compiling package stackCPU_sv_unit
--- Importing package stackCPU_DEFS
--- Compiling module stackCPU
-
-Top level modules:
-	stackCPU
-End time: 14:04:27 on Nov 27,2024, Elapsed time: 0:00:00
-Errors: 0, Warnings: 0
-vsim -c tb_stackCPU
+[3;J[H[2Jvsim -c tb_stackCPU
 Reading pref.tcl
 
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:29 on Nov 27,2024
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Start time: 20:33:17 on Nov 27,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
 # //
@@ -131,6 +120,6 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:32 on Nov 27,2024, Elapsed time: 0:00:03
+# End time: 20:33:18 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'

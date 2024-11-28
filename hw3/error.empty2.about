@@ -1,0 +1,2 @@
+Popping from an empty stack should be an error.
+In this case a binary op has only 1 operand.

@@ -1,9 +1,10 @@
 
 =========================================
-About:
-deferred
+File: deferred.mem
+
+Description:
 At one point my design was pushing duplicates onto the design.
-So PUSH_IMMEDIATE 2 would transform
+For example PUSH_IMMEDIATE 2 would transform
 	stack
 to
 	2:2:stack
@@ -11,7 +12,7 @@ to
 Roy's example program didn't catch the problem, since it consumed data immediately after each push.
 This program pushes all the arguments to 5! onto the stack before it begins calculations.
 
-Program:
+Input Program:
 00000_0_0000000001        // PUSH_IMMEDIATE 1
 00000_0_0000000010        // PUSH_IMMEDIATE 2
 00000_0_0000000011        // PUSH_IMMEDIATE 3
@@ -25,26 +26,14 @@ Program:
 Results:
 make[1]: Entering directory `/u/harke/ece-351/hw3'
 clear
-[3;J[H[2Jvlog stackCPU.sv && touch vlog.stackCPU
-QuestaSim-64 vlog 2024.2 Compiler 2024.05 May 20 2024
-Start time: 14:04:27 on Nov 27,2024
-vlog stackCPU.sv 
--- Compiling package stackCPU_sv_unit
--- Importing package stackCPU_DEFS
--- Compiling module stackCPU
-
-Top level modules:
-	stackCPU
-End time: 14:04:27 on Nov 27,2024, Elapsed time: 0:00:00
-Errors: 0, Warnings: 0
-vsim -c tb_stackCPU
+[3;J[H[2Jvsim -c tb_stackCPU
 Reading pref.tcl
 
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:29 on Nov 27,2024
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Start time: 20:33:17 on Nov 27,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
 # //
@@ -131,17 +120,18 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:32 on Nov 27,2024, Elapsed time: 0:00:03
+# End time: 20:33:18 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
 =========================================
-About:
-roys
-This is the test from Roy.
-The HALT command has been removed.
+File: roys.mem
 
-Program:
+Description:
+This is the test from Roy.
+It's been modified: The HALT command has been removed.
+
+Input Program:
 00000_0_1111111110        // PUSH_IMMEDIATE -2	
 00000_0_0000000101        // PUSH_IMMEDIATE 5
 00001_0_0000000000        // ADD
@@ -161,7 +151,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:34 on Nov 27,2024
+# Start time: 20:33:19 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -249,15 +239,17 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:35 on Nov 27,2024, Elapsed time: 0:00:01
+# End time: 20:33:20 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
 =========================================
-About:
-unit.add
+File: unit.add.mem
 
-Program:
+Description:
+unit test for ADD
+
+Input Program:
 00000_0_1111111110 // PUSH_IMMEDIATE -2	
 00000_0_0000000101 // PUSH_IMMEDIATE 5
 00001_0_0000000000 // ADD
@@ -271,7 +263,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:37 on Nov 27,2024
+# Start time: 20:33:22 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -323,15 +315,17 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:38 on Nov 27,2024, Elapsed time: 0:00:01
+# End time: 20:33:22 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
 =========================================
-About:
-unit.sub
+File: unit.sub.mem
 
-Program:
+Description:
+unit test for SUB
+
+Input Program:
 00000_0_1111111110        // PUSH_IMMEDIATE -2	
 00000_0_0000000101        // PUSH_IMMEDIATE 5
 00010_0_0000000000        // SUB
@@ -345,7 +339,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:40 on Nov 27,2024
+# Start time: 20:33:24 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -397,15 +391,17 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:40 on Nov 27,2024, Elapsed time: 0:00:00
+# End time: 20:33:24 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
 =========================================
-About:
-unit.mul
+File: unit.mul.mem
 
-Program:
+Description:
+unit test for MUL
+
+Input Program:
 00000_0_1111111110        // PUSH_IMMEDIATE -2	
 00000_0_0000000101        // PUSH_IMMEDIATE 5
 00011_0_0000000000        // MUL
@@ -419,7 +415,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:42 on Nov 27,2024
+# Start time: 20:33:26 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -471,15 +467,18 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:42 on Nov 27,2024, Elapsed time: 0:00:00
+# End time: 20:33:27 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
 =========================================
-About:
-unit.div
+File: unit.div.mem
 
-Program:
+Description:
+unit test for DIV
+9/4 = 2
+
+Input Program:
 00000_0_0000001001 // PUSH_IMMEDIATE 9
 00000_0_0000000010 // PUSH_IMMEDIATE 2	
 00100_0_0000000000 // DIV
@@ -493,7 +492,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:44 on Nov 27,2024
+# Start time: 20:33:28 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -545,15 +544,18 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:44 on Nov 27,2024, Elapsed time: 0:00:00
+# End time: 20:33:29 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
 =========================================
-About:
-unit.mod
+File: unit.mod.mem
 
-Program:
+Description:
+unit test for MOD
+9%4 = 1
+
+Input Program:
 00000_0_0000001001 // PUSH_IMMEDIATE 9
 00000_0_0000000010 // PUSH_IMMEDIATE 2	
 00101_0_0000000000 // MOD
@@ -567,7 +569,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:46 on Nov 27,2024
+# Start time: 20:33:30 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -619,15 +621,17 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:47 on Nov 27,2024, Elapsed time: 0:00:01
+# End time: 20:33:31 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
 =========================================
-About:
-unit.and
+File: unit.and.mem
 
-Program:
+Description:
+unit test for AND
+
+Input Program:
 00000_0_01111_00000 // PUSH_IMMEDIATE
 00000_0_01111_10101 // PUSH_IMMEDIATE
 00110_0_00000_00000 // AND
@@ -641,7 +645,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:48 on Nov 27,2024
+# Start time: 20:33:32 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -693,15 +697,17 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:49 on Nov 27,2024, Elapsed time: 0:00:01
+# End time: 20:33:33 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
 =========================================
-About:
-unit.or
+File: unit.or.mem
 
-Program:
+Description:
+unit test for OR
+
+Input Program:
 00000_0_01111_00000 // PUSH_IMMEDIATE
 00000_0_01111_10101 // PUSH_IMMEDIATE
 00111_0_00000_00000 // OR
@@ -715,7 +721,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:50 on Nov 27,2024
+# Start time: 20:33:35 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -767,15 +773,17 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:51 on Nov 27,2024, Elapsed time: 0:00:01
+# End time: 20:33:35 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
 =========================================
-About:
-unit.invert
+File: unit.invert.mem
 
-Program:
+Description:
+unit test for INVERT
+
+Input Program:
 00000_0_01111_00000 // PUSH_IMMEDIATE
 01000_0_00000_00000 // INVERT
 
@@ -788,7 +796,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:53 on Nov 27,2024
+# Start time: 20:33:37 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -834,6 +842,368 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:53 on Nov 27,2024, Elapsed time: 0:00:00
+# End time: 20:33:37 on Nov 27,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+make[1]: Leaving directory `/u/harke/ece-351/hw3'
+
+=========================================
+File: error.div0.mem
+
+Description:
+Divide by zero should put the FSM into the ERROR state
+
+Input Program:
+00000_0_0000001001 // PUSH_IMMEDIATE 9
+00000_0_0000000000 // PUSH_IMMEDIATE 0	
+00100_0_0000000000 // DIV
+
+Results:
+make[1]: Entering directory `/u/harke/ece-351/hw3'
+clear
+[3;J[H[2Jvsim -c tb_stackCPU
+Reading pref.tcl
+
+# 2024.2
+
+# vsim -c tb_stackCPU 
+# Start time: 20:33:39 on Nov 27,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 2024.2 linux_x86_64 May 20 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.stackCPU_DEFS(fast)
+# Loading work.stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU(fast)
+VSIM 1> run -a
+# ECE 351 Fall 2024: Stack CPU testbench - Tom Harke (harke@pdx.edu)
+# Sources: /u/harke/351/hw3
+# 
+# waiting to come out of reset
+# waiting to come out of reset
+# StackCPU is alive and executing instructions!!
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   0 | PUSH_IMMEDIATE, (  9) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    9 0000001001
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   1 | PUSH_IMMEDIATE, (  0) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    0 0000000000
+#   1 | PUSH_IMMEDIATE, (  0) | DECODE (  PUSH) | 0    0    |    9 |    X,   X |    0 0000000000
+#   1 | PUSH_IMMEDIATE, (  0) |   PUSH ( FETCH) | 0    1    |    9 |    X,   9 |    0 0000000000
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    x xxxxxxxxxx
+#   2 |            DIV, (  0) | DECODE ( ERROR) | 1    0    |    0 |    X,   X |    x xxxxxxxxxx
+# Reached end of program.
+# ** Note: $stop    : tb_stackCPU.sv(102)
+#    Time: 105 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 102
+# Stopped at tb_stackCPU.sv line 102
+VSIM 2> # 
+# <EOF>
+# End time: 20:33:39 on Nov 27,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+make[1]: Leaving directory `/u/harke/ece-351/hw3'
+
+=========================================
+File: error.empty1.mem
+
+Description:
+Popping from an empty stack should be an error.
+In this case a binary op has no operands.
+
+Input Program:
+00011_0_0000000000        // MUL
+
+Results:
+make[1]: Entering directory `/u/harke/ece-351/hw3'
+clear
+[3;J[H[2Jvsim -c tb_stackCPU
+Reading pref.tcl
+
+# 2024.2
+
+# vsim -c tb_stackCPU 
+# Start time: 20:33:41 on Nov 27,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 2024.2 linux_x86_64 May 20 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.stackCPU_DEFS(fast)
+# Loading work.stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU(fast)
+VSIM 1> run -a
+# ECE 351 Fall 2024: Stack CPU testbench - Tom Harke (harke@pdx.edu)
+# Sources: /u/harke/351/hw3
+# 
+# waiting to come out of reset
+# waiting to come out of reset
+# StackCPU is alive and executing instructions!!
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   0 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    x xxxxxxxxxx
+#   0 |            MUL, (  0) | DECODE ( ERROR) | 1    0    |    0 |    x,   x |    x xxxxxxxxxx
+# Reached end of program.
+# ** Note: $stop    : tb_stackCPU.sv(102)
+#    Time: 45 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 102
+# Stopped at tb_stackCPU.sv line 102
+VSIM 2> # 
+# <EOF>
+# End time: 20:33:42 on Nov 27,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+make[1]: Leaving directory `/u/harke/ece-351/hw3'
+
+=========================================
+File: error.empty2.mem
+
+Description:
+Popping from an empty stack should be an error.
+In this case a binary op has only 1 operand.
+
+Input Program:
+00000_0_0000000101        // PUSH_IMMEDIATE 5
+00011_0_0000000000        // MUL
+
+Results:
+make[1]: Entering directory `/u/harke/ece-351/hw3'
+clear
+[3;J[H[2Jvsim -c tb_stackCPU
+Reading pref.tcl
+
+# 2024.2
+
+# vsim -c tb_stackCPU 
+# Start time: 20:33:43 on Nov 27,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 2024.2 linux_x86_64 May 20 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.stackCPU_DEFS(fast)
+# Loading work.stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU(fast)
+VSIM 1> run -a
+# ECE 351 Fall 2024: Stack CPU testbench - Tom Harke (harke@pdx.edu)
+# Sources: /u/harke/351/hw3
+# 
+# waiting to come out of reset
+# waiting to come out of reset
+# StackCPU is alive and executing instructions!!
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   0 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    5 0000000101
+#   0 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    5 0000000101
+#   0 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    5 0000000101
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   1 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   1 |            MUL, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   1 |            MUL, (  0) |   POP2 ( ERROR) | 1    0    |    0 |    X,   5 |    x xxxxxxxxxx
+# Reached end of program.
+# ** Note: $stop    : tb_stackCPU.sv(102)
+#    Time: 85 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 102
+# Stopped at tb_stackCPU.sv line 102
+VSIM 2> # 
+# <EOF>
+# End time: 20:33:44 on Nov 27,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+make[1]: Leaving directory `/u/harke/ece-351/hw3'
+
+=========================================
+File: error.full.mem
+
+Description:
+An attempt to push to a full stack is an error.
+
+Input Program:
+00000_0_0000000000 // PUSH_IMMEDIATE 0	
+00000_0_0000000001 // PUSH_IMMEDIATE 1
+00000_0_0000000010 // PUSH_IMMEDIATE 2
+00000_0_0000000011 // PUSH_IMMEDIATE 3
+00000_0_0000000100 // PUSH_IMMEDIATE 4
+00000_0_0000000101 // PUSH_IMMEDIATE 5
+00000_0_0000000110 // PUSH_IMMEDIATE 6
+00000_0_0000000111 // PUSH_IMMEDIATE 7
+00000_0_0000001000 // PUSH_IMMEDIATE 8
+00000_0_0000001001 // PUSH_IMMEDIATE 9
+00000_0_0000001010 // PUSH_IMMEDIATE 10
+00000_0_0000001011 // PUSH_IMMEDIATE 11
+00000_0_0000001100 // PUSH_IMMEDIATE 12
+00000_0_0000001101 // PUSH_IMMEDIATE 13
+00000_0_0000001110 // PUSH_IMMEDIATE 14
+00000_0_0000001111 // PUSH_IMMEDIATE 15
+00000_0_0000010000 // PUSH_IMMEDIATE 16  -- Error if we're using the default stack size
+
+Results:
+make[1]: Entering directory `/u/harke/ece-351/hw3'
+clear
+[3;J[H[2Jvsim -c tb_stackCPU
+Reading pref.tcl
+
+# 2024.2
+
+# vsim -c tb_stackCPU 
+# Start time: 20:33:45 on Nov 27,2024
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 2024.2 linux_x86_64 May 20 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.stackCPU_DEFS(fast)
+# Loading work.stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU_sv_unit(fast)
+# Loading work.tb_stackCPU(fast)
+VSIM 1> run -a
+# ECE 351 Fall 2024: Stack CPU testbench - Tom Harke (harke@pdx.edu)
+# Sources: /u/harke/351/hw3
+# 
+# waiting to come out of reset
+# waiting to come out of reset
+# StackCPU is alive and executing instructions!!
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   0 | PUSH_IMMEDIATE, (  0) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    0 0000000000
+#   0 | PUSH_IMMEDIATE, (  0) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    0 0000000000
+#   0 | PUSH_IMMEDIATE, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    0 0000000000
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   1 | PUSH_IMMEDIATE, (  1) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    1 0000000001
+#   1 | PUSH_IMMEDIATE, (  1) | DECODE (  PUSH) | 0    0    |    0 |    X,   X |    1 0000000001
+#   1 | PUSH_IMMEDIATE, (  1) |   PUSH ( FETCH) | 0    1    |    0 |    X,   0 |    1 0000000001
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   2 | PUSH_IMMEDIATE, (  2) |  FETCH (DECODE) | 0    0    |    1 |    X,   X |    2 0000000010
+#   2 | PUSH_IMMEDIATE, (  2) | DECODE (  PUSH) | 0    0    |    1 |    X,   X |    2 0000000010
+#   2 | PUSH_IMMEDIATE, (  2) |   PUSH ( FETCH) | 0    1    |    1 |    X,   1 |    2 0000000010
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   3 | PUSH_IMMEDIATE, (  3) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    3 0000000011
+#   3 | PUSH_IMMEDIATE, (  3) | DECODE (  PUSH) | 0    0    |    2 |    X,   X |    3 0000000011
+#   3 | PUSH_IMMEDIATE, (  3) |   PUSH ( FETCH) | 0    1    |    2 |    X,   2 |    3 0000000011
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   4 | PUSH_IMMEDIATE, (  4) |  FETCH (DECODE) | 0    0    |    3 |    X,   X |    4 0000000100
+#   4 | PUSH_IMMEDIATE, (  4) | DECODE (  PUSH) | 0    0    |    3 |    X,   X |    4 0000000100
+#   4 | PUSH_IMMEDIATE, (  4) |   PUSH ( FETCH) | 0    1    |    3 |    X,   3 |    4 0000000100
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   5 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |    4 |    X,   X |    5 0000000101
+#   5 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |    4 |    X,   X |    5 0000000101
+#   5 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |    4 |    X,   4 |    5 0000000101
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   6 | PUSH_IMMEDIATE, (  6) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    6 0000000110
+#   6 | PUSH_IMMEDIATE, (  6) | DECODE (  PUSH) | 0    0    |    5 |    X,   X |    6 0000000110
+#   6 | PUSH_IMMEDIATE, (  6) |   PUSH ( FETCH) | 0    1    |    5 |    X,   5 |    6 0000000110
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   7 | PUSH_IMMEDIATE, (  7) |  FETCH (DECODE) | 0    0    |    6 |    X,   X |    7 0000000111
+#   7 | PUSH_IMMEDIATE, (  7) | DECODE (  PUSH) | 0    0    |    6 |    X,   X |    7 0000000111
+#   7 | PUSH_IMMEDIATE, (  7) |   PUSH ( FETCH) | 0    1    |    6 |    X,   6 |    7 0000000111
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   8 | PUSH_IMMEDIATE, (  8) |  FETCH (DECODE) | 0    0    |    7 |    X,   X |    8 0000001000
+#   8 | PUSH_IMMEDIATE, (  8) | DECODE (  PUSH) | 0    0    |    7 |    X,   X |    8 0000001000
+#   8 | PUSH_IMMEDIATE, (  8) |   PUSH ( FETCH) | 0    1    |    7 |    X,   7 |    8 0000001000
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   9 | PUSH_IMMEDIATE, (  9) |  FETCH (DECODE) | 0    0    |    8 |    X,   X |    9 0000001001
+#   9 | PUSH_IMMEDIATE, (  9) | DECODE (  PUSH) | 0    0    |    8 |    X,   X |    9 0000001001
+#   9 | PUSH_IMMEDIATE, (  9) |   PUSH ( FETCH) | 0    1    |    8 |    X,   8 |    9 0000001001
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#  10 | PUSH_IMMEDIATE, ( 10) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |   10 0000001010
+#  10 | PUSH_IMMEDIATE, ( 10) | DECODE (  PUSH) | 0    0    |    9 |    X,   X |   10 0000001010
+#  10 | PUSH_IMMEDIATE, ( 10) |   PUSH ( FETCH) | 0    1    |    9 |    X,   9 |   10 0000001010
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#  11 | PUSH_IMMEDIATE, ( 11) |  FETCH (DECODE) | 0    0    |   10 |    X,   X |   11 0000001011
+#  11 | PUSH_IMMEDIATE, ( 11) | DECODE (  PUSH) | 0    0    |   10 |    X,   X |   11 0000001011
+#  11 | PUSH_IMMEDIATE, ( 11) |   PUSH ( FETCH) | 0    1    |   10 |    X,  10 |   11 0000001011
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#  12 | PUSH_IMMEDIATE, ( 12) |  FETCH (DECODE) | 0    0    |   11 |    X,   X |   12 0000001100
+#  12 | PUSH_IMMEDIATE, ( 12) | DECODE (  PUSH) | 0    0    |   11 |    X,   X |   12 0000001100
+#  12 | PUSH_IMMEDIATE, ( 12) |   PUSH ( FETCH) | 0    1    |   11 |    X,  11 |   12 0000001100
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#  13 | PUSH_IMMEDIATE, ( 13) |  FETCH (DECODE) | 0    0    |   12 |    X,   X |   13 0000001101
+#  13 | PUSH_IMMEDIATE, ( 13) | DECODE (  PUSH) | 0    0    |   12 |    X,   X |   13 0000001101
+#  13 | PUSH_IMMEDIATE, ( 13) |   PUSH ( FETCH) | 0    1    |   12 |    X,  12 |   13 0000001101
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#  14 | PUSH_IMMEDIATE, ( 14) |  FETCH (DECODE) | 0    0    |   13 |    X,   X |   14 0000001110
+#  14 | PUSH_IMMEDIATE, ( 14) | DECODE (  PUSH) | 0    0    |   13 |    X,   X |   14 0000001110
+#  14 | PUSH_IMMEDIATE, ( 14) |   PUSH ( FETCH) | 0    1    |   13 |    X,  13 |   14 0000001110
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#  15 | PUSH_IMMEDIATE, ( 15) |  FETCH (DECODE) | 0    0    |   14 |    X,   X |   15 0000001111
+#  15 | PUSH_IMMEDIATE, ( 15) | DECODE (  PUSH) | 0    0    |   14 |    X,   X |   15 0000001111
+#  15 | PUSH_IMMEDIATE, ( 15) |   PUSH ( FETCH) | 0    1    |   14 |    X,  14 |   15 0000001111
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#  16 | PUSH_IMMEDIATE, ( 16) |  FETCH (DECODE) | 0    0    |   15 |    X,   X |   16 0000010000
+#  16 | PUSH_IMMEDIATE, ( 16) | DECODE (  PUSH) | 0    0    |   15 |    X,   X |   16 0000010000
+#  16 | PUSH_IMMEDIATE, ( 16) |   PUSH ( ERROR) | 0    1    |   15 |    X,  15 |   16 0000010000
+# Reached end of program.
+# ** Note: $stop    : tb_stackCPU.sv(102)
+#    Time: 535 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 102
+# Stopped at tb_stackCPU.sv line 102
+VSIM 2> # 
+# <EOF>
+# End time: 20:33:46 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'

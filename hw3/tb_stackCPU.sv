@@ -105,7 +105,7 @@ module tb_stackCPU;
 			$stop;
 		end else if (~reset) begin
 			//$display("Operation: %15s, (%d)\tState: %4s  (%4s)\t pop=%b push=%b\tPC: +%-10d\ttop: %d"
-			if (DUT.current == FETCH)
+			if (DUT.current == FETCH || DUT.current == ERROR)
 				begin
 					$display("----+-----------------------+-----------------+-----------+------+-----------+-------");
 					$display("PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result");

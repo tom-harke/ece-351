@@ -1,11 +1,12 @@
 
 =========================================
-About:
-roys
-This is the test from Roy.
-The HALT command has been removed.
+File: roys.mem
 
-Program:
+Description:
+This is the test from Roy.
+It's been modified: The HALT command has been removed.
+
+Input Program:
 00000_0_1111111110        // PUSH_IMMEDIATE -2	
 00000_0_0000000101        // PUSH_IMMEDIATE 5
 00001_0_0000000000        // ADD
@@ -25,7 +26,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:34 on Nov 27,2024
+# Start time: 20:33:19 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -113,6 +114,6 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:35 on Nov 27,2024, Elapsed time: 0:00:01
+# End time: 20:33:20 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'

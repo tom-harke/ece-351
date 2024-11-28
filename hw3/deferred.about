@@ -1,5 +1,5 @@
 At one point my design was pushing duplicates onto the design.
-So PUSH_IMMEDIATE 2 would transform
+For example PUSH_IMMEDIATE 2 would transform
 	stack
 to
 	2:2:stack

@@ -1,9 +1,11 @@
 
 =========================================
-About:
-unit.and
+File: unit.and.mem
 
-Program:
+Description:
+unit test for AND
+
+Input Program:
 00000_0_01111_00000 // PUSH_IMMEDIATE
 00000_0_01111_10101 // PUSH_IMMEDIATE
 00110_0_00000_00000 // AND
@@ -17,7 +19,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 14:04:48 on Nov 27,2024
+# Start time: 20:33:32 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -69,6 +71,6 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 14:04:49 on Nov 27,2024, Elapsed time: 0:00:01
+# End time: 20:33:33 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
