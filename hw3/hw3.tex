@@ -21,15 +21,6 @@
 
 %\begin{multicols}{2}
 
-\section{TODO}
-\begin{itemize}
-\item test that memory is larger than immediates
-\item test divide-by-zero
-\item test overflow
-\item test stack size
-\item test stack empty
-\item test stack full
-\end{itemize}
 \section{Design}
 \subsection{Finite State Machine}
 \includegraphics[scale=0.4]{fsm.pdf}
@@ -51,6 +42,7 @@ With my FSM the states are:
 \item[POP2:]   means the 2nd argument (if any) has already been popped off the stack
 \item[POP1:]   means the 1st argument (if any) has already been popped off the stack
 \item[PUSH:]   the result is computed and ready to push onto the stack
+\item[ERROR:]  something has gone wrong. (This is not in the diagram)
 \end{description}
 
 
@@ -71,6 +63,22 @@ but my design doesn't need \verb'HALT' to terminate.
 So I've removed it from all .mem files and from the
 verilog.
 
+\subsection{Error Checking}
+I've implemented checks for:
+\begin{itemize}
+\item divide-by-zero
+\item push to full stack
+\item pop from empty stack
+\end{itemize}
+
+I did not have time to add error handling for the following problems
+\begin{itemize}
+\item overflow
+\item a final stack having more than 1 entry
+\end{itemize}
+
+To minimize clutter the ERROR state is not depicted in the FSM diagram as there are several transitions to it,
+and all are terminal.
 \section{Timing}
 \subsection{Binary Operations}
 
@@ -111,15 +119,41 @@ The \verb'INVERT' op follows this timing example
 \end{center}
 
 \subsection{Immediate Operations}
-The \verb'PUSH_IMMEDIATE' op follows this timing example
-\begin{center}
-\includegraphics[scale=1.0]{imm.timing.pdf}
-\end{center}
+I'm skipping the \verb'PUSH_IMMEDIATE' op. The value is immediately available, and the stack push happens analogously to the other operations, just skipping the POP states.
+%\begin{center}
+%\includegraphics[scale=1.0]{imm.timing.pdf}
+%\end{center}
 
 \section{Etc}
+
+\subsection{How to read the log files}
+Normally terminating computations will end with a result in the lower-right corner.
+Here's the bottom of the given example code, with the result displayed both
+as decimal ($276$) and binary ($0100010100$).
+\begin{verbatim}
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   8 |            ADD, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    x xxxxxxxxxx
+#   8 |            ADD, (  0) | DECODE (  POP2) | 1    0    |    0 |    X,   X |    x xxxxxxxxxx
+#   8 |            ADD, (  0) |   POP2 (  POP1) | 1    0    |  276 |    X,   0 |    x xxxxxxxxxx
+#   8 |            ADD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |  276,   0 |  276 0100010100
+#   8 |            ADD, (  0) |   PUSH ( FETCH) | 0    1    |    0 |  276,   0 |  276 0100010100
+\end{verbatim}
+
+A computation that ends in the ERROR state will show the transition under the \verb'State (next)' column.
+In the case of divide-by-zero it's \verb'DECODE ( ERROR)'.
+Other errors may transition from different states to ERROR.
+\begin{verbatim}
+# ----+-----------------------+-----------------+-----------+------+-----------+-------
+# PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
+#   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    x xxxxxxxxxx
+#   2 |            DIV, (  0) | DECODE ( ERROR) | 1    0    |    0 |    X,   X |    x xxxxxxxxxx
+\end{verbatim}
+
 %\subsection{Etc}
 %I spent a lot of time drawing timing diagrams before I started coding.
 %Midway through, I wondered if I'd just wasted all that time, but when I started coding, it was a breeze.
+
 \subsection{Technology}
 Timing diagrams were typeset with ease using the \LaTeX\ package \verb'tikz-timing'.
 The ugly FSM was generated with graphviz dot.

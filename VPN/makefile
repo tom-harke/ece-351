@@ -8,7 +8,7 @@ How to connect to pdx.edu via vpn:
    sudo openvpn --config cecs.ovpn --auth-user-pass up
 
 How simulate
-   ssh _@mo.ece.pdx.edu
+   ssh $(USER)@mo.ece.pdx.edu
    ssh _@auto.ece.pdx.edu
    set -o vi
 
