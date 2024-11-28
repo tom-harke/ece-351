@@ -1,11 +1,12 @@
 
 =========================================
-About:
-error.empty1
+File: error.empty1.mem
+
+Description:
 Popping from an empty stack should be an error.
 In this case a binary op has no operands.
 
-Program:
+Input Program:
 00011_0_0000000000        // MUL
 
 Results:
@@ -17,7 +18,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 16:17:07 on Nov 27,2024
+# Start time: 20:33:41 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -56,6 +57,6 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 16:17:07 on Nov 27,2024, Elapsed time: 0:00:00
+# End time: 20:33:42 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'

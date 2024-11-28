@@ -107,24 +107,12 @@ module stackCPU
             endcase
             if (opcode==DIV && top==0)
               next = ERROR;
-            // if (pop && empty) next = ERROR;
           end
-        POP2:
-          begin
-            {next,pop,push} = {POP1, 1'b1,1'b0};
-            // if (pop && empty) next = ERROR;
-          end
-        POP1:
-          begin
-            {next,pop,push} = {PUSH, 1'b0,1'b0};
-            // if (empty) next = ERROR;
-          end
-        PUSH:
-          begin
-            {next,pop,push} = {FETCH,1'b0,1'b1};
-            if (full) next = ERROR;
-          end
+        POP2: {next,pop,push} = {POP1, 1'b1,1'b0};
+        POP1: {next,pop,push} = {PUSH, 1'b0,1'b0};
+        PUSH: {next,pop,push} = {FETCH,1'b0,1'b1};
       endcase
+      if (push && full) next = ERROR;
       if (pop && empty) next = ERROR;
     end
 

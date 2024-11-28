@@ -36,11 +36,12 @@ echo:
 	ln -fsn $*.mem program.mem
 	echo ''                >  $*.out
 	echo '=========================================' >> $*.out
-	echo 'About:' >> $*.out
-	echo $*                >> $*.out
+	echo "File: $*.mem"    >> $*.out
+	echo ''                >> $*.out
+	echo 'Description:'    >> $*.out
 	cat $*.about           >> $*.out
 	echo ''                >> $*.out
-	echo 'Program:'        >> $*.out
+	echo 'Input Program:'  >> $*.out
 	cat $*.mem             >> $*.out
 	echo ''                >> $*.out
 	echo 'Results:'        >> $*.out
@@ -49,6 +50,8 @@ echo:
 
 UNIT_ARITH = add sub mul div mod
 UNIT_LOGIC = and or invert
+ERROR      = div0 empty1 empty2 full
+ERROR2     = $(patsubst %,error.%,$(ERROR))
 UNIT       = $(patsubst %,unit.%,$(UNIT_ARITH) $(UNIT_LOGIC))
 COMPLEX = \
 	deferred \
@@ -57,6 +60,7 @@ COMPLEX = \
 PROGRAMS = \
 	$(COMPLEX) \
 	$(UNIT) \
+	$(ERROR2) \
 
 
 test_results.txt: $(patsubst %,%.out,$(PROGRAMS))
