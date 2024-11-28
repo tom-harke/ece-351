@@ -34,9 +34,9 @@ module stackCPU
   logic pop, push;
   logic signed [9:0] immediate;
   logic signed [DATA_WIDTH-1:0] top, op1, op2;
-  logic full;
+  logic full, empty;
 
-  logic HI, LO;
+  logic HI, LO; // TODO: these could make the code more readable
   assign HI = 1;
   assign LO = 1;
 
@@ -52,10 +52,10 @@ module stackCPU
     .data_in(result),
     .data_out(top),
 
-    .full(full),         // TODO
-    .empty(),        // TODO
-    .one_or_more(),  // TODO
-    .two_or_more()   // TODO
+    .full(full),
+    .empty(empty),
+    .one_or_more(),  // UNUSED
+    .two_or_more()   // UNUSED
   );
 
 
@@ -64,7 +64,6 @@ module stackCPU
       begin
         pc <= 0;
         current <= FETCH;
-        // TODO: clear stack
       end
     else
       begin
@@ -108,16 +107,25 @@ module stackCPU
             endcase
             if (opcode==DIV && top==0)
               next = ERROR;
+            // if (pop && empty) next = ERROR;
           end
-        POP2: {next,pop,push} = {POP1, 1'b1,1'b0};
-        POP1: {next,pop,push} = {PUSH, 1'b0,1'b0};
+        POP2:
+          begin
+            {next,pop,push} = {POP1, 1'b1,1'b0};
+            // if (pop && empty) next = ERROR;
+          end
+        POP1:
+          begin
+            {next,pop,push} = {PUSH, 1'b0,1'b0};
+            // if (empty) next = ERROR;
+          end
         PUSH:
           begin
             {next,pop,push} = {FETCH,1'b0,1'b1};
-            if (full)
-              next = ERROR;
+            if (full) next = ERROR;
           end
       endcase
+      if (pop && empty) next = ERROR;
     end
 
 

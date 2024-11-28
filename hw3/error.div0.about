@@ -1,0 +1,1 @@
+Divide by zero should put the FSM into the ERROR state
