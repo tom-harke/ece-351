@@ -69,3 +69,15 @@ PROGRAMS = \
 
 test_results.txt: $(patsubst %,%.out,$(PROGRAMS))
 	cat $(patsubst %,%.out,$(PROGRAMS)) > test_results.txt
+
+package: ece351f24_harke_hw3.zip
+
+ece351f24_harke_hw3.zip: \
+	stackCPU_DEFS.sv \
+	stackCPU.sv \
+	stack_signed.sv \
+	tb_stackCPU.sv \
+	test_results.txt \
+	$(patsubst %,%.mem,$(PROGRAMS)) \
+	hw3.pdf
+	zip ece351f24_harke_hw3 $+

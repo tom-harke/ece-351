@@ -65,21 +65,32 @@ verilog.
 
 \subsection{Error Checking}
 I've implemented checks for:
-\begin{itemize}
+\begin{itemize}[noitemsep]
 \item divide-by-zero
 \item push to full stack
 \item pop from empty stack
 \end{itemize}
 
 I did not have time to add error handling for the following problems
-\begin{itemize}
+\begin{itemize}[noitemsep]
 \item overflow
-\item a final stack having more than 1 entry
+\item a final stack having more than 1 entry.
 \end{itemize}
 
 To minimize clutter the ERROR state is not depicted in the FSM diagram as there are several transitions to it,
 and all are terminal.
 \section{Timing}
+My design was driven by my expected timing diagrams.
+My reasoning was that the main constraint in the
+design was that we needed the clock signal to sequence
+the pushes and pops, and to stash the instruction
+and the popped values into registers.
+All other computation could be done via combinational
+logic.
+
+These are not the original designs that I made, but
+they've been tweaked as I've debugged my design.
+
 \subsection{Binary Operations}
 
 All binary ops (\verb'+',\verb'-',\verb'*',\verb'/',\verb'\%',\verb'\&',\verb'|') follow the timing diagram below.
@@ -113,19 +124,48 @@ So, for example, $3:4:\sigma$ has a 3 on top, a 4 in the second position, and th
 %We need to have each change on a clock edge so we can pop or push.
 
 \subsection{Unary Operations}
-The \verb'INVERT' op follows this timing example
+The \verb'INVERT' op follows this timing example.
 \begin{center}
 \includegraphics[scale=1.0]{inv.timing.pdf}
 \end{center}
+The diagram is basically identical to the binary case, but with one cycle (POP2) omitted.
 
 \subsection{Immediate Operations}
-I'm skipping the \verb'PUSH_IMMEDIATE' op. The value is immediately available, and the stack push happens analogously to the other operations, just skipping the POP states.
+I'm skipping the diagram \verb'PUSH_IMMEDIATE' op.
+The value is immediately available, and the stack push happens analogously to the other operations,
+without the POP states.
 %\begin{center}
 %\includegraphics[scale=1.0]{imm.timing.pdf}
 %\end{center}
 
-\section{Etc}
 
+\section{Output}
+\subsection{Tests}
+There are 3 groups of tests
+\begin{description}[noitemsep]
+\item[roys.mem] The example program from the homework
+\item[deferred.mem] compute $5!$, but do so by pushing all values onto the stack before starting multiplication
+\end{description}
+
+Unit tests.  These are self-descriptive.
+\begin{description}[noitemsep]
+\item[unit.add.mem] Do only a single ADD
+\item[unit.and.mem] \dots
+\item[unit.div.mem] \dots
+\item[unit.invert.mem] \dots
+\item[unit.mod.mem] \dots
+\item[unit.mul.mem] \dots
+\item[unit.or.mem] \dots
+\item[unit.sub.mem] \dots
+\end{description}
+
+Testing error handling.
+\begin{description}[noitemsep]
+\item[error.div0.mem] test division by zery
+\item[error.empty1.mem] test popping 1st instruction off empty stack
+\item[error.empty2.mem] test popping 2nd instruction off empty stack
+\item[error.full.mem] test pushing to a full stack
+\end{description}
 \subsection{How to read the log files}
 Normally terminating computations will end with a result in the lower-right corner.
 Here's the bottom of the given example code, with the result displayed both
@@ -154,15 +194,22 @@ Other errors may transition from different states to ERROR.
 %I spent a lot of time drawing timing diagrams before I started coding.
 %Midway through, I wondered if I'd just wasted all that time, but when I started coding, it was a breeze.
 
-\subsection{Technology}
-Timing diagrams were typeset with ease using the \LaTeX\ package \verb'tikz-timing'.
-The ugly FSM was generated with graphviz dot.
-\section{Improvements}
+\section{Etc}
+\subsection{Improvements}
 Next time you offer this assignment, drop the logical operators, add an arithmetic unary negation operator.
 The only thing logic ops add is a unary operator, and they have the cost of the student supporting both bit arrays and numbers.
 They also have the problem that a 10-bit input with a leading 1 gets sign-extended, which is nonsensical for bit arrays.
 
 It would be nice to have a way to quickly run the simulator on multiple inputs.
 I was able to jerry-rig something with a makefile and symlinks.
+\subsection{Challenges}
+I spent far too much time debugging my initial implementation.
+I suspect it's simply due to lack of experience writing non-trivial code.
+Perhaps this problem was aggravated by my insistance to reduce the number of states.
+Regardless, I would have loved to have had another assignment between \#2 and \#3 which was simpler -- maybe a Johnson counter \verb':-)'
+
+\subsection{Technology}
+Timing diagrams were typeset with ease using the \LaTeX\ package \verb'tikz-timing'.
+The ugly FSM was generated with graphviz dot.
 %\end{multicols}
 \end{document}
