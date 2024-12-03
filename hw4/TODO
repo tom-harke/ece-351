@@ -1,0 +1,6 @@
+ - refactor: my design --> common <-- Roy's design
+    - in particular
+       - add valid_result, since it feeds into HW
+          - can be lightweight assignment to 'state == PUSH'
+       - fake up other signals...
+       - do I break my CPU into FSM vs DP, or do I merge Roy's interface?
