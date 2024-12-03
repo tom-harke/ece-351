@@ -2,9 +2,8 @@
  * @file stackCPU.sv
  * @brief  Top level for the stack CPU
  *
- * @version 1.1.0
- * @author	Roy Kravitz (roy.kravitz@pdx.edu)
- * @date	16-Nov-2024
+ * @author Tom Harke (harke@pdx.edu)
+ * @date   2024 Dec TODO
  *
  * @detail
  * Implements the top level module for the stack CPU.  The stack CPU is
@@ -13,8 +12,8 @@
  *
  * Revision History
  * ----------------
- * 1.1.0	(21-Nov-2024 by RK) Added configurable reset polarity.  Support single-stepping
- * 1.0.0	(16-Nov-2024 by RK)	Initial version
+ * 1.1.0    (21-Nov-2024 by RK)    Added configurable reset polarity.  Support single-stepping
+ * 1.0.0    (16-Nov-2024 by RK)    Initial version
  *
  */
  // global definitions, parameters, etc.
@@ -22,38 +21,38 @@ import stackCPU_DEFS::*;
 
 module stackCPU
 #(
-	parameter int DATA_WIDTH = DATA_WIDTH_DEF,		// Width of each stack element
-    parameter int STACK_DEPTH = STACK_DEPTH_DEF,	// Depth of the stack
-	parameter int INSTR_WIDTH = INSTR_WIDTH_DEF,	// Width of an instruction
-	parameter int PC_WIDTH = PC_WIDTH_DEF,			// Width of the program counter
-	
-	parameter int RESET_POLARITY_LOW = 0,			// reset polarity. default is asserted high
-	parameter int SSTEP_ENABLE_DEF = 0				// enable single step functionality. default is disabled 
+    parameter int DATA_WIDTH  = DATA_WIDTH_DEF,     // Width of each stack element
+    parameter int STACK_DEPTH = STACK_DEPTH_DEF,    // Depth of the stack
+    parameter int INSTR_WIDTH = INSTR_WIDTH_DEF,    // Width of an instruction
+    parameter int PC_WIDTH    = PC_WIDTH_DEF,       // Width of the program counter
+    
+    parameter int RESET_POLARITY_LOW = 0,           // reset polarity. default is asserted high
+    parameter int SSTEP_ENABLE_DEF   = 0            // enable single step functionality. default is disabled 
 )(  
 
-	// global clock and reset
-    input logic								clk,
-    input logic								reset,			// Active-high reset
-	
-	// instruction from program memory
-    input logic [INSTR_WIDTH-1:0] 			instruction,	// 16-bit instruction:
-															//{opcode[4:0], 1'b0, imm[9:0]}
-	output logic [PC_WIDTH_DEF-1:0] 		pc,				// program counter
-	
-	// interface to nexysA7
-	input logic								single_step,	// step on instruction on rising edge	
-	output logic signed [DATA_WIDTH-1:0]	result,			// ALU result
-	output logic							valid_result,	// asserted high when ALU result is valid
-	output logic							error,			// error if asserted high
-	output logic							halt			// CPU is halted
+    // global clock and reset
+    input logic                             clk,
+    input logic                             reset,          // Active-high reset
+    
+    // instruction from program memory
+    input logic [INSTR_WIDTH-1:0]           instruction,    // 16-bit instruction:
+                                                            // {opcode[4:0], 1'b0, imm[9:0]}
+    output logic [PC_WIDTH_DEF-1:0]         pc,             // program counter
+    
+    // interface to nexysA7
+    input logic                             single_step,    // step on instruction on rising edge    
+    output logic signed [DATA_WIDTH-1:0]    result,         // ALU result
+    output logic                            valid_result,   // asserted high when ALU result is valid
+    output logic                            error,          // error if asserted high
+    output logic                            halt            // CPU is halted
 );
 
 // internal signals
-logic push, pop;			// stack control
-logic alu_to_stack;			// stack input mux
-logic div_by_zero;			// divide-by-zero error condition
-logic [4:0] stack_flags;	//{full, empty, one_or_more, two_or_more, div_by_zero}
-logic reset_in; 			// system reset based on expected polarity of reset
+logic push, pop;            // stack control
+logic alu_to_stack;         // stack input mux
+logic div_by_zero;          // divide-by-zero error condition
+logic [4:0] stack_flags;    // {full, empty, one_or_more, two_or_more, div_by_zero}
+logic reset_in;             // system reset based on expected polarity of reset
 
 assign reset_in = RESET_POLARITY_LOW ? ~reset : reset; 
 
@@ -62,7 +61,7 @@ assign reset_in = RESET_POLARITY_LOW ? ~reset : reset;
 stackCPU_DP #(
     .DATA_WIDTH(DATA_WIDTH_DEF),
     .STACK_DEPTH(STACK_DEPTH_DEF),
-	.INSTR_WIDTH(INSTR_WIDTH_DEF)
+    .INSTR_WIDTH(INSTR_WIDTH_DEF)
 ) DP
 (
     .clk(clk),
@@ -71,34 +70,34 @@ stackCPU_DP #(
     .push(push),
     .pop(pop),
     .alu_to_stack(alu_to_stack),
-	.ld_op1(ld_op1),
-	.ld_op2(ld_op2),
-	
+    .ld_op1(ld_op1),
+    .ld_op2(ld_op2),
+    
     .result(result),
-	.stack_flags(stack_flags)
+    .stack_flags(stack_flags)
 );
 
 // instantiate the control FSM
 stackCPU_CTL #(
-	.INSTR_WIDTH(INSTR_WIDTH_DEF),
-	.PC_WIDTH(PC_WIDTH_DEF),
-	.SSTEP_ENABLE(SSTEP_ENABLE_DEF)
+    .INSTR_WIDTH(INSTR_WIDTH_DEF),
+    .PC_WIDTH(PC_WIDTH_DEF),
+    .SSTEP_ENABLE(SSTEP_ENABLE_DEF)
 ) CP
 (
     .clk(clk),
     .reset(reset_in),
-	.instruction(instruction),
-	.pc(pc),
-	.stack_flags(stack_flags),
+    .instruction(instruction),
+    .pc(pc),
+    .stack_flags(stack_flags),
     .push(push),
     .pop(pop),
     .alu_to_stack(alu_to_stack),
-	.ld_op1(ld_op1),
-	.ld_op2(ld_op2),
-	.single_step(single_step),
-	.valid_result(valid_result),
-	.error(error),
-	.halt(halt)
+    .ld_op1(ld_op1),
+    .ld_op2(ld_op2),
+    .single_step(single_step),
+    .valid_result(valid_result),
+    .error(error),
+    .halt(halt)
 );
 
 

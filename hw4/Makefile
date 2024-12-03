@@ -1,7 +1,35 @@
 #!/usr/bin/make -f
 
-INST = add inv
-INST = add 
+
+SV = \
+	bin2bcd_8bits.sv \
+	binary2bcd.sv \
+	debounce.sv \
+	nexysa7fpga.sv \
+	seven_segment.sv \
+	stackCPU_DEFS.sv \
+	stackCPU.sv \
+	stack_signed.sv \
+	tb_stackCPU.sv \
+
+
+UNIT_ARITH = add sub mul div mod
+UNIT_LOGIC = and or invert
+ERROR      = div0 empty1 empty2 full
+ERROR2     = $(patsubst %,error.%,$(ERROR))
+UNIT       = $(patsubst %,unit.%,$(UNIT_ARITH) $(UNIT_LOGIC))
+COMPLEX = \
+	deferred \
+	roys
+
+PROGRAMS = \
+	$(COMPLEX) \
+	$(UNIT) \
+	$(ERROR2) \
+
+
+test_results.txt: $(patsubst %,%.out,$(PROGRAMS))
+	cat $(patsubst %,%.out,$(PROGRAMS)) > test_results.txt
 
 hw4.pdf: \
 	hw4.tex
@@ -21,7 +49,7 @@ run: clear vlog.stackCPU_DEFS vlog.stack_signed vlog.tb_stackCPU vlog.stackCPU
 echo:
 	echo run -a | make run
 
-%.out: %.mem
+%.out: %.mem $(SV)
 	ln -fsn $*.mem program.mem
 	echo ''                >  $*.out
 	echo '=========================================' >> $*.out
@@ -34,23 +62,6 @@ echo:
 	echo run -a | make run >> $*.out
 	cat $*.out
 
-UNIT_ARITH = add sub mul div mod
-UNIT_LOGIC = and or invert
-ERROR      = div0 empty1 empty2 full
-ERROR2     = $(patsubst %,error.%,$(ERROR))
-UNIT       = $(patsubst %,unit.%,$(UNIT_ARITH) $(UNIT_LOGIC))
-COMPLEX = \
-	deferred \
-	roys
-
-PROGRAMS = \
-	$(COMPLEX) \
-	$(UNIT) \
-	$(ERROR2) \
-
-
-test_results.txt: $(patsubst %,%.out,$(PROGRAMS))
-	cat $(patsubst %,%.out,$(PROGRAMS)) > test_results.txt
 
 package: ece351f24_harke_hw4.zip
 

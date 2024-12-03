@@ -1,24 +1,30 @@
 /**
- * stackCPU.sv - stack-based CPU
+ * @file stackCPU.sv
+ * @brief  Top level for the stack CPU
  *
  * @author Tom Harke (harke@pdx.edu)
- * @date   2024 Nov 27
+ * @date   2024 Dec TODO
  *
- * @brief
- * TODO
- * 
+ * @detail
+ * Implements the top level module for the stack CPU.  The stack CPU is
+ * implemented as an FSM-D with stackCPU_CTL doing the control for the
+ * stackCPU_DP datapath
  *
- * @note:  TODO
+ * Revision History
+ * ----------------
+ * 1.1.0    (21-Nov-2024 by RK) Added configurable reset polarity.  Support single-stepping
+ * 1.0.0    (16-Nov-2024 by RK)    Initial version
+ *
  */
-
+ // global definitions, parameters, etc.
 import stackCPU_DEFS::*;
 
 module stackCPU
 #(
-  parameter DATA_WIDTH  = 32,
-  parameter STACK_DEPTH = 16,
-  parameter INSTR_WIDTH = 10,
-  parameter PC_WIDTH    = 10
+  parameter int DATA_WIDTH  = 32,
+  parameter int STACK_DEPTH = 16,
+  parameter int INSTR_WIDTH = 10,
+  parameter int PC_WIDTH    = 10
 )
 (
   input  logic clk, reset,
