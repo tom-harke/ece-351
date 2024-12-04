@@ -46,6 +46,9 @@ clear:
 run: clear vlog.stackCPU_DEFS vlog.stack_signed vlog.tb_stackCPU vlog.stackCPU
 	vsim -c tb_stackCPU
 
+run2: clear vlog.bin2bcd_8bits vlog.binary2bcd vlog.debounce vlog.nexysa7fpga vlog.seven_segment vlog.stackCPU_DEFS vlog.stackCPU vlog.stack_signed vlog.tb_nexysa7fpga
+	vsim -c tb_nexysa7fpga
+
 echo:
 	echo run -a | make run
 
@@ -68,3 +71,4 @@ package: ece351f24_harke_hw4.zip
 ece351f24_harke_hw4.zip: \
 	hw4.pdf
 	zip ece351f24_harke_hw4 $+
+

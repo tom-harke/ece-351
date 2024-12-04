@@ -39,11 +39,11 @@ module stackCPU
   output logic [PC_WIDTH-1:0]             pc,             // program counter
 
   // interface to nexysA7
-  //input logic                             single_step,    // step on instruction on rising edge         // TODO
-  //output logic signed [DATA_WIDTH-1:0]    result,         // ALU result                                 // TODO
-  //output logic                            valid_result,   // asserted high when ALU result is valid     // TODO
-  //output logic                            error,          // error if asserted high                     // TODO
-  //output logic                            halt            // CPU is halted                              // TODO
+  input logic                             single_step,    // step on instruction on rising edge         // TODO
+  output logic signed [DATA_WIDTH-1:0]    result,         // ALU result                                 // TODO
+  output logic                            valid_result,   // asserted high when ALU result is valid     // TODO
+  output logic                            error,          // error if asserted high                     // TODO
+  output logic                            halt            // CPU is halted                              // TODO
 );
 
 // internal signals
@@ -152,6 +152,9 @@ Stack #(
       endcase
     end
 
+assign error = current == ERROR ? 1'b1 : 1'b0;
+assign halt  = 1'b0; // current == HALT  ? 1'b1 : 1'b0; // TODO
+assign valid_result = opcode == PUSH  ? 1'b1 : 1'b0;
 assign {opcode,unused,immediate} = instruction;
 
 endmodule: stackCPU

@@ -22,7 +22,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:24:44 on Dec 03,2024
+# Start time: 14:02:47 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -110,7 +110,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:24:45 on Dec 03,2024, Elapsed time: 0:00:01
+# End time: 14:02:48 on Dec 03,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -137,7 +137,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:24:29 on Dec 03,2024
+# Start time: 14:02:50 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -225,7 +225,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:24:29 on Dec 03,2024, Elapsed time: 0:00:00
+# End time: 14:02:50 on Dec 03,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -246,7 +246,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:24:46 on Dec 03,2024
+# Start time: 14:02:52 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -298,7 +298,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:24:47 on Dec 03,2024, Elapsed time: 0:00:01
+# End time: 14:02:52 on Dec 03,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -319,7 +319,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:24:49 on Dec 03,2024
+# Start time: 14:02:54 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -371,7 +371,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:24:49 on Dec 03,2024, Elapsed time: 0:00:00
+# End time: 14:02:54 on Dec 03,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -392,7 +392,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:24:51 on Dec 03,2024
+# Start time: 14:02:56 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -444,7 +444,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:24:51 on Dec 03,2024, Elapsed time: 0:00:00
+# End time: 14:02:57 on Dec 03,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -465,7 +465,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:24:53 on Dec 03,2024
+# Start time: 14:02:58 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -517,7 +517,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:24:53 on Dec 03,2024, Elapsed time: 0:00:00
+# End time: 14:02:59 on Dec 03,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -538,7 +538,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:24:55 on Dec 03,2024
+# Start time: 14:03:00 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -590,7 +590,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:24:56 on Dec 03,2024, Elapsed time: 0:00:01
+# End time: 14:03:01 on Dec 03,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -611,7 +611,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:24:57 on Dec 03,2024
+# Start time: 14:03:02 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -663,7 +663,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:24:58 on Dec 03,2024, Elapsed time: 0:00:01
+# End time: 14:03:03 on Dec 03,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -684,7 +684,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:24:59 on Dec 03,2024
+# Start time: 14:03:05 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -736,7 +736,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:25:00 on Dec 03,2024, Elapsed time: 0:00:01
+# End time: 14:03:05 on Dec 03,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -756,7 +756,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:25:01 on Dec 03,2024
+# Start time: 14:03:07 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -802,7 +802,7 @@ VSIM 1> run -a
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 13:25:02 on Dec 03,2024, Elapsed time: 0:00:01
+# End time: 14:03:07 on Dec 03,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -823,7 +823,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:25:04 on Dec 03,2024
+# Start time: 14:03:09 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -865,14 +865,14 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    x xxxxxxxxxx
 #   2 |            DIV, (  0) | DECODE ( ERROR) | 1    0    |    0 |    X,   X |    x xxxxxxxxxx
-# Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
+# Error occurred during execution.
+# ** Note: $stop    : tb_stackCPU.sv(96)
 #    Time: 105 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# Break at tb_stackCPU.sv line 96
+# Stopped at tb_stackCPU.sv line 96
 VSIM 2> # 
 # <EOF>
-# End time: 13:25:04 on Dec 03,2024, Elapsed time: 0:00:00
+# End time: 14:03:10 on Dec 03,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -891,7 +891,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:25:06 on Dec 03,2024
+# Start time: 14:03:11 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -923,14 +923,14 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    x xxxxxxxxxx
 #   0 |            MUL, (  0) | DECODE ( ERROR) | 1    0    |    0 |    x,   x |    x xxxxxxxxxx
-# Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
+# Error occurred during execution.
+# ** Note: $stop    : tb_stackCPU.sv(96)
 #    Time: 45 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# Break at tb_stackCPU.sv line 96
+# Stopped at tb_stackCPU.sv line 96
 VSIM 2> # 
 # <EOF>
-# End time: 13:25:06 on Dec 03,2024, Elapsed time: 0:00:00
+# End time: 14:03:12 on Dec 03,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -950,7 +950,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:25:08 on Dec 03,2024
+# Start time: 14:03:13 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -988,14 +988,14 @@ VSIM 1> run -a
 #   1 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
 #   1 |            MUL, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
 #   1 |            MUL, (  0) |   POP2 ( ERROR) | 1    0    |    0 |    X,   5 |    x xxxxxxxxxx
-# Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
+# Error occurred during execution.
+# ** Note: $stop    : tb_stackCPU.sv(96)
 #    Time: 85 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# Break at tb_stackCPU.sv line 96
+# Stopped at tb_stackCPU.sv line 96
 VSIM 2> # 
 # <EOF>
-# End time: 13:25:08 on Dec 03,2024, Elapsed time: 0:00:00
+# End time: 14:03:14 on Dec 03,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
 
@@ -1030,7 +1030,7 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 13:25:10 on Dec 03,2024
+# Start time: 14:03:15 on Dec 03,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -1143,13 +1143,13 @@ VSIM 1> run -a
 #  16 | PUSH_IMMEDIATE, ( 16) |  FETCH (DECODE) | 0    0    |   15 |    X,   X |   16 0000010000
 #  16 | PUSH_IMMEDIATE, ( 16) | DECODE (  PUSH) | 0    0    |   15 |    X,   X |   16 0000010000
 #  16 | PUSH_IMMEDIATE, ( 16) |   PUSH ( ERROR) | 0    1    |   15 |    X,  15 |   16 0000010000
-# Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
+# Error occurred during execution.
+# ** Note: $stop    : tb_stackCPU.sv(96)
 #    Time: 535 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# Break at tb_stackCPU.sv line 96
+# Stopped at tb_stackCPU.sv line 96
 VSIM 2> # 
 # <EOF>
-# End time: 13:25:11 on Dec 03,2024, Elapsed time: 0:00:01
+# End time: 14:03:16 on Dec 03,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw4'
