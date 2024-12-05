@@ -45,10 +45,15 @@ module tb_stackCPU;
 	logic signed [DATA_WIDTH_DEF-1:0] result;
 	logic error, halt;
 
+	logic single_step;
+
+	assign single_step = 0;
+
 	// Instantiate the stack-based CPU
 	stackCPU #(
 		.DATA_WIDTH(DATA_WIDTH_DEF),
 		.STACK_DEPTH(STACK_DEPTH_DEF),
+.SSTEP_ENABLE(0),
 		.INSTR_WIDTH(INSTR_WIDTH_DEF),
 		.PC_WIDTH(PC_WIDTH_DEF)
 	) DUT
@@ -57,6 +62,7 @@ module tb_stackCPU;
 		.reset(reset),	
 		.instruction(instruction),
 		.pc(pc),
+.single_step(single_step),
 		.result(result),
 		.error(error),
 		.halt(halt)

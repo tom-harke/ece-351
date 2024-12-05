@@ -36,20 +36,28 @@ run: clear vlog.stackCPU_DEFS vlog.stack_signed vlog.tb_stackCPU vlog.stackCPU
 echo:
 	echo run -a | make run
 
-%.out: %.mem
+
+SOURCES = \
+	stackCPU_DEFS.sv \
+	stackCPU.sv \
+	stack_signed.sv \
+	tb_stackCPU.sv \
+
+
+%.out: %.mem $(SOURCES)
 	ln -fsn $*.mem program.mem
-	echo ''                >  $*.out
-	echo '=========================================' >> $*.out
-	echo "File: $*.mem"    >> $*.out
-	echo ''                >> $*.out
-	echo 'Description:'    >> $*.out
-	cat $*.about           >> $*.out
-	echo ''                >> $*.out
-	echo 'Input Program:'  >> $*.out
-	cat $*.mem             >> $*.out
-	echo ''                >> $*.out
-	echo 'Results:'        >> $*.out
-	echo run -a | make run >> $*.out
+	@echo ''                >  $*.out
+	@echo '=========================================' >> $*.out
+	@echo "File: $*.mem"    >> $*.out
+	@echo ''                >> $*.out
+	@echo 'Description:'    >> $*.out
+	@cat $*.about           >> $*.out
+	@echo ''                >> $*.out
+	@echo 'Input Program:'  >> $*.out
+	@cat $*.mem             >> $*.out
+	@echo ''                >> $*.out
+	@echo 'Results:'        >> $*.out
+	@echo run -a | make run | grep -v ' time: ' >> $*.out
 	cat $*.out
 
 UNIT_ARITH = add sub mul div mod

@@ -2,7 +2,7 @@
  * stackCPU.sv - stack-based CPU
  *
  * @author Tom Harke (harke@pdx.edu)
- * @date   2024 Nov 27
+ * @date   2024 Dec 05
  *
  * @brief
  * TODO
@@ -10,11 +10,12 @@
  *
  * @note:  TODO
  */
-
+ // global definitions, parameters, etc.
 import stackCPU_DEFS::*;
 
 module stackCPU
 #(
+  parameter logic SSTEP_ENABLE   = 0,
   parameter DATA_WIDTH  = 32,
   parameter STACK_DEPTH = 16,
   parameter INSTR_WIDTH = 10,
@@ -24,8 +25,13 @@ module stackCPU
   input  logic clk, reset,
   input  logic [INSTR_WIDTH-1:0] instruction,
   output logic [PC_WIDTH-1:0] pc,
-  output logic signed [DATA_WIDTH-1:0] result,
-  output logic error, halt
+
+  // interface to nexysA7
+  input logic                             single_step,    // step on instruction on rising edge
+  output logic signed [DATA_WIDTH-1:0]    result,         // ALU result
+  output logic                            valid_result,   // asserted high when ALU result is valid
+  output logic                            error,          // error if asserted high
+  output logic                            halt            // CPU is halted
 );
 
   opcode_t opcode;
@@ -94,45 +100,61 @@ module stackCPU
     end
 
 
+  // HW4 changes:
+  //   - declutter by moving pop=0 and push=0 to top
+  //   - add PAUSE state
   always_comb // Next State & push/pop control signals
     begin
+      pop  = 1'b0;
+      push = 1'b0;
       case (current)
-        FETCH: {next,pop,push} = {DECODE,1'b0,1'b0};
+        FETCH: next = DECODE;
         DECODE:
           begin
             case (opcode)
-              PUSH_IMMEDIATE: {next,pop,push} = {PUSH,1'b0,1'b0}; // TODO want HI/LO instead of 1/0
-              INVERT:         {next,pop,push} = {POP1,1'b1,1'b0};
-              default:        {next,pop,push} = {POP2,1'b1,1'b0};
+              PUSH_IMMEDIATE:  next      = PUSH;
+              INVERT:         {next,pop} = {POP1,1'b1};
+              default:        {next,pop} = {POP2,1'b1};
             endcase
             if (opcode==DIV && top==0)
               next = ERROR;
           end
-        POP2: {next,pop,push} = {POP1, 1'b1,1'b0};
-        POP1: {next,pop,push} = {PUSH, 1'b0,1'b0};
-        PUSH: {next,pop,push} = {FETCH,1'b0,1'b1};
+        POP2:  {next,pop}  = {POP1, 1'b1};
+        POP1:   next       =  PUSH;
+        PUSH:  {next,push} = {PAUSE,1'b1};
+        PAUSE:  next = (SSTEP_ENABLE && ~single_step)
+                     ? PAUSE
+                     : FETCH
+                     ;
+        ERROR:  next       =  ERROR;
       endcase
       if (push && full) next = ERROR;
       if (pop && empty) next = ERROR;
     end
 
 
-  always_comb
+  // HW4 changes:
+  //   - put result in register
+  //   - add conditional so that it doesn't latch too late
+  always_ff @(posedge clk)
+   if (current < PAUSE)
     begin
       unique case (opcode)
-        PUSH_IMMEDIATE: result = immediate;
-        ADD:            result = op1 + op2;
-        SUB:            result = op1 - op2;
-        MUL:            result = op1 * op2;
-        DIV:            result = op1 / op2;
-        MOD:            result = op1 % op2;
-        AND:            result = op1 & op2;
-        OR:             result = op1 | op2;
-        INVERT:         result =     ~ op2;
-        default:        result = 1'bx; // needed to silence warning
+        PUSH_IMMEDIATE: result <= immediate;
+        ADD:            result <= op1 + op2;
+        SUB:            result <= op1 - op2;
+        MUL:            result <= op1 * op2;
+        DIV:            result <= op1 / op2;
+        MOD:            result <= op1 % op2;
+        AND:            result <= op1 & op2;
+        OR:             result <= op1 | op2;
+        INVERT:         result <=     ~ op2;
       endcase
     end
 
+assign error        = current == ERROR ? 1'b1 : 1'b0;
+assign halt         = current == ERROR ? 1'b1 : 1'b0; // current == HALT  ? 1'b1 : 1'b0; // TODO
+assign valid_result = current == PUSH  ? 1'b1 : 1'b0; // TODO
 assign {opcode,unused,immediate} = instruction;
 
 endmodule: stackCPU

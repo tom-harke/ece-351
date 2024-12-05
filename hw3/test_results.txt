@@ -32,7 +32,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:17 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -64,63 +63,71 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (  1) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    1 0000000001
 #   0 | PUSH_IMMEDIATE, (  1) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    1 0000000001
-#   0 | PUSH_IMMEDIATE, (  1) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    1 0000000001
+#   0 | PUSH_IMMEDIATE, (  1) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |    1 0000000001
+#   0 | PUSH_IMMEDIATE, (  1) |  PAUSE ( FETCH) | 0    0    |    1 |    X,   X |    1 0000000001
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  2) |  FETCH (DECODE) | 0    0    |    1 |    X,   X |    2 0000000010
+#   1 | PUSH_IMMEDIATE, (  2) |  FETCH (DECODE) | 0    0    |    1 |    X,   X |    1 0000000001
 #   1 | PUSH_IMMEDIATE, (  2) | DECODE (  PUSH) | 0    0    |    1 |    X,   X |    2 0000000010
-#   1 | PUSH_IMMEDIATE, (  2) |   PUSH ( FETCH) | 0    1    |    1 |    X,   1 |    2 0000000010
+#   1 | PUSH_IMMEDIATE, (  2) |   PUSH ( PAUSE) | 0    1    |    1 |    X,   1 |    2 0000000010
+#   1 | PUSH_IMMEDIATE, (  2) |  PAUSE ( FETCH) | 0    0    |    2 |    X,   X |    2 0000000010
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 | PUSH_IMMEDIATE, (  3) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    3 0000000011
+#   2 | PUSH_IMMEDIATE, (  3) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    2 0000000010
 #   2 | PUSH_IMMEDIATE, (  3) | DECODE (  PUSH) | 0    0    |    2 |    X,   X |    3 0000000011
-#   2 | PUSH_IMMEDIATE, (  3) |   PUSH ( FETCH) | 0    1    |    2 |    X,   2 |    3 0000000011
+#   2 | PUSH_IMMEDIATE, (  3) |   PUSH ( PAUSE) | 0    1    |    2 |    X,   2 |    3 0000000011
+#   2 | PUSH_IMMEDIATE, (  3) |  PAUSE ( FETCH) | 0    0    |    3 |    X,   X |    3 0000000011
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   3 | PUSH_IMMEDIATE, (  4) |  FETCH (DECODE) | 0    0    |    3 |    X,   X |    4 0000000100
+#   3 | PUSH_IMMEDIATE, (  4) |  FETCH (DECODE) | 0    0    |    3 |    X,   X |    3 0000000011
 #   3 | PUSH_IMMEDIATE, (  4) | DECODE (  PUSH) | 0    0    |    3 |    X,   X |    4 0000000100
-#   3 | PUSH_IMMEDIATE, (  4) |   PUSH ( FETCH) | 0    1    |    3 |    X,   3 |    4 0000000100
+#   3 | PUSH_IMMEDIATE, (  4) |   PUSH ( PAUSE) | 0    1    |    3 |    X,   3 |    4 0000000100
+#   3 | PUSH_IMMEDIATE, (  4) |  PAUSE ( FETCH) | 0    0    |    4 |    X,   X |    4 0000000100
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   4 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |    4 |    X,   X |    5 0000000101
+#   4 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |    4 |    X,   X |    4 0000000100
 #   4 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |    4 |    X,   X |    5 0000000101
-#   4 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |    4 |    X,   4 |    5 0000000101
+#   4 | PUSH_IMMEDIATE, (  5) |   PUSH ( PAUSE) | 0    1    |    4 |    X,   4 |    5 0000000101
+#   4 | PUSH_IMMEDIATE, (  5) |  PAUSE ( FETCH) | 0    0    |    5 |    X,   X |    5 0000000101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   5 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   5 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    5 0000000101
 #   5 |            MUL, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
 #   5 |            MUL, (  0) |   POP2 (  POP1) | 1    0    |    4 |    X,   5 |    x xxxxxxxxxx
-#   5 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    3 |    4,   5 |   20 0000010100
-#   5 |            MUL, (  0) |   PUSH ( FETCH) | 0    1    |    3 |    4,   5 |   20 0000010100
+#   5 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    3 |    4,   5 |    x xxxxxxxxxx
+#   5 |            MUL, (  0) |   PUSH ( PAUSE) | 0    1    |    3 |    4,   5 |   20 0000010100
+#   5 |            MUL, (  0) |  PAUSE ( FETCH) | 0    0    |   20 |    X,   X |   20 0000010100
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   6 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |   20 |    X,   X |    x xxxxxxxxxx
+#   6 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |   20 |    X,   X |   20 0000010100
 #   6 |            MUL, (  0) | DECODE (  POP2) | 1    0    |   20 |    X,   X |    x xxxxxxxxxx
 #   6 |            MUL, (  0) |   POP2 (  POP1) | 1    0    |    3 |    X,  20 |    x xxxxxxxxxx
-#   6 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    2 |    3,  20 |   60 0000111100
-#   6 |            MUL, (  0) |   PUSH ( FETCH) | 0    1    |    2 |    3,  20 |   60 0000111100
+#   6 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    2 |    3,  20 |    x xxxxxxxxxx
+#   6 |            MUL, (  0) |   PUSH ( PAUSE) | 0    1    |    2 |    3,  20 |   60 0000111100
+#   6 |            MUL, (  0) |  PAUSE ( FETCH) | 0    0    |   60 |    X,   X |   60 0000111100
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   7 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |   60 |    X,   X |    x xxxxxxxxxx
+#   7 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |   60 |    X,   X |   60 0000111100
 #   7 |            MUL, (  0) | DECODE (  POP2) | 1    0    |   60 |    X,   X |    x xxxxxxxxxx
 #   7 |            MUL, (  0) |   POP2 (  POP1) | 1    0    |    2 |    X,  60 |    x xxxxxxxxxx
-#   7 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    1 |    2,  60 |  120 0001111000
-#   7 |            MUL, (  0) |   PUSH ( FETCH) | 0    1    |    1 |    2,  60 |  120 0001111000
+#   7 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    1 |    2,  60 |    x xxxxxxxxxx
+#   7 |            MUL, (  0) |   PUSH ( PAUSE) | 0    1    |    1 |    2,  60 |  120 0001111000
+#   7 |            MUL, (  0) |  PAUSE ( FETCH) | 0    0    |  120 |    X,   X |  120 0001111000
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   8 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |  120 |    X,   X |    x xxxxxxxxxx
+#   8 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |  120 |    X,   X |  120 0001111000
 #   8 |            MUL, (  0) | DECODE (  POP2) | 1    0    |  120 |    X,   X |    x xxxxxxxxxx
 #   8 |            MUL, (  0) |   POP2 (  POP1) | 1    0    |    1 |    X, 120 |    x xxxxxxxxxx
-#   8 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    1, 120 |  120 0001111000
-#   8 |            MUL, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    1, 120 |  120 0001111000
+#   8 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    1, 120 |    x xxxxxxxxxx
+#   8 |            MUL, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |    1, 120 |  120 0001111000
+#   8 |            MUL, (  0) |  PAUSE ( FETCH) | 0    0    |  120 |    X,   X |  120 0001111000
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 375 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 465 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:18 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -151,7 +158,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:19 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -183,63 +189,71 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, ( -2) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |   -2 11111111111111111111111111111110
 #   0 | PUSH_IMMEDIATE, ( -2) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |   -2 11111111111111111111111111111110
-#   0 | PUSH_IMMEDIATE, ( -2) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |   -2 11111111111111111111111111111110
+#   0 | PUSH_IMMEDIATE, ( -2) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |   -2 11111111111111111111111111111110
+#   0 | PUSH_IMMEDIATE, ( -2) |  PAUSE ( FETCH) | 0    0    |   -2 |    X,   X |   -2 11111111111111111111111111111110
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |   -2 |    X,   X |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |   -2 |    X,   X |   -2 11111111111111111111111111111110
 #   1 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |   -2 |    X,   X |    5 0000000101
-#   1 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |   -2 |    X,  -2 |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |   PUSH ( PAUSE) | 0    1    |   -2 |    X,  -2 |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |  PAUSE ( FETCH) | 0    0    |    5 |    X,   X |    5 0000000101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            ADD, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   2 |            ADD, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    5 0000000101
 #   2 |            ADD, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
 #   2 |            ADD, (  0) |   POP2 (  POP1) | 1    0    |   -2 |    X,   5 |    x xxxxxxxxxx
-#   2 |            ADD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   -2,   5 |    3 0000000011
-#   2 |            ADD, (  0) |   PUSH ( FETCH) | 0    1    |    0 |   -2,   5 |    3 0000000011
+#   2 |            ADD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   -2,   5 |    x xxxxxxxxxx
+#   2 |            ADD, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |   -2,   5 |    3 0000000011
+#   2 |            ADD, (  0) |  PAUSE ( FETCH) | 0    0    |    3 |    X,   X |    3 0000000011
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   3 | PUSH_IMMEDIATE, (  7) |  FETCH (DECODE) | 0    0    |    3 |    X,   X |    7 0000000111
+#   3 | PUSH_IMMEDIATE, (  7) |  FETCH (DECODE) | 0    0    |    3 |    X,   X |    3 0000000011
 #   3 | PUSH_IMMEDIATE, (  7) | DECODE (  PUSH) | 0    0    |    3 |    X,   X |    7 0000000111
-#   3 | PUSH_IMMEDIATE, (  7) |   PUSH ( FETCH) | 0    1    |    3 |    X,   3 |    7 0000000111
+#   3 | PUSH_IMMEDIATE, (  7) |   PUSH ( PAUSE) | 0    1    |    3 |    X,   3 |    7 0000000111
+#   3 | PUSH_IMMEDIATE, (  7) |  PAUSE ( FETCH) | 0    0    |    7 |    X,   X |    7 0000000111
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   4 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    7 |    X,   X |    x xxxxxxxxxx
+#   4 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    7 |    X,   X |    7 0000000111
 #   4 |            MUL, (  0) | DECODE (  POP2) | 1    0    |    7 |    X,   X |    x xxxxxxxxxx
 #   4 |            MUL, (  0) |   POP2 (  POP1) | 1    0    |    3 |    X,   7 |    x xxxxxxxxxx
-#   4 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    3,   7 |   21 0000010101
-#   4 |            MUL, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    3,   7 |   21 0000010101
+#   4 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    3,   7 |    x xxxxxxxxxx
+#   4 |            MUL, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |    3,   7 |   21 0000010101
+#   4 |            MUL, (  0) |  PAUSE ( FETCH) | 0    0    |   21 |    X,   X |   21 0000010101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   5 | PUSH_IMMEDIATE, (255) |  FETCH (DECODE) | 0    0    |   21 |    X,   X |  255 0011111111
+#   5 | PUSH_IMMEDIATE, (255) |  FETCH (DECODE) | 0    0    |   21 |    X,   X |   21 0000010101
 #   5 | PUSH_IMMEDIATE, (255) | DECODE (  PUSH) | 0    0    |   21 |    X,   X |  255 0011111111
-#   5 | PUSH_IMMEDIATE, (255) |   PUSH ( FETCH) | 0    1    |   21 |    X,  21 |  255 0011111111
+#   5 | PUSH_IMMEDIATE, (255) |   PUSH ( PAUSE) | 0    1    |   21 |    X,  21 |  255 0011111111
+#   5 | PUSH_IMMEDIATE, (255) |  PAUSE ( FETCH) | 0    0    |  255 |    X,   X |  255 0011111111
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   6 |            ADD, (  0) |  FETCH (DECODE) | 0    0    |  255 |    X,   X |    x xxxxxxxxxx
+#   6 |            ADD, (  0) |  FETCH (DECODE) | 0    0    |  255 |    X,   X |  255 0011111111
 #   6 |            ADD, (  0) | DECODE (  POP2) | 1    0    |  255 |    X,   X |    x xxxxxxxxxx
 #   6 |            ADD, (  0) |   POP2 (  POP1) | 1    0    |   21 |    X, 255 |    x xxxxxxxxxx
-#   6 |            ADD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   21, 255 |  276 0100010100
-#   6 |            ADD, (  0) |   PUSH ( FETCH) | 0    1    |    0 |   21, 255 |  276 0100010100
+#   6 |            ADD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   21, 255 |    x xxxxxxxxxx
+#   6 |            ADD, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |   21, 255 |  276 0100010100
+#   6 |            ADD, (  0) |  PAUSE ( FETCH) | 0    0    |  276 |    X,   X |  276 0100010100
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   7 | PUSH_IMMEDIATE, (  0) |  FETCH (DECODE) | 0    0    |  276 |    X,   X |    0 0000000000
+#   7 | PUSH_IMMEDIATE, (  0) |  FETCH (DECODE) | 0    0    |  276 |    X,   X |  276 0100010100
 #   7 | PUSH_IMMEDIATE, (  0) | DECODE (  PUSH) | 0    0    |  276 |    X,   X |    0 0000000000
-#   7 | PUSH_IMMEDIATE, (  0) |   PUSH ( FETCH) | 0    1    |  276 |    X, 276 |    0 0000000000
+#   7 | PUSH_IMMEDIATE, (  0) |   PUSH ( PAUSE) | 0    1    |  276 |    X, 276 |    0 0000000000
+#   7 | PUSH_IMMEDIATE, (  0) |  PAUSE ( FETCH) | 0    0    |    0 |    X,   X |    0 0000000000
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   8 |            ADD, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    x xxxxxxxxxx
+#   8 |            ADD, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    0 0000000000
 #   8 |            ADD, (  0) | DECODE (  POP2) | 1    0    |    0 |    X,   X |    x xxxxxxxxxx
 #   8 |            ADD, (  0) |   POP2 (  POP1) | 1    0    |  276 |    X,   0 |    x xxxxxxxxxx
-#   8 |            ADD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |  276,   0 |  276 0100010100
-#   8 |            ADD, (  0) |   PUSH ( FETCH) | 0    1    |    0 |  276,   0 |  276 0100010100
+#   8 |            ADD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |  276,   0 |    x xxxxxxxxxx
+#   8 |            ADD, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |  276,   0 |  276 0100010100
+#   8 |            ADD, (  0) |  PAUSE ( FETCH) | 0    0    |  276 |    X,   X |  276 0100010100
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 375 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 465 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:20 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -263,7 +277,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:22 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -295,27 +308,29 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, ( -2) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |   -2 11111111111111111111111111111110
 #   0 | PUSH_IMMEDIATE, ( -2) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |   -2 11111111111111111111111111111110
-#   0 | PUSH_IMMEDIATE, ( -2) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |   -2 11111111111111111111111111111110
+#   0 | PUSH_IMMEDIATE, ( -2) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |   -2 11111111111111111111111111111110
+#   0 | PUSH_IMMEDIATE, ( -2) |  PAUSE ( FETCH) | 0    0    |   -2 |    X,   X |   -2 11111111111111111111111111111110
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |   -2 |    X,   X |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |   -2 |    X,   X |   -2 11111111111111111111111111111110
 #   1 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |   -2 |    X,   X |    5 0000000101
-#   1 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |   -2 |    X,  -2 |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |   PUSH ( PAUSE) | 0    1    |   -2 |    X,  -2 |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |  PAUSE ( FETCH) | 0    0    |    5 |    X,   X |    5 0000000101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            ADD, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   2 |            ADD, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    5 0000000101
 #   2 |            ADD, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
 #   2 |            ADD, (  0) |   POP2 (  POP1) | 1    0    |   -2 |    X,   5 |    x xxxxxxxxxx
-#   2 |            ADD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   -2,   5 |    3 0000000011
-#   2 |            ADD, (  0) |   PUSH ( FETCH) | 0    1    |    0 |   -2,   5 |    3 0000000011
+#   2 |            ADD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   -2,   5 |    x xxxxxxxxxx
+#   2 |            ADD, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |   -2,   5 |    3 0000000011
+#   2 |            ADD, (  0) |  PAUSE ( FETCH) | 0    0    |    3 |    X,   X |    3 0000000011
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 135 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 165 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:22 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -339,7 +354,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:24 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -371,27 +385,29 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, ( -2) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |   -2 11111111111111111111111111111110
 #   0 | PUSH_IMMEDIATE, ( -2) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |   -2 11111111111111111111111111111110
-#   0 | PUSH_IMMEDIATE, ( -2) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |   -2 11111111111111111111111111111110
+#   0 | PUSH_IMMEDIATE, ( -2) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |   -2 11111111111111111111111111111110
+#   0 | PUSH_IMMEDIATE, ( -2) |  PAUSE ( FETCH) | 0    0    |   -2 |    X,   X |   -2 11111111111111111111111111111110
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |   -2 |    X,   X |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |   -2 |    X,   X |   -2 11111111111111111111111111111110
 #   1 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |   -2 |    X,   X |    5 0000000101
-#   1 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |   -2 |    X,  -2 |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |   PUSH ( PAUSE) | 0    1    |   -2 |    X,  -2 |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |  PAUSE ( FETCH) | 0    0    |    5 |    X,   X |    5 0000000101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            SUB, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   2 |            SUB, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    5 0000000101
 #   2 |            SUB, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
 #   2 |            SUB, (  0) |   POP2 (  POP1) | 1    0    |   -2 |    X,   5 |    x xxxxxxxxxx
-#   2 |            SUB, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   -2,   5 |   -7 11111111111111111111111111111001
-#   2 |            SUB, (  0) |   PUSH ( FETCH) | 0    1    |    0 |   -2,   5 |   -7 11111111111111111111111111111001
+#   2 |            SUB, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   -2,   5 |    x xxxxxxxxxx
+#   2 |            SUB, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |   -2,   5 |   -7 11111111111111111111111111111001
+#   2 |            SUB, (  0) |  PAUSE ( FETCH) | 0    0    |   -7 |    X,   X |   -7 11111111111111111111111111111001
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 135 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 165 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:24 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -415,7 +431,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:26 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -447,27 +462,29 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, ( -2) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |   -2 11111111111111111111111111111110
 #   0 | PUSH_IMMEDIATE, ( -2) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |   -2 11111111111111111111111111111110
-#   0 | PUSH_IMMEDIATE, ( -2) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |   -2 11111111111111111111111111111110
+#   0 | PUSH_IMMEDIATE, ( -2) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |   -2 11111111111111111111111111111110
+#   0 | PUSH_IMMEDIATE, ( -2) |  PAUSE ( FETCH) | 0    0    |   -2 |    X,   X |   -2 11111111111111111111111111111110
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |   -2 |    X,   X |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |   -2 |    X,   X |   -2 11111111111111111111111111111110
 #   1 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |   -2 |    X,   X |    5 0000000101
-#   1 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |   -2 |    X,  -2 |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |   PUSH ( PAUSE) | 0    1    |   -2 |    X,  -2 |    5 0000000101
+#   1 | PUSH_IMMEDIATE, (  5) |  PAUSE ( FETCH) | 0    0    |    5 |    X,   X |    5 0000000101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   2 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    5 0000000101
 #   2 |            MUL, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
 #   2 |            MUL, (  0) |   POP2 (  POP1) | 1    0    |   -2 |    X,   5 |    x xxxxxxxxxx
-#   2 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   -2,   5 |  -10 11111111111111111111111111110110
-#   2 |            MUL, (  0) |   PUSH ( FETCH) | 0    1    |    0 |   -2,   5 |  -10 11111111111111111111111111110110
+#   2 |            MUL, (  0) |   POP1 (  PUSH) | 0    0    |    0 |   -2,   5 |    x xxxxxxxxxx
+#   2 |            MUL, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |   -2,   5 |  -10 11111111111111111111111111110110
+#   2 |            MUL, (  0) |  PAUSE ( FETCH) | 0    0    |  -10 |    X,   X |  -10 11111111111111111111111111110110
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 135 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 165 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:27 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -492,7 +509,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:28 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -524,27 +540,29 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (  9) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    9 0000001001
 #   0 | PUSH_IMMEDIATE, (  9) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    9 0000001001
-#   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) |  PAUSE ( FETCH) | 0    0    |    9 |    X,   X |    9 0000001001
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  2) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    2 0000000010
+#   1 | PUSH_IMMEDIATE, (  2) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    9 0000001001
 #   1 | PUSH_IMMEDIATE, (  2) | DECODE (  PUSH) | 0    0    |    9 |    X,   X |    2 0000000010
-#   1 | PUSH_IMMEDIATE, (  2) |   PUSH ( FETCH) | 0    1    |    9 |    X,   9 |    2 0000000010
+#   1 | PUSH_IMMEDIATE, (  2) |   PUSH ( PAUSE) | 0    1    |    9 |    X,   9 |    2 0000000010
+#   1 | PUSH_IMMEDIATE, (  2) |  PAUSE ( FETCH) | 0    0    |    2 |    X,   X |    2 0000000010
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    x xxxxxxxxxx
+#   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    2 0000000010
 #   2 |            DIV, (  0) | DECODE (  POP2) | 1    0    |    2 |    X,   X |    x xxxxxxxxxx
 #   2 |            DIV, (  0) |   POP2 (  POP1) | 1    0    |    9 |    X,   2 |    x xxxxxxxxxx
-#   2 |            DIV, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    9,   2 |    4 0000000100
-#   2 |            DIV, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    9,   2 |    4 0000000100
+#   2 |            DIV, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    9,   2 |    x xxxxxxxxxx
+#   2 |            DIV, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |    9,   2 |    4 0000000100
+#   2 |            DIV, (  0) |  PAUSE ( FETCH) | 0    0    |    4 |    X,   X |    4 0000000100
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 135 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 165 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:29 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -569,7 +587,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:30 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -601,27 +618,29 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (  9) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    9 0000001001
 #   0 | PUSH_IMMEDIATE, (  9) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    9 0000001001
-#   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) |  PAUSE ( FETCH) | 0    0    |    9 |    X,   X |    9 0000001001
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  2) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    2 0000000010
+#   1 | PUSH_IMMEDIATE, (  2) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    9 0000001001
 #   1 | PUSH_IMMEDIATE, (  2) | DECODE (  PUSH) | 0    0    |    9 |    X,   X |    2 0000000010
-#   1 | PUSH_IMMEDIATE, (  2) |   PUSH ( FETCH) | 0    1    |    9 |    X,   9 |    2 0000000010
+#   1 | PUSH_IMMEDIATE, (  2) |   PUSH ( PAUSE) | 0    1    |    9 |    X,   9 |    2 0000000010
+#   1 | PUSH_IMMEDIATE, (  2) |  PAUSE ( FETCH) | 0    0    |    2 |    X,   X |    2 0000000010
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            MOD, (  0) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    x xxxxxxxxxx
+#   2 |            MOD, (  0) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    2 0000000010
 #   2 |            MOD, (  0) | DECODE (  POP2) | 1    0    |    2 |    X,   X |    x xxxxxxxxxx
 #   2 |            MOD, (  0) |   POP2 (  POP1) | 1    0    |    9 |    X,   2 |    x xxxxxxxxxx
-#   2 |            MOD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    9,   2 |    1 0000000001
-#   2 |            MOD, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    9,   2 |    1 0000000001
+#   2 |            MOD, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    9,   2 |    x xxxxxxxxxx
+#   2 |            MOD, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |    9,   2 |    1 0000000001
+#   2 |            MOD, (  0) |  PAUSE ( FETCH) | 0    0    |    1 |    X,   X |    1 0000000001
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 135 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 165 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:31 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -645,7 +664,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:32 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -677,27 +695,29 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (480) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |  480 0111100000
 #   0 | PUSH_IMMEDIATE, (480) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |  480 0111100000
-#   0 | PUSH_IMMEDIATE, (480) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |  480 0111100000
+#   0 | PUSH_IMMEDIATE, (480) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |  480 0111100000
+#   0 | PUSH_IMMEDIATE, (480) |  PAUSE ( FETCH) | 0    0    |  480 |    X,   X |  480 0111100000
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (501) |  FETCH (DECODE) | 0    0    |  480 |    X,   X |  501 0111110101
+#   1 | PUSH_IMMEDIATE, (501) |  FETCH (DECODE) | 0    0    |  480 |    X,   X |  480 0111100000
 #   1 | PUSH_IMMEDIATE, (501) | DECODE (  PUSH) | 0    0    |  480 |    X,   X |  501 0111110101
-#   1 | PUSH_IMMEDIATE, (501) |   PUSH ( FETCH) | 0    1    |  480 |    X, 480 |  501 0111110101
+#   1 | PUSH_IMMEDIATE, (501) |   PUSH ( PAUSE) | 0    1    |  480 |    X, 480 |  501 0111110101
+#   1 | PUSH_IMMEDIATE, (501) |  PAUSE ( FETCH) | 0    0    |  501 |    X,   X |  501 0111110101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            AND, (  0) |  FETCH (DECODE) | 0    0    |  501 |    X,   X |    X 000000000x
+#   2 |            AND, (  0) |  FETCH (DECODE) | 0    0    |  501 |    X,   X |  501 0111110101
 #   2 |            AND, (  0) | DECODE (  POP2) | 1    0    |  501 |    X,   X |    X 000000000x
 #   2 |            AND, (  0) |   POP2 (  POP1) | 1    0    |  480 |    X, 501 |    X 000000000x
-#   2 |            AND, (  0) |   POP1 (  PUSH) | 0    0    |    0 |  480, 501 |  480 0111100000
-#   2 |            AND, (  0) |   PUSH ( FETCH) | 0    1    |    0 |  480, 501 |  480 0111100000
+#   2 |            AND, (  0) |   POP1 (  PUSH) | 0    0    |    0 |  480, 501 |    X 000000000x
+#   2 |            AND, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |  480, 501 |  480 0111100000
+#   2 |            AND, (  0) |  PAUSE ( FETCH) | 0    0    |  480 |    X,   X |  480 0111100000
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 135 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 165 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:33 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -721,7 +741,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:35 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -753,27 +772,29 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (480) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |  480 0111100000
 #   0 | PUSH_IMMEDIATE, (480) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |  480 0111100000
-#   0 | PUSH_IMMEDIATE, (480) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |  480 0111100000
+#   0 | PUSH_IMMEDIATE, (480) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |  480 0111100000
+#   0 | PUSH_IMMEDIATE, (480) |  PAUSE ( FETCH) | 0    0    |  480 |    X,   X |  480 0111100000
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (501) |  FETCH (DECODE) | 0    0    |  480 |    X,   X |  501 0111110101
+#   1 | PUSH_IMMEDIATE, (501) |  FETCH (DECODE) | 0    0    |  480 |    X,   X |  480 0111100000
 #   1 | PUSH_IMMEDIATE, (501) | DECODE (  PUSH) | 0    0    |  480 |    X,   X |  501 0111110101
-#   1 | PUSH_IMMEDIATE, (501) |   PUSH ( FETCH) | 0    1    |  480 |    X, 480 |  501 0111110101
+#   1 | PUSH_IMMEDIATE, (501) |   PUSH ( PAUSE) | 0    1    |  480 |    X, 480 |  501 0111110101
+#   1 | PUSH_IMMEDIATE, (501) |  PAUSE ( FETCH) | 0    0    |  501 |    X,   X |  501 0111110101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |             OR, (  0) |  FETCH (DECODE) | 0    0    |  501 |    X,   X |    X 000000000x
+#   2 |             OR, (  0) |  FETCH (DECODE) | 0    0    |  501 |    X,   X |  501 0111110101
 #   2 |             OR, (  0) | DECODE (  POP2) | 1    0    |  501 |    X,   X |    X 000000000x
-#   2 |             OR, (  0) |   POP2 (  POP1) | 1    0    |  480 |    X, 501 |  501 0111110101
+#   2 |             OR, (  0) |   POP2 (  POP1) | 1    0    |  480 |    X, 501 |    X 000000000x
 #   2 |             OR, (  0) |   POP1 (  PUSH) | 0    0    |    0 |  480, 501 |  501 0111110101
-#   2 |             OR, (  0) |   PUSH ( FETCH) | 0    1    |    0 |  480, 501 |  501 0111110101
+#   2 |             OR, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |  480, 501 |  501 0111110101
+#   2 |             OR, (  0) |  PAUSE ( FETCH) | 0    0    |  501 |    X,   X |  501 0111110101
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 135 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 165 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:35 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -796,7 +817,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:37 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -828,21 +848,22 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (480) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |  480 0111100000
 #   0 | PUSH_IMMEDIATE, (480) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |  480 0111100000
-#   0 | PUSH_IMMEDIATE, (480) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |  480 0111100000
+#   0 | PUSH_IMMEDIATE, (480) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |  480 0111100000
+#   0 | PUSH_IMMEDIATE, (480) |  PAUSE ( FETCH) | 0    0    |  480 |    X,   X |  480 0111100000
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 |         INVERT, (  0) |  FETCH (DECODE) | 0    0    |  480 |    X,   X |    X 1111111111111111111111111111111x
+#   1 |         INVERT, (  0) |  FETCH (DECODE) | 0    0    |  480 |    X,   X |  480 0111100000
 #   1 |         INVERT, (  0) | DECODE (  POP1) | 1    0    |  480 |    X,   X |    X 1111111111111111111111111111111x
-#   1 |         INVERT, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    X, 480 | -481 11111111111111111111111000011111
-#   1 |         INVERT, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    X, 480 | -481 11111111111111111111111000011111
+#   1 |         INVERT, (  0) |   POP1 (  PUSH) | 0    0    |    0 |    X, 480 |    X 1111111111111111111111111111111x
+#   1 |         INVERT, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |    X, 480 | -481 11111111111111111111111000011111
+#   1 |         INVERT, (  0) |  PAUSE ( FETCH) | 0    0    | -481 |    X,   X | -481 11111111111111111111111000011111
 # Reached end of program.
-# ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 95 ns  Iteration: 1  Instance: /tb_stackCPU
-# Break at tb_stackCPU.sv line 102
-# Stopped at tb_stackCPU.sv line 102
+# ** Note: $stop    : tb_stackCPU.sv(108)
+#    Time: 115 ns  Iteration: 1  Instance: /tb_stackCPU
+# Break at tb_stackCPU.sv line 108
+# Stopped at tb_stackCPU.sv line 108
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:37 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -866,7 +887,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:39 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -898,24 +918,25 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (  9) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    9 0000001001
 #   0 | PUSH_IMMEDIATE, (  9) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    9 0000001001
-#   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) |  PAUSE ( FETCH) | 0    0    |    9 |    X,   X |    9 0000001001
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  0) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    0 0000000000
+#   1 | PUSH_IMMEDIATE, (  0) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    9 0000001001
 #   1 | PUSH_IMMEDIATE, (  0) | DECODE (  PUSH) | 0    0    |    9 |    X,   X |    0 0000000000
-#   1 | PUSH_IMMEDIATE, (  0) |   PUSH ( FETCH) | 0    1    |    9 |    X,   9 |    0 0000000000
+#   1 | PUSH_IMMEDIATE, (  0) |   PUSH ( PAUSE) | 0    1    |    9 |    X,   9 |    0 0000000000
+#   1 | PUSH_IMMEDIATE, (  0) |  PAUSE ( FETCH) | 0    0    |    0 |    X,   X |    0 0000000000
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    x xxxxxxxxxx
+#   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    0 0000000000
 #   2 |            DIV, (  0) | DECODE ( ERROR) | 1    0    |    0 |    X,   X |    x xxxxxxxxxx
-# Reached end of program.
+# Error occurred during execution.
 # ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 105 ns  Iteration: 1  Instance: /tb_stackCPU
+#    Time: 125 ns  Iteration: 1  Instance: /tb_stackCPU
 # Break at tb_stackCPU.sv line 102
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:39 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -938,7 +959,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:41 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -970,14 +990,13 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    x xxxxxxxxxx
 #   0 |            MUL, (  0) | DECODE ( ERROR) | 1    0    |    0 |    x,   x |    x xxxxxxxxxx
-# Reached end of program.
+# Error occurred during execution.
 # ** Note: $stop    : tb_stackCPU.sv(102)
 #    Time: 45 ns  Iteration: 1  Instance: /tb_stackCPU
 # Break at tb_stackCPU.sv line 102
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:42 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -1001,7 +1020,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:43 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -1033,20 +1051,20 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    5 0000000101
 #   0 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    5 0000000101
-#   0 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    5 0000000101
+#   0 | PUSH_IMMEDIATE, (  5) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |    5 0000000101
+#   0 | PUSH_IMMEDIATE, (  5) |  PAUSE ( FETCH) | 0    0    |    5 |    X,   X |    5 0000000101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   1 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    5 0000000101
 #   1 |            MUL, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
 #   1 |            MUL, (  0) |   POP2 ( ERROR) | 1    0    |    0 |    X,   5 |    x xxxxxxxxxx
-# Reached end of program.
+# Error occurred during execution.
 # ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 85 ns  Iteration: 1  Instance: /tb_stackCPU
+#    Time: 95 ns  Iteration: 1  Instance: /tb_stackCPU
 # Break at tb_stackCPU.sv line 102
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:44 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
 
@@ -1084,7 +1102,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:45 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -1116,94 +1133,109 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (  0) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    0 0000000000
 #   0 | PUSH_IMMEDIATE, (  0) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    0 0000000000
-#   0 | PUSH_IMMEDIATE, (  0) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    0 0000000000
+#   0 | PUSH_IMMEDIATE, (  0) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |    0 0000000000
+#   0 | PUSH_IMMEDIATE, (  0) |  PAUSE ( FETCH) | 0    0    |    0 |    X,   X |    0 0000000000
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  1) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    1 0000000001
+#   1 | PUSH_IMMEDIATE, (  1) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    0 0000000000
 #   1 | PUSH_IMMEDIATE, (  1) | DECODE (  PUSH) | 0    0    |    0 |    X,   X |    1 0000000001
-#   1 | PUSH_IMMEDIATE, (  1) |   PUSH ( FETCH) | 0    1    |    0 |    X,   0 |    1 0000000001
+#   1 | PUSH_IMMEDIATE, (  1) |   PUSH ( PAUSE) | 0    1    |    0 |    X,   0 |    1 0000000001
+#   1 | PUSH_IMMEDIATE, (  1) |  PAUSE ( FETCH) | 0    0    |    1 |    X,   X |    1 0000000001
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 | PUSH_IMMEDIATE, (  2) |  FETCH (DECODE) | 0    0    |    1 |    X,   X |    2 0000000010
+#   2 | PUSH_IMMEDIATE, (  2) |  FETCH (DECODE) | 0    0    |    1 |    X,   X |    1 0000000001
 #   2 | PUSH_IMMEDIATE, (  2) | DECODE (  PUSH) | 0    0    |    1 |    X,   X |    2 0000000010
-#   2 | PUSH_IMMEDIATE, (  2) |   PUSH ( FETCH) | 0    1    |    1 |    X,   1 |    2 0000000010
+#   2 | PUSH_IMMEDIATE, (  2) |   PUSH ( PAUSE) | 0    1    |    1 |    X,   1 |    2 0000000010
+#   2 | PUSH_IMMEDIATE, (  2) |  PAUSE ( FETCH) | 0    0    |    2 |    X,   X |    2 0000000010
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   3 | PUSH_IMMEDIATE, (  3) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    3 0000000011
+#   3 | PUSH_IMMEDIATE, (  3) |  FETCH (DECODE) | 0    0    |    2 |    X,   X |    2 0000000010
 #   3 | PUSH_IMMEDIATE, (  3) | DECODE (  PUSH) | 0    0    |    2 |    X,   X |    3 0000000011
-#   3 | PUSH_IMMEDIATE, (  3) |   PUSH ( FETCH) | 0    1    |    2 |    X,   2 |    3 0000000011
+#   3 | PUSH_IMMEDIATE, (  3) |   PUSH ( PAUSE) | 0    1    |    2 |    X,   2 |    3 0000000011
+#   3 | PUSH_IMMEDIATE, (  3) |  PAUSE ( FETCH) | 0    0    |    3 |    X,   X |    3 0000000011
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   4 | PUSH_IMMEDIATE, (  4) |  FETCH (DECODE) | 0    0    |    3 |    X,   X |    4 0000000100
+#   4 | PUSH_IMMEDIATE, (  4) |  FETCH (DECODE) | 0    0    |    3 |    X,   X |    3 0000000011
 #   4 | PUSH_IMMEDIATE, (  4) | DECODE (  PUSH) | 0    0    |    3 |    X,   X |    4 0000000100
-#   4 | PUSH_IMMEDIATE, (  4) |   PUSH ( FETCH) | 0    1    |    3 |    X,   3 |    4 0000000100
+#   4 | PUSH_IMMEDIATE, (  4) |   PUSH ( PAUSE) | 0    1    |    3 |    X,   3 |    4 0000000100
+#   4 | PUSH_IMMEDIATE, (  4) |  PAUSE ( FETCH) | 0    0    |    4 |    X,   X |    4 0000000100
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   5 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |    4 |    X,   X |    5 0000000101
+#   5 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |    4 |    X,   X |    4 0000000100
 #   5 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |    4 |    X,   X |    5 0000000101
-#   5 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |    4 |    X,   4 |    5 0000000101
+#   5 | PUSH_IMMEDIATE, (  5) |   PUSH ( PAUSE) | 0    1    |    4 |    X,   4 |    5 0000000101
+#   5 | PUSH_IMMEDIATE, (  5) |  PAUSE ( FETCH) | 0    0    |    5 |    X,   X |    5 0000000101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   6 | PUSH_IMMEDIATE, (  6) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    6 0000000110
+#   6 | PUSH_IMMEDIATE, (  6) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    5 0000000101
 #   6 | PUSH_IMMEDIATE, (  6) | DECODE (  PUSH) | 0    0    |    5 |    X,   X |    6 0000000110
-#   6 | PUSH_IMMEDIATE, (  6) |   PUSH ( FETCH) | 0    1    |    5 |    X,   5 |    6 0000000110
+#   6 | PUSH_IMMEDIATE, (  6) |   PUSH ( PAUSE) | 0    1    |    5 |    X,   5 |    6 0000000110
+#   6 | PUSH_IMMEDIATE, (  6) |  PAUSE ( FETCH) | 0    0    |    6 |    X,   X |    6 0000000110
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   7 | PUSH_IMMEDIATE, (  7) |  FETCH (DECODE) | 0    0    |    6 |    X,   X |    7 0000000111
+#   7 | PUSH_IMMEDIATE, (  7) |  FETCH (DECODE) | 0    0    |    6 |    X,   X |    6 0000000110
 #   7 | PUSH_IMMEDIATE, (  7) | DECODE (  PUSH) | 0    0    |    6 |    X,   X |    7 0000000111
-#   7 | PUSH_IMMEDIATE, (  7) |   PUSH ( FETCH) | 0    1    |    6 |    X,   6 |    7 0000000111
+#   7 | PUSH_IMMEDIATE, (  7) |   PUSH ( PAUSE) | 0    1    |    6 |    X,   6 |    7 0000000111
+#   7 | PUSH_IMMEDIATE, (  7) |  PAUSE ( FETCH) | 0    0    |    7 |    X,   X |    7 0000000111
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   8 | PUSH_IMMEDIATE, (  8) |  FETCH (DECODE) | 0    0    |    7 |    X,   X |    8 0000001000
+#   8 | PUSH_IMMEDIATE, (  8) |  FETCH (DECODE) | 0    0    |    7 |    X,   X |    7 0000000111
 #   8 | PUSH_IMMEDIATE, (  8) | DECODE (  PUSH) | 0    0    |    7 |    X,   X |    8 0000001000
-#   8 | PUSH_IMMEDIATE, (  8) |   PUSH ( FETCH) | 0    1    |    7 |    X,   7 |    8 0000001000
+#   8 | PUSH_IMMEDIATE, (  8) |   PUSH ( PAUSE) | 0    1    |    7 |    X,   7 |    8 0000001000
+#   8 | PUSH_IMMEDIATE, (  8) |  PAUSE ( FETCH) | 0    0    |    8 |    X,   X |    8 0000001000
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   9 | PUSH_IMMEDIATE, (  9) |  FETCH (DECODE) | 0    0    |    8 |    X,   X |    9 0000001001
+#   9 | PUSH_IMMEDIATE, (  9) |  FETCH (DECODE) | 0    0    |    8 |    X,   X |    8 0000001000
 #   9 | PUSH_IMMEDIATE, (  9) | DECODE (  PUSH) | 0    0    |    8 |    X,   X |    9 0000001001
-#   9 | PUSH_IMMEDIATE, (  9) |   PUSH ( FETCH) | 0    1    |    8 |    X,   8 |    9 0000001001
+#   9 | PUSH_IMMEDIATE, (  9) |   PUSH ( PAUSE) | 0    1    |    8 |    X,   8 |    9 0000001001
+#   9 | PUSH_IMMEDIATE, (  9) |  PAUSE ( FETCH) | 0    0    |    9 |    X,   X |    9 0000001001
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#  10 | PUSH_IMMEDIATE, ( 10) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |   10 0000001010
+#  10 | PUSH_IMMEDIATE, ( 10) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    9 0000001001
 #  10 | PUSH_IMMEDIATE, ( 10) | DECODE (  PUSH) | 0    0    |    9 |    X,   X |   10 0000001010
-#  10 | PUSH_IMMEDIATE, ( 10) |   PUSH ( FETCH) | 0    1    |    9 |    X,   9 |   10 0000001010
+#  10 | PUSH_IMMEDIATE, ( 10) |   PUSH ( PAUSE) | 0    1    |    9 |    X,   9 |   10 0000001010
+#  10 | PUSH_IMMEDIATE, ( 10) |  PAUSE ( FETCH) | 0    0    |   10 |    X,   X |   10 0000001010
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#  11 | PUSH_IMMEDIATE, ( 11) |  FETCH (DECODE) | 0    0    |   10 |    X,   X |   11 0000001011
+#  11 | PUSH_IMMEDIATE, ( 11) |  FETCH (DECODE) | 0    0    |   10 |    X,   X |   10 0000001010
 #  11 | PUSH_IMMEDIATE, ( 11) | DECODE (  PUSH) | 0    0    |   10 |    X,   X |   11 0000001011
-#  11 | PUSH_IMMEDIATE, ( 11) |   PUSH ( FETCH) | 0    1    |   10 |    X,  10 |   11 0000001011
+#  11 | PUSH_IMMEDIATE, ( 11) |   PUSH ( PAUSE) | 0    1    |   10 |    X,  10 |   11 0000001011
+#  11 | PUSH_IMMEDIATE, ( 11) |  PAUSE ( FETCH) | 0    0    |   11 |    X,   X |   11 0000001011
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#  12 | PUSH_IMMEDIATE, ( 12) |  FETCH (DECODE) | 0    0    |   11 |    X,   X |   12 0000001100
+#  12 | PUSH_IMMEDIATE, ( 12) |  FETCH (DECODE) | 0    0    |   11 |    X,   X |   11 0000001011
 #  12 | PUSH_IMMEDIATE, ( 12) | DECODE (  PUSH) | 0    0    |   11 |    X,   X |   12 0000001100
-#  12 | PUSH_IMMEDIATE, ( 12) |   PUSH ( FETCH) | 0    1    |   11 |    X,  11 |   12 0000001100
+#  12 | PUSH_IMMEDIATE, ( 12) |   PUSH ( PAUSE) | 0    1    |   11 |    X,  11 |   12 0000001100
+#  12 | PUSH_IMMEDIATE, ( 12) |  PAUSE ( FETCH) | 0    0    |   12 |    X,   X |   12 0000001100
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#  13 | PUSH_IMMEDIATE, ( 13) |  FETCH (DECODE) | 0    0    |   12 |    X,   X |   13 0000001101
+#  13 | PUSH_IMMEDIATE, ( 13) |  FETCH (DECODE) | 0    0    |   12 |    X,   X |   12 0000001100
 #  13 | PUSH_IMMEDIATE, ( 13) | DECODE (  PUSH) | 0    0    |   12 |    X,   X |   13 0000001101
-#  13 | PUSH_IMMEDIATE, ( 13) |   PUSH ( FETCH) | 0    1    |   12 |    X,  12 |   13 0000001101
+#  13 | PUSH_IMMEDIATE, ( 13) |   PUSH ( PAUSE) | 0    1    |   12 |    X,  12 |   13 0000001101
+#  13 | PUSH_IMMEDIATE, ( 13) |  PAUSE ( FETCH) | 0    0    |   13 |    X,   X |   13 0000001101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#  14 | PUSH_IMMEDIATE, ( 14) |  FETCH (DECODE) | 0    0    |   13 |    X,   X |   14 0000001110
+#  14 | PUSH_IMMEDIATE, ( 14) |  FETCH (DECODE) | 0    0    |   13 |    X,   X |   13 0000001101
 #  14 | PUSH_IMMEDIATE, ( 14) | DECODE (  PUSH) | 0    0    |   13 |    X,   X |   14 0000001110
-#  14 | PUSH_IMMEDIATE, ( 14) |   PUSH ( FETCH) | 0    1    |   13 |    X,  13 |   14 0000001110
+#  14 | PUSH_IMMEDIATE, ( 14) |   PUSH ( PAUSE) | 0    1    |   13 |    X,  13 |   14 0000001110
+#  14 | PUSH_IMMEDIATE, ( 14) |  PAUSE ( FETCH) | 0    0    |   14 |    X,   X |   14 0000001110
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#  15 | PUSH_IMMEDIATE, ( 15) |  FETCH (DECODE) | 0    0    |   14 |    X,   X |   15 0000001111
+#  15 | PUSH_IMMEDIATE, ( 15) |  FETCH (DECODE) | 0    0    |   14 |    X,   X |   14 0000001110
 #  15 | PUSH_IMMEDIATE, ( 15) | DECODE (  PUSH) | 0    0    |   14 |    X,   X |   15 0000001111
-#  15 | PUSH_IMMEDIATE, ( 15) |   PUSH ( FETCH) | 0    1    |   14 |    X,  14 |   15 0000001111
+#  15 | PUSH_IMMEDIATE, ( 15) |   PUSH ( PAUSE) | 0    1    |   14 |    X,  14 |   15 0000001111
+#  15 | PUSH_IMMEDIATE, ( 15) |  PAUSE ( FETCH) | 0    0    |   15 |    X,   X |   15 0000001111
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#  16 | PUSH_IMMEDIATE, ( 16) |  FETCH (DECODE) | 0    0    |   15 |    X,   X |   16 0000010000
+#  16 | PUSH_IMMEDIATE, ( 16) |  FETCH (DECODE) | 0    0    |   15 |    X,   X |   15 0000001111
 #  16 | PUSH_IMMEDIATE, ( 16) | DECODE (  PUSH) | 0    0    |   15 |    X,   X |   16 0000010000
 #  16 | PUSH_IMMEDIATE, ( 16) |   PUSH ( ERROR) | 0    1    |   15 |    X,  15 |   16 0000010000
-# Reached end of program.
+# Error occurred during execution.
 # ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 535 ns  Iteration: 1  Instance: /tb_stackCPU
+#    Time: 695 ns  Iteration: 1  Instance: /tb_stackCPU
 # Break at tb_stackCPU.sv line 102
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:46 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'

@@ -19,7 +19,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:39 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -51,23 +50,24 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (  9) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    9 0000001001
 #   0 | PUSH_IMMEDIATE, (  9) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    9 0000001001
-#   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |    9 0000001001
+#   0 | PUSH_IMMEDIATE, (  9) |  PAUSE ( FETCH) | 0    0    |    9 |    X,   X |    9 0000001001
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 | PUSH_IMMEDIATE, (  0) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    0 0000000000
+#   1 | PUSH_IMMEDIATE, (  0) |  FETCH (DECODE) | 0    0    |    9 |    X,   X |    9 0000001001
 #   1 | PUSH_IMMEDIATE, (  0) | DECODE (  PUSH) | 0    0    |    9 |    X,   X |    0 0000000000
-#   1 | PUSH_IMMEDIATE, (  0) |   PUSH ( FETCH) | 0    1    |    9 |    X,   9 |    0 0000000000
+#   1 | PUSH_IMMEDIATE, (  0) |   PUSH ( PAUSE) | 0    1    |    9 |    X,   9 |    0 0000000000
+#   1 | PUSH_IMMEDIATE, (  0) |  PAUSE ( FETCH) | 0    0    |    0 |    X,   X |    0 0000000000
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    x xxxxxxxxxx
+#   2 |            DIV, (  0) |  FETCH (DECODE) | 0    0    |    0 |    X,   X |    0 0000000000
 #   2 |            DIV, (  0) | DECODE ( ERROR) | 1    0    |    0 |    X,   X |    x xxxxxxxxxx
-# Reached end of program.
+# Error occurred during execution.
 # ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 105 ns  Iteration: 1  Instance: /tb_stackCPU
+#    Time: 125 ns  Iteration: 1  Instance: /tb_stackCPU
 # Break at tb_stackCPU.sv line 102
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:39 on Nov 27,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'

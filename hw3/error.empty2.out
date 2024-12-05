@@ -19,7 +19,6 @@ Reading pref.tcl
 # 2024.2
 
 # vsim -c tb_stackCPU 
-# Start time: 20:33:43 on Nov 27,2024
 # ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2024.2 linux_x86_64 May 20 2024
@@ -51,19 +50,19 @@ VSIM 1> run -a
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
 #   0 | PUSH_IMMEDIATE, (  5) |  FETCH (DECODE) | 0    0    |    0 |    x,   x |    5 0000000101
 #   0 | PUSH_IMMEDIATE, (  5) | DECODE (  PUSH) | 0    0    |    0 |    x,   x |    5 0000000101
-#   0 | PUSH_IMMEDIATE, (  5) |   PUSH ( FETCH) | 0    1    |    0 |    x,   0 |    5 0000000101
+#   0 | PUSH_IMMEDIATE, (  5) |   PUSH ( PAUSE) | 0    1    |    0 |    x,   0 |    5 0000000101
+#   0 | PUSH_IMMEDIATE, (  5) |  PAUSE ( FETCH) | 0    0    |    5 |    X,   X |    5 0000000101
 # ----+-----------------------+-----------------+-----------+------+-----------+-------
 # PC  | Operation             |  State  (next)  | pop  push | top  | op1   op2 | result
-#   1 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    x xxxxxxxxxx
+#   1 |            MUL, (  0) |  FETCH (DECODE) | 0    0    |    5 |    X,   X |    5 0000000101
 #   1 |            MUL, (  0) | DECODE (  POP2) | 1    0    |    5 |    X,   X |    x xxxxxxxxxx
 #   1 |            MUL, (  0) |   POP2 ( ERROR) | 1    0    |    0 |    X,   5 |    x xxxxxxxxxx
-# Reached end of program.
+# Error occurred during execution.
 # ** Note: $stop    : tb_stackCPU.sv(102)
-#    Time: 85 ns  Iteration: 1  Instance: /tb_stackCPU
+#    Time: 95 ns  Iteration: 1  Instance: /tb_stackCPU
 # Break at tb_stackCPU.sv line 102
 # Stopped at tb_stackCPU.sv line 102
 VSIM 2> # 
 # <EOF>
-# End time: 20:33:44 on Nov 27,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 make[1]: Leaving directory `/u/harke/ece-351/hw3'
