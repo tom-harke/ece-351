@@ -125,7 +125,7 @@ Stack #(
         POP2:  {next,pop}  = {POP1, 1'b1};
         POP1:   next       =  PUSH;
         PUSH:  {next,push} = {PAUSE,1'b1};
-        PAUSE:  next = (SSTEP_ENABLE && ~single_step)
+        PAUSE:  next = (SSTEP_ENABLE_DEF && ~single_step)
                      ? PAUSE
                      : FETCH
                      ;
