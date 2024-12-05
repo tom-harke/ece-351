@@ -43,6 +43,7 @@ package stackCPU_DEFS;
         POP2,
         POP1,
         PUSH,
+        //ERROR2,
         ERROR
  } state_t;
  

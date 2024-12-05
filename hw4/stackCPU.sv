@@ -3,7 +3,7 @@
  * @brief  Top level for the stack CPU
  *
  * @author Tom Harke (harke@pdx.edu)
- * @date   2024 Dec TODO
+ * @date   2024 Dec 05
  *
  * @detail
  * Implements the top level module for the stack CPU.  The stack CPU is
@@ -39,11 +39,11 @@ module stackCPU
   output logic [PC_WIDTH-1:0]             pc,             // program counter
 
   // interface to nexysA7
-  input logic                             single_step,    // step on instruction on rising edge         // TODO
-  output logic signed [DATA_WIDTH-1:0]    result,         // ALU result                                 // TODO
-  output logic                            valid_result,   // asserted high when ALU result is valid     // TODO
-  output logic                            error,          // error if asserted high                     // TODO
-  output logic                            halt            // CPU is halted                              // TODO
+  input logic                             single_step,    // step on instruction on rising edge
+  output logic signed [DATA_WIDTH-1:0]    result,         // ALU result
+  output logic                            valid_result,   // asserted high when ALU result is valid
+  output logic                            error,          // error if asserted high
+  output logic                            halt            // CPU is halted
 );
 
 // internal signals
@@ -77,7 +77,6 @@ Stack #(
   .two_or_more()   // UNUSED
 );
 
-
   always_ff @(posedge clk or posedge reset)
     if (reset)
       begin
@@ -85,16 +84,19 @@ Stack #(
         current <= FETCH;
       end
     else
+/*
+      if (single_step)
+          pc <= pc+1;
+*/
       begin
         current <= next;
-        if (next==FETCH)
+        if (single_step)
           begin
-            pc <= pc+1;
-          end
-        if (next==ERROR)
-          begin
-            pc <= pc+1;
-          end
+            if (next==FETCH)
+              pc <= pc+1;
+            if (next==ERROR)
+              pc <= pc+1;
+	  end
       end
 
   always_ff @(posedge clk)
@@ -109,13 +111,20 @@ Stack #(
             op1 <= 1'bx;
             op2 <= 1'bx;
           end
+
+default: // TODO
+begin // TODO
+op1 <= op1; // TODO
+op2 <= op2; // TODO
+end // TODO
+
       endcase
     end
 
 
   always_comb // Next State & push/pop control signals
     begin
-      case (current)
+      unique case (current)
         FETCH: {next,pop,push} = {DECODE,1'b0,1'b0};
         DECODE:
           begin
@@ -124,15 +133,17 @@ Stack #(
               INVERT:         {next,pop,push} = {POP1,1'b1,1'b0};
               default:        {next,pop,push} = {POP2,1'b1,1'b0};
             endcase
-            if (opcode==DIV && top==0)
-              next = ERROR;
+            //if (opcode==DIV && top==0)
+              //next = ERROR;
           end
         POP2: {next,pop,push} = {POP1, 1'b1,1'b0};
         POP1: {next,pop,push} = {PUSH, 1'b0,1'b0};
         PUSH: {next,pop,push} = {FETCH,1'b0,1'b1};
+        ERROR: {next,pop,push} = {ERROR,1'b0,1'b0};
       endcase
-      if (push && full) next = ERROR;
-      if (pop && empty) next = ERROR;
+      //if (push && full) next = ERROR;
+      //if (pop && empty) next = ERROR;
+      //if (unused && !unused) next = ERROR;
     end
 
 
@@ -152,9 +163,9 @@ Stack #(
       endcase
     end
 
-assign error = current == ERROR ? 1'b1 : 1'b0;
-assign halt  = 1'b0; // current == HALT  ? 1'b1 : 1'b0; // TODO
-assign valid_result = opcode == PUSH  ? 1'b1 : 1'b0;
+assign error        = current == ERROR ? 1'b1 : 1'b0;
+assign halt         = current == ERROR ? 1'b1 : 1'b0; // current == HALT  ? 1'b1 : 1'b0; // TODO
+assign valid_result = current == PUSH  ? 1'b1 : 1'b0; // TODO
 assign {opcode,unused,immediate} = instruction;
 
 endmodule: stackCPU
